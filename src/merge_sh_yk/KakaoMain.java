@@ -96,9 +96,7 @@ public class KakaoMain extends JFrame {
 	public void DBConn(){
 		manager = DBManager.getInstance();
 		con=manager.getConnection();
-		//DB楷搬 按眉 积己.
-		
-		
+		//DB楷搬 按眉 积己.	
 	}
 	
 	public static void main(String[] args) {

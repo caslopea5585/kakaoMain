@@ -82,7 +82,7 @@ public class MenuDialog extends JDialog implements ActionListener{
 		Object obj=e.getSource();
 		if(obj==bt_addFriend){
 			dispose(); //dialog 메모리에서 지우기
-			AddFriendDialog addFriendDialog=new AddFriendDialog();//친구 추가 창 생성
+			AddFriendDialog addFriendDialog=new AddFriendDialog(kakaoMain.con);//친구 추가 창 생성
 			//ChangeProfile pop=new ChangeProfile((FriendsListPanel)kakaoMain.friendsListPanel);
 		}
 	}
