@@ -17,6 +17,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -40,7 +41,7 @@ public class AddFriendDialog extends JDialog{
 	Member member; //dto
 	
 	public AddFriendDialog(Connection con){
-		
+		getRootPane().setBorder( BorderFactory.createLineBorder(Color.DARK_GRAY) );
 		
 		this.con=con;
 		 manager=DBManager.getInstance();
@@ -61,9 +62,14 @@ public class AddFriendDialog extends JDialog{
 		p_center.setLayout(new BorderLayout());
 		
 		la_add=new JLabel("친구 추가", JLabel.CENTER);
-		t_search=new JTextField("ID검색", 25);
-		la_des=new JLabel("아이디로 친구를 추가하세요", JLabel.CENTER);
+
+		t_search=new HintTextField_FIRST("ID검색");
+		t_search.setPreferredSize(new Dimension(250, 25));
+		t_search.setBorder(BorderFactory.createLineBorder(new Color(30,170,170)));
 		
+		la_des=new JLabel("아이디로 친구를 추가하세요", JLabel.CENTER);
+        la_des.setForeground(new Color(30,170,170));
+        
 		bt_close=new JButton("X");
 		
 		p_north.add(la_add);
@@ -113,8 +119,8 @@ public class AddFriendDialog extends JDialog{
 		
 		String sql="select * from member where nik_id=?";
 		String input_id=t_search.getText();
-		String ori_nik=null;
-		System.out.println(input_id);
+		String ori_nik="";
+		//System.out.println(input_id);
 		
 		try {
 			pstmt=con.prepareStatement(sql);
@@ -125,12 +131,17 @@ public class AddFriendDialog extends JDialog{
 				member=new Member();
 				member.setName(rs.getString("nik_id"));
 			}
-			ori_nik=member.getName();
+			if(member!=null){
+				ori_nik=member.getName();
+			}else{
+				ori_nik=null;
+			}
 			
 			if(input_id.equalsIgnoreCase(ori_nik)){
 				JOptionPane.showMessageDialog(this, "친구가 있습니다");
 			}else{
-				JOptionPane.showMessageDialog(this, "친구가 없습니다");
+				//JOptionPane.showMessageDialog(this, "친구가 없습니다");
+				la_des.setText("\'"+t_search.getText()+"\'"+"를 찾을 수 없습니다.");
 			}
 			
 		} catch (SQLException e) {

@@ -8,6 +8,7 @@ import java.awt.PointerInfo;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -22,8 +23,8 @@ public class MenuDialog extends JDialog implements ActionListener{
 		this.kakaoMain=kakaoMain;
 		
 		setLayout(new FlowLayout());
-		
-		//getContentPane().setBackground(Color.WHITE);
+		getRootPane().setBorder( BorderFactory.createLineBorder(Color.DARK_GRAY) );
+		getContentPane().setBackground(Color.WHITE);
 		
 		p_addFriend=new JPanel();
 		p_logout=new JPanel();
