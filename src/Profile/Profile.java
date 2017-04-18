@@ -61,7 +61,6 @@ public class Profile extends JFrame implements ActionListener{
 		url_profileImage=this.getClass().getResource(photopath); //프로필사진
 		
 		
-		
 		try {
 			buffr_south = ImageIO.read(url_profileSouth);
 			
