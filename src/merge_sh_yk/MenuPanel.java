@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 
 public class MenuPanel extends JPanel implements ActionListener{
 	KakaoMain kakaoMain;
+	MenuDialog menuDialog;
 	
 	Color color=new Color(82, 55, 56);
 	//Point mouseDownCompCoords = null;
@@ -34,6 +35,8 @@ public class MenuPanel extends JPanel implements ActionListener{
 	JLabel la_kakaotalk;
 	
 	JButton bt_addFriend;
+	URL url_menu;
+	String path_menu="/circle4.png";
 	
 	JTextField t_name, t_status;
 	JButton bt_reg;
@@ -50,7 +53,10 @@ public class MenuPanel extends JPanel implements ActionListener{
 		la_kakaotalk=new JLabel(kakaoIcon);
 		url_close=this.getClass().getResource("/close3.png");
 		bt_close=new JButton(new ImageIcon(url_close));
-		bt_addFriend=new JButton("o");
+		
+		url_menu=this.getClass().getResource(path_menu);
+		bt_addFriend=new JButton(new ImageIcon(url_menu));
+		bt_addFriend.setPreferredSize(new Dimension(40, 40));
 		
 		t_name=new JTextField(10);
 		t_status=new JTextField(10);
@@ -74,10 +80,7 @@ public class MenuPanel extends JPanel implements ActionListener{
 			bt_menu[i].setPreferredSize(new Dimension(40, 40));
 			p_buttons.add(bt_menu[i]);
 			
-			bt_menu[i].setBorderPainted(false); //버튼 경계선 없애기
-			bt_menu[i].setContentAreaFilled(false); //색 채우기(파란색) 없애기
-			bt_menu[i].setFocusPainted(false); //포커스에 의한 경계 없애기
-			bt_menu[i].setOpaque(false); //투명도-투명해야되니까 false(불투명-true)
+			setButton(bt_menu[i]);
 			
 			//메뉴 리스너 연결
 			bt_menu[i].addActionListener(this);
@@ -85,10 +88,8 @@ public class MenuPanel extends JPanel implements ActionListener{
 		}
 		bt_addFriend.addActionListener(this);
 		
-		bt_close.setBorderPainted(false);
-		bt_close.setContentAreaFilled(false);
-		bt_close.setFocusPainted(false);
-		bt_close.setOpaque(false);
+		setButton(bt_close);
+		setButton(bt_addFriend);
 		
 		p_north.add(la_kakaotalk, BorderLayout.WEST);
 		p_north.add(bt_close, BorderLayout.EAST);
@@ -116,6 +117,12 @@ public class MenuPanel extends JPanel implements ActionListener{
 			flag[index]=false;
 		}
 	}
+	public void setButton(JButton bt){
+		bt.setBorderPainted(false); //버튼 경계선 없애기
+		bt.setContentAreaFilled(false); //색 채우기(파란색) 없애기
+		bt.setFocusPainted(false); //포커스에 의한 경계 없애기
+		bt.setOpaque(false); //투명도-투명해야되니까 false(불투명-true)
+	}
 	
 	public void actionPerformed(ActionEvent e) {
 		Object obj=e.getSource();
@@ -129,7 +136,8 @@ public class MenuPanel extends JPanel implements ActionListener{
 		}else if(obj==bt_close){
 			System.exit(0);
 		}else if(obj==bt_addFriend){
-			ChangeProfile pop=new ChangeProfile((FriendsListPanel)kakaoMain.friendsListPanel);
+			menuDialog=new MenuDialog(kakaoMain);
+			//ChangeProfile pop=new ChangeProfile((FriendsListPanel)kakaoMain.friendsListPanel);
 		}
 	}
 }

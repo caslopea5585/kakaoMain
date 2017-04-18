@@ -50,7 +50,7 @@ public class KakaoMain extends JFrame {
 
 		dragMouse(panel[0]);
 		
-		//setUndecorated(true); //타이틀바 제거
+		setUndecorated(true); //타이틀바 제거
 		setBounds(100,100,360,590);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
