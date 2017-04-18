@@ -62,7 +62,7 @@ public class LoginPanel extends JPanel implements ActionListener{
    DBManager manager;
    
 
-   String ip="211.238.142.121";//////////////////임시 아이피
+   String ip="211.238.142.113";//////////////////임시 아이피
    Socket socket;
    ClientThread ct;
    int port=7777;
