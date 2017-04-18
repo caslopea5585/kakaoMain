@@ -20,7 +20,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.net.Socket;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -58,6 +60,12 @@ public class LoginPanel extends JPanel implements ActionListener{
    Thread thread;
    Connection con;
    DBManager manager;
+   
+
+   String ip="211.238.142.121";//////////////////임시 아이피
+   Socket socket;
+   ClientThread ct;
+   int port=7777;
    
    public LoginPanel(KakaoMain kakaoMain) {
        this.kakaoMain=kakaoMain; 
@@ -208,6 +216,10 @@ public class LoginPanel extends JPanel implements ActionListener{
    
 
    public void login(){
+	   ///////////서버연결//////////////
+	   connect();
+	   ///////////////////////////////
+	   
       PreparedStatement pstmt=null;
       ResultSet rs=null;
       String sql="select * from member where e_mail=? and password=?";
@@ -237,8 +249,7 @@ public class LoginPanel extends JPanel implements ActionListener{
          System.out.println("input_pw"+input_pw);
          System.out.println("ori_pw"+ori_pw);
          if((input_email.equals(ori_email))&&(input_pw.equals(ori_pw))){
-            JOptionPane.showMessageDialog(this, "로그인성공");
-            
+            JOptionPane.showMessageDialog(this, "로그인성공");      
          } else{
             JOptionPane.showMessageDialog(this, "로그인실패");
          }
@@ -263,6 +274,24 @@ public class LoginPanel extends JPanel implements ActionListener{
          }
       }//finally
    }
+   
+	public void connect(){
+		try {
+			socket=new Socket(ip, port);
+			
+			ct=new ClientThread(socket,kakaoMain.chat);//chat 리스트를 넣어서 각 채팅방의 번호에 따라 대화를 넘겨주기
+			//채팅방 리스트는 각 계정이 미리 알고 있어야하므로 db를 넣는다. 채팅방이 생성된 순서에따라 db에 넣어주고 그 순서대로 chat 리스트 생성후 저장
+			//각 방의 리스트는 db(서버)에서 관리하며 각 프라이머리키를 갖고 있다. 서버에서 클라로 해당하는 사용자가 있을 경우 접속시 방의 정보를 넘겨준다.
+			//넘겨준 정보를 바탕으로 접속전에 chat 리스트를 생성한다.
+			ct.start();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+	}
    
    @Override
    public void actionPerformed(ActionEvent e) {
