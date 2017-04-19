@@ -31,7 +31,7 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
-import merge_sh_yk.KakaoMain;
+import merge_sh_yk.MemberList;
 
 public class Profile extends JFrame implements ActionListener{
 	Point mouseDownCompCoords = null;
@@ -48,13 +48,13 @@ public class Profile extends JFrame implements ActionListener{
 	RoundButton bt_chat,bt_manager,bt_back_profile;
 	String status_msg="상태메시지";
 	JFileChooser chooser;
-	
+	MemberList memberList;
 	
 	public Profile(String photopath) {
 		
 		profile = this;
 		
-		getDB();
+		
 		layeredPane = new JLayeredPane();
 		url_profileBackground = this.getClass().getResource("/bg_north.png");	//상단배경
 		url_profileSouth=this.getClass().getResource("/bg_south.png");	//하단
@@ -236,14 +236,7 @@ public class Profile extends JFrame implements ActionListener{
 		
 	}
 	
-	//DB정보 가져오기
-	public void getDB(){
-		PreparedStatement pstmt;
-		ResultSet rs;
-		
-		
-	}
-	
+
 /*
 	public static void main(String[] args) {
 		new Profile();

@@ -11,6 +11,11 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -18,6 +23,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import Profile.Profile;
+import db.DBManager;
 
 public class PersonPanel extends JPanel{
 	Canvas can=null;
@@ -34,9 +40,16 @@ public class PersonPanel extends JPanel{
 	String name;
 	String statusMsg;
 	
-	ChangeProfile pop; //내 프로필 변경을 위한 임시창. 
+	ChangeProfile pop; //내 프로필 변경을 위한 임시창.
+	DBManager manager;
+	Connection con;
+	ArrayList<MemberList> memberList = new ArrayList<MemberList>();
+	
 	
 	public PersonPanel(String photoPath, String name, String statusMsg){
+		
+		getFriendList();
+		
 		this.photoPath=photoPath;
 		this.name=name;
 		this.statusMsg=statusMsg;
@@ -92,5 +105,39 @@ public class PersonPanel extends JPanel{
 		setPreferredSize(new Dimension(360, 60));
 		setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 		setBackground(Color.WHITE);
+	}
+	
+	
+	
+	
+	public void getFriendList(){
+		manager=DBManager.getInstance();
+		con=manager.getConnection();
+		String sql="select * from member";
+		PreparedStatement pstmt;
+		ResultSet rs =null;
+		
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()){
+				MemberList memberListDto = new MemberList();
+				memberListDto.setE_mail(rs.getString("e_mail"));
+				memberListDto.setNik_id(rs.getString("nik_id"));
+				memberListDto.setPassword(rs.getString("password"));
+				memberListDto.setProfile_img(rs.getString("profile_img"));
+				memberListDto.setProfileBackImg(rs.getString("profilebackimg"));
+				memberListDto.setStatus_msg(rs.getString("status_msg"));
+				
+				memberList.add(memberListDto);
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println(memberList.size()+" 사이즈");
+		System.out.println(memberList.get(0).getE_mail()+" 있는 값");
 	}
 }

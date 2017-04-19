@@ -18,12 +18,28 @@ public class KakaoMain extends JFrame {
 	JPanel menuPanel, friendsListPanel, chattingListPanel, settingPanel, p_center;
 	DBManager manager;
 	Connection con;
+	
 
 	Client_chat chat;//채널 새창*채팅목록에서 새로열기 가능하게 바꾸기
 	
 	public KakaoMain(){
 		DBConn();
 		panel=new JPanel[2];
+		panel[0]=new LoginPanel(this);
+		
+		add(panel[0]);
+		
+		
+		setUndecorated(true); //타이틀바 제거
+		setBounds(100,100,360,590);
+		setVisible(true);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+	}
+	
+	public void seeMain(){
+		
+		
 		p_center=new JPanel();
 		
 		menuPanel=new MenuPanel(this);
@@ -33,7 +49,6 @@ public class KakaoMain extends JFrame {
 		
 		chat=new Client_chat(this);/////////채팅
 		
-		panel[0]=new LoginPanel(this);
 		panel[1]=new JPanel();	
 		panel[1].setLayout(new BorderLayout()); //panel[1]의 북쪽에 메뉴바, 센터에 패널3개
 	
@@ -43,22 +58,20 @@ public class KakaoMain extends JFrame {
 		p_center.add(settingPanel);
 		panel[1].add(p_center);
 		
-		add(panel[0]);
+		
 		add(panel[1]);
 
 		panel[0].setBackground(new Color(255, 235, 051));
 		panel[0].setSize(360,590);
 		
-		panel[0].setVisible(true);
-		panel[1].setVisible(false);
+		panel[0].setVisible(false);
+		panel[1].setVisible(true);
 
 		dragMouse(panel[0]);
 		
-		setUndecorated(true); //타이틀바 제거
-		setBounds(100,100,360,590);
-		setVisible(true);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+
 	}
+	
 	
 	//윈도우안에 어떤 패널이 올지를 결정해주는 메서드 정의
 	public void setPage(int index){
