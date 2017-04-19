@@ -6,6 +6,8 @@ public class MemberList {
 	private String password;
 	private String profile_img;
 	private String profileBackImg;
+	private String status_msg;
+	
 	public String getE_mail() {
 		return e_mail;
 	}
@@ -42,5 +44,4 @@ public class MemberList {
 	public void setStatus_msg(String status_msg) {
 		this.status_msg = status_msg;
 	}
-	private String status_msg;
 }
