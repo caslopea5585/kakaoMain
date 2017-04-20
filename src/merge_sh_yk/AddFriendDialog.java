@@ -1,8 +1,10 @@
 package merge_sh_yk;
 
 import java.awt.BorderLayout;
+import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.PointerInfo;
@@ -12,16 +14,20 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Vector;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -38,7 +44,15 @@ public class AddFriendDialog extends JDialog{
 	Connection con;
 	DBManager manager;
 	
-	Member member; //dto
+	//Vector<MemberList> member= new Vector<MemberList>(); //dto
+	MemberList member;
+	
+	//email검색으로 찾은 친구 프로필사진과 닉네임 보여주기 위한 객체들
+	Canvas can=null;
+	BufferedImage image=null; //프로필 사진
+	BufferedImage bgimage=null; //프로필 사진 원형처리 위한 이미지
+	URL url=null;
+	URL bgurl=null;
 	
 	public AddFriendDialog(Connection con){
 		getRootPane().setBorder( BorderFactory.createLineBorder(Color.DARK_GRAY) );
@@ -53,21 +67,22 @@ public class AddFriendDialog extends JDialog{
 		p_north=new JPanel(); //border
 		p_center=new JPanel(); //border
 		p_search=new JPanel();
-		p_friend=new JPanel();
+		p_friend=new JPanel(); //친구 이미지,닉네임 붙일 패널
 		
 		p_north.setBackground(Color.WHITE);
 		p_center.setBackground(Color.WHITE);
+		p_friend.setBackground(Color.WHITE);
 		
 		p_north.setLayout(new BorderLayout());
 		p_center.setLayout(new BorderLayout());
 		
 		la_add=new JLabel("친구 추가", JLabel.CENTER);
 
-		t_search=new HintTextField_FIRST("ID검색");
+		t_search=new HintTextField_FIRST("email 검색");
 		t_search.setPreferredSize(new Dimension(250, 25));
 		t_search.setBorder(BorderFactory.createLineBorder(new Color(30,170,170)));
 		
-		la_des=new JLabel("아이디로 친구를 추가하세요", JLabel.CENTER);
+		la_des=new JLabel("이메일로 친구를 추가하세요", JLabel.CENTER);
         la_des.setForeground(new Color(30,170,170));
         
 		bt_close=new JButton("X");
@@ -96,7 +111,6 @@ public class AddFriendDialog extends JDialog{
 			public void keyReleased(KeyEvent e) {
 				int key=e.getKeyCode();
 				if(key==KeyEvent.VK_ENTER){
-					System.out.println("엔터");
 					getDB();
 				}
 			}
@@ -106,7 +120,7 @@ public class AddFriendDialog extends JDialog{
 		point(this);
 		setButton(bt_close);
 		
-		setUndecorated(true);
+		//setUndecorated(true);
 		setSize(300,350);
         setModal(true);
         setVisible(true);
@@ -115,12 +129,23 @@ public class AddFriendDialog extends JDialog{
 	//member데이터 가져와서 찾는 친구가 있는지 여부 검사
 	public void getDB(){
 		
+		
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		
-		String sql="select * from member where nik_id=?";
+		String sql="select * from member where e_mail=?";
 		String input_id=t_search.getText();
+<<<<<<< HEAD
 		String ori_nik=null;
+=======
+		
+		String ori_email="";
+		String ori_nik="";
+		//String ori_pw="";
+		String ori_img="";
+		//String ori_bgimg="";
+		//String ori_status="";
+>>>>>>> 463f2dccc345ab054d8de881ba7a16d6ad4d98d9
 		//System.out.println(input_id);
 		
 		try {
@@ -129,21 +154,30 @@ public class AddFriendDialog extends JDialog{
 			rs=pstmt.executeQuery();
 			
 			while(rs.next()){
-				member=new Member();
-				member.setName(rs.getString("nik_id"));
+				member=new MemberList();
+				member.setE_mail(rs.getString("e_mail"));
+				member.setNik_id(rs.getString("nik_id"));
+				member.setPassword(rs.getString("password"));
+				member.setProfile_img(rs.getString("profile_img"));
+				member.setProfileBackImg(rs.getString("profilebackimg"));
+				member.setStatus_msg(rs.getString("status_msg"));
 			}
 			if(member!=null){
-				ori_nik=member.getName();
+				ori_email=member.getE_mail();
+				ori_nik=member.getNik_id();
+				ori_img=member.getProfile_img();
 			}else{
-				ori_nik=null;
+				ori_email=null;
 			}
 			
-			if(input_id.equalsIgnoreCase(ori_nik)){
-				JOptionPane.showMessageDialog(this, "친구가 있습니다");
+			if(input_id.equalsIgnoreCase(ori_email)){
+				//JOptionPane.showMessageDialog(this, "친구가 있습니다");
+				showFriend();
 			}else{
 				//JOptionPane.showMessageDialog(this, "친구가 없습니다");
 				la_des.setText("\'"+t_search.getText()+"\'"+"를 찾을 수 없습니다.");
 			}
+			member=null;
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -164,6 +198,30 @@ public class AddFriendDialog extends JDialog{
 	             }
 	         }
 		}
+	}
+	public void showFriend(){
+		url=this.getClass().getResource(member.getProfile_img());
+		bgurl=this.getClass().getResource("/emptyCircle.png");
+		
+		try {
+			image=ImageIO.read(url);
+			bgimage=ImageIO.read(bgurl);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		can=new Canvas(){
+			public void paint(Graphics g) {
+				g.drawImage(image, 0, 0, 100,100, this);
+				g.drawImage(bgimage, 0, 0, 100,100, this);
+			}
+		};
+		
+		can.setPreferredSize(new Dimension(100,100));
+		p_friend.add(can);
+		la_des.setVisible(false);
+		p_center.add(p_friend);
+
 	}
 	
 	//다이얼로그 위치

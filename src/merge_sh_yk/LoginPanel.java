@@ -1,5 +1,11 @@
 package merge_sh_yk;
+<<<<<<< HEAD
 
+=======
+ 
+ 
+ 
+>>>>>>> 463f2dccc345ab054d8de881ba7a16d6ad4d98d9
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Checkbox;
@@ -14,6 +20,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -25,7 +33,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import java.util.Vector;
+ 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -34,11 +43,11 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-
+ 
 import db.DBManager;
-
-
-public class LoginPanel extends JPanel implements ActionListener{
+ 
+ 
+public class LoginPanel extends JPanel{
    KakaoMain kakaoMain;
    JPanel p_north, p_center, p_south, p_id_pw, p_pw;
    HintTextField_FIRST t_email;
@@ -59,8 +68,13 @@ public class LoginPanel extends JPanel implements ActionListener{
    Connection con;
    DBManager manager;
    
+<<<<<<< HEAD
 
    String ip="211.238.142.102";//////////////////임시 아이피
+=======
+ 
+  String ip="211.238.142.113";//////////////////임시 아이피
+>>>>>>> 463f2dccc345ab054d8de881ba7a16d6ad4d98d9
    
    Socket socket;
    ClientThread ct;
@@ -69,7 +83,12 @@ public class LoginPanel extends JPanel implements ActionListener{
    public LoginPanel(KakaoMain kakaoMain) {
        this.kakaoMain=kakaoMain; 
        setLayout(new BorderLayout());
+<<<<<<< HEAD
 
+=======
+ 
+      
+>>>>>>> 463f2dccc345ab054d8de881ba7a16d6ad4d98d9
       //db와 연동
       manager=DBManager.getInstance();
       con=manager.getConnection();
@@ -131,7 +150,18 @@ public class LoginPanel extends JPanel implements ActionListener{
       t_pw.setPreferredSize(new Dimension(250, 45));
       bt_login.setPreferredSize(new Dimension(250, 35));
       bt_login.setBackground(new Color(113, 92, 94));
-      bt_login.addActionListener(this);
+      bt_login.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			login();
+		}
+      });
+      bt_login.addKeyListener(new KeyAdapter() {
+    	public void keyPressed(KeyEvent e) {
+    		if(e.getKeyCode()==e.VK_ENTER){ 
+    			login();
+    		}	
+    	}
+      });
    
       info=new JLabel("모바일에서 카카오계정을 확인할 수 있습니다.");
       link= new JLabel("<HTML><U>카카오계정안내</U></HTML>");
@@ -165,18 +195,13 @@ public class LoginPanel extends JPanel implements ActionListener{
              });
             p_pw.updateUI();
          }
-         
          @Override
-         public void focusLost(FocusEvent e) {
-         }
-      
+         public void focusLost(FocusEvent e) {}
       }); 
-
+ 
       t_pw.addFocusListener(new FocusListener() {
-         
          @Override
          public void focusLost(FocusEvent e) {
-            System.out.println("초점 잃음");
             t_pw.setVisible(false);
             t_info.setVisible(true);
             p_pw.updateUI();
@@ -212,24 +237,20 @@ public class LoginPanel extends JPanel implements ActionListener{
       //setDefaultCloseOperation(EXIT_ON_CLOSE);
    }
    
-
+ 
    public void login(){
 	   ///////////서버연결//////////////
 	   connect();
 	   ///////////////////////////////
-	   
       PreparedStatement pstmt=null;
       ResultSet rs=null;
       String sql="select * from member where e_mail=? and password=?";
-      String input_email=t_email.getText();
-      String input_pw=t_pw.getText();
-      String ori_email=null;
-      String ori_pw=null;
+      Vector<Member> list=new Vector<Member>();
       
       try {
          pstmt=con.prepareStatement(sql);
-         pstmt.setString(1, input_email); //내가 입력한 값
-         pstmt.setString(2, input_pw); 
+         pstmt.setString(1, t_email.getText()); //내가 입력한 값
+         pstmt.setString(2, t_pw.getText()); 
          rs=pstmt.executeQuery();
          
          while(rs.next()){
@@ -237,8 +258,10 @@ public class LoginPanel extends JPanel implements ActionListener{
             member.setEmail(rs.getString("e_mail"));
             member.setName(rs.getString("nik_id"));
             member.setPw(rs.getString("password"));
+            list.add(member);
          }            
          
+<<<<<<< HEAD
          ori_email=member.getEmail();
          ori_pw=member.getPw();
 
@@ -251,8 +274,17 @@ public class LoginPanel extends JPanel implements ActionListener{
 
          } else{
             JOptionPane.showMessageDialog(this, "로그인실패");
+=======
+         if(list.size()!=0){
+        	 JOptionPane.showMessageDialog(this, "로그인성공");  
+        	 kakaoMain.seeMain();
+         }	else {
+        	 JOptionPane.showMessageDialog(this, "아이디나 비밀번호를 확인해주세요.");
+        	 t_pw.setText("");
+            
+>>>>>>> 463f2dccc345ab054d8de881ba7a16d6ad4d98d9
          }
-         
+
       } catch (SQLException e) {
          e.printStackTrace();
       } finally {
@@ -275,6 +307,7 @@ public class LoginPanel extends JPanel implements ActionListener{
    }
    
 	public void connect(){
+		
 		try {
 			socket=new Socket(ip, port);
 			
@@ -284,13 +317,12 @@ public class LoginPanel extends JPanel implements ActionListener{
 			//넘겨준 정보를 바탕으로 접속전에 chat 리스트를 생성한다.
 			ct.start();
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 	}
+<<<<<<< HEAD
    
    @Override
    public void actionPerformed(ActionEvent e) {
@@ -305,3 +337,7 @@ public class LoginPanel extends JPanel implements ActionListener{
 
 }
 
+=======
+ 
+}
+>>>>>>> 463f2dccc345ab054d8de881ba7a16d6ad4d98d9

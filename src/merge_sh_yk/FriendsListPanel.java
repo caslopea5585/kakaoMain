@@ -4,13 +4,18 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+
+import db.DBManager;
 
 public class FriendsListPanel extends JPanel{
 	JPanel p_search; //검색 패널
@@ -24,9 +29,11 @@ public class FriendsListPanel extends JPanel{
 	PersonPanel[] people=new PersonPanel[2];
 	
 	String myPhotoPath, myName, myStatusMsg;
+
 	
 	public FriendsListPanel(){
 		setLayout(new BorderLayout());
+		
 		
 		p_search=new JPanel();
 		t_search=new JTextField("이름검색", 30);
@@ -76,5 +83,9 @@ public class FriendsListPanel extends JPanel{
 		
 	}
 	
+<<<<<<< HEAD
+=======
+
+>>>>>>> 463f2dccc345ab054d8de881ba7a16d6ad4d98d9
 }
 
