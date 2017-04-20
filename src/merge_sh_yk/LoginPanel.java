@@ -65,14 +65,10 @@ public class LoginPanel extends JPanel{
    DBManager manager;
    
  
-<<<<<<< HEAD
-  //String ip="211.238.142.113";//////////////////임시 아이피
-=======
-  String ip="211.238.142.103";//////////////////임시 아이피
->>>>>>> origin/master
+
    
-  //String ip="211.238.142.113";//////////////////임시 아이피
- String ip="211.238.142.102";
+  String ip="211.238.142.113";//////////////////임시 아이피
+
    Socket socket;
    ClientThread ct;
    int port=7777;

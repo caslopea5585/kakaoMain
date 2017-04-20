@@ -25,14 +25,12 @@ public class FriendsListPanel extends JPanel{
 	JLabel la_myProfile, la_friends;
 	JScrollPane scroll;
 	int friends_count=0; //Ä£±¸ ¼ö
-<<<<<<< HEAD
-	PersonPanel[] people=new PersonPanel[10];
-=======
+
 	
 	//PersonPanel[] people=new PersonPanel[10];
 	
 	ArrayList<PersonPanel> people = new ArrayList<PersonPanel>();
->>>>>>> origin/master
+
 	KakaoMain kakaoMain;
 	
 	
