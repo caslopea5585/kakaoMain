@@ -65,7 +65,11 @@ public class LoginPanel extends JPanel{
    DBManager manager;
    
  
+<<<<<<< HEAD
   //String ip="211.238.142.113";//////////////////임시 아이피
+=======
+  String ip="211.238.142.103";//////////////////임시 아이피
+>>>>>>> origin/master
    
   //String ip="211.238.142.113";//////////////////임시 아이피
  String ip="211.238.142.102";
@@ -147,6 +151,7 @@ public class LoginPanel extends JPanel{
       bt_login.addKeyListener(new KeyAdapter() {
     	public void keyPressed(KeyEvent e) {
     		if(e.getKeyCode()==e.VK_ENTER){ 
+    			
     			login();
     		}	
     	}
@@ -242,11 +247,12 @@ public class LoginPanel extends JPanel{
       
       try {
          pstmt=con.prepareStatement(sql);
+         rs = pstmt.executeQuery();
          /* 회원 로그인시 필요한..정보...임시로막아둠..
          pstmt.setString(1, t_email.getText()); //내가 입력한 값
          pstmt.setString(2, t_pw.getText());
-         */ 
-         rs=pstmt.executeQuery();
+         
+          */
          
          while(rs.next()){
  			MemberList memberListDto = new MemberList();
@@ -259,26 +265,13 @@ public class LoginPanel extends JPanel{
 			
 			memberList.add(memberListDto);
          }            
+
          
-/*         if(memberList.size()!=0){
-            member=new Member();//인스턴스 한건 생성
-<<<<<<< HEAD
-            member.setE_mail(rs.getString("e_mail"));
-            member.setNik_id(rs.getString("nik_id"));
-            member.setPassword(rs.getString("password"));
-=======
-            member.setEmail(rs.getString("e_mail"));
-            member.setName(rs.getString("nik_id"));
-            member.setPw(rs.getString("password"));
-            
->>>>>>> origin/master
-            list.add(member);
-         }            
-         */
          if(memberList.size()!=0){
         	 JOptionPane.showMessageDialog(this, "로그인성공");  
         	
-        	 //로그인 정보의 e_mail,password정보를 가져온다.
+        	 
+        	 //로그인 정보의 e_mail정보를 가져온다.
         	 kakaoMain.seeMain(t_email.getText(),memberList);
          }	else {
         	 JOptionPane.showMessageDialog(this, "아이디나 비밀번호를 확인해주세요.");

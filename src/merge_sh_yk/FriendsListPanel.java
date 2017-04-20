@@ -25,7 +25,14 @@ public class FriendsListPanel extends JPanel{
 	JLabel la_myProfile, la_friends;
 	JScrollPane scroll;
 	int friends_count=0; //친구 수
+<<<<<<< HEAD
 	PersonPanel[] people=new PersonPanel[10];
+=======
+	
+	//PersonPanel[] people=new PersonPanel[10];
+	
+	ArrayList<PersonPanel> people = new ArrayList<PersonPanel>();
+>>>>>>> origin/master
 	KakaoMain kakaoMain;
 	
 	
@@ -68,8 +75,9 @@ public class FriendsListPanel extends JPanel{
 			while( !(kakaoMain.loginEmail.equals(kakaoMain.memberList.get(j).getE_mail())) ){
 				j++;
 			}
-			people[0]=new PersonPanel(kakaoMain,kakaoMain.memberList.get(j).getProfile_img(), kakaoMain.memberList.get(j).getNik_id(),  kakaoMain.memberList.get(j).getStatus_msg() );
-			p_list.add(people[0]);
+			people.add(new PersonPanel(kakaoMain,kakaoMain.memberList.get(j).getProfile_img(), kakaoMain.memberList.get(j).getNik_id(),  kakaoMain.memberList.get(j).getStatus_msg() ));
+			
+			p_list.add(people.get(0));
 			p_list.add(la_friends);
 			
 			}
@@ -82,8 +90,9 @@ public class FriendsListPanel extends JPanel{
 				continue;
 				
 			}else{
-				people[i+1]=new PersonPanel(kakaoMain,kakaoMain.memberList.get(i).getProfile_img(), kakaoMain.memberList.get(i).getNik_id(),  kakaoMain.memberList.get(i).getStatus_msg() );
-				p_list.add(people[i+1]);
+				people.add(new PersonPanel(kakaoMain,kakaoMain.memberList.get(i).getProfile_img(), kakaoMain.memberList.get(i).getNik_id(),  kakaoMain.memberList.get(i).getStatus_msg() ));
+				p_list.add(people.get(i));
+				System.out.println("사이즈"+people.size());
 			}
 		}
 
