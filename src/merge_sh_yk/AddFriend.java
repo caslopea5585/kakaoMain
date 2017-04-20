@@ -40,9 +40,9 @@ public class AddFriend extends JDialog implements ActionListener{
 		photo=t_photo.getText();
 		status=t_status.getText();
 		System.out.println(name+","+photo+","+status);
-		PersonPanel personPanel=new PersonPanel(photo, name, status);
-		friendsPanel.p_list.add(personPanel);
-		friendsPanel.p_list.updateUI();
+		//PersonPanel personPanel=new PersonPanel(photo, name, status);
+		//friendsPanel.p_list.add(personPanel);
+		//friendsPanel.p_list.updateUI();
 		//friendsPanel.updateUI();
 	}
 

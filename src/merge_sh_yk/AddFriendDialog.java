@@ -145,21 +145,12 @@ public class AddFriendDialog extends JDialog{
 		String sql="select * from member where e_mail=?";
 		String input_id=t_search.getText();
 
-
-		String ori_nik=null;
-
-		
-		//String ori_nik=null;
-	
+		String ori_nik=null;	
 		String ori_email="";
-
-
 		//String ori_pw="";
 		String ori_img="";
 		//String ori_bgimg="";
 		//String ori_status="";
-
-		//System.out.println(input_id);
 		
 		bt_add=new JButton("친구 추가");
 		

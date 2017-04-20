@@ -65,10 +65,10 @@ public class LoginPanel extends JPanel{
    DBManager manager;
    
  
-  String ip="211.238.142.113";//////////////////임시 아이피
+  //String ip="211.238.142.113";//////////////////임시 아이피
    
   //String ip="211.238.142.113";//////////////////임시 아이피
- //  String ip="211.238.142.102";
+ String ip="211.238.142.102";
    Socket socket;
    ClientThread ct;
    int port=7777;
@@ -236,7 +236,7 @@ public class LoginPanel extends JPanel{
      // String sql="select * from members where e_mail=? and password=?";
       //회원로그인시 필요한 정보 확인을 위한정보...
       
-      String sql ="select * from members";
+      String sql ="select * from member";
       //멤버테이블에 전체를 가져오기 위한 테이블
       Vector<MemberList> memberList=new Vector<MemberList>();
       
