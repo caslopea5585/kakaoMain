@@ -135,28 +135,23 @@ public class Register extends JDialog {
 	   }
 	   
 	   public void join(){   
-	        
+	        /*
 		   me=new Member();//인스턴스 한건 생성
 		   me.setEmail(t_email.getText());
 	     
 	      
-<<<<<<< HEAD
 	      member.setE_mail(t_email.getText());
 	      member.setNik_id(t_name.getText());
 	      member.setPassword(t_pw.getText());
-=======
 		   
 		   me.setName(t_name.getText());
 		   me.setPw(t_pw.getText());
->>>>>>> origin/master
-	      
 	      PreparedStatement pstmt=null;
 	      ResultSet rs=null;
 	      String sql="insert into member(e_mail, nik_id, password) values(?, ?, ?)";
 	      
 	      try {
 	         pstmt=kakaoMain.con.prepareStatement(sql);
-<<<<<<< HEAD
 	         System.out.println("멤버 아이디 = " + member.getE_mail());
 	         System.out.println("멤버 아이디 = " + member.getNik_id());
 	         System.out.println("멤버 아이디 = " + member.getPassword());
@@ -164,7 +159,6 @@ public class Register extends JDialog {
 	         pstmt.setString(1, member.getE_mail());
 	         pstmt.setString(2, member.getNik_id());
 	         pstmt.setString(3, member.getPassword());
-=======
 	         System.out.println("멤버 아이디 = " + me.getEmail());
 	         System.out.println("멤버 아이디 = " + me.getName());
 	         System.out.println("멤버 아이디 = " + me.getPw());
@@ -172,7 +166,6 @@ public class Register extends JDialog {
 	         pstmt.setString(1, me.getEmail());
 	         pstmt.setString(2, me.getName());
 	         pstmt.setString(3, me.getPw());
->>>>>>> origin/master
 	         rs=pstmt.executeQuery();
 	      
 	         JOptionPane.showMessageDialog(this, "회원가입성공!");
@@ -195,8 +188,9 @@ public class Register extends JDialog {
 	            }
 	         }
 	      }//finally
+	        
+	         */
 	      
 	   }
-
 
 }

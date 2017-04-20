@@ -20,8 +20,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Vector;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -31,12 +29,8 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
-<<<<<<< HEAD
-import merge_sh_yk.Member;
-=======
 import merge_sh_yk.KakaoMain;
-import merge_sh_yk.MemberList;
->>>>>>> origin/master
+import merge_sh_yk.Member;
 
 public class Profile extends JFrame implements ActionListener{
 	Point mouseDownCompCoords = null;
@@ -53,10 +47,7 @@ public class Profile extends JFrame implements ActionListener{
 	RoundButton bt_chat,bt_manager,bt_back_profile;
 	String status_msg="상태메시지";
 	JFileChooser chooser;
-<<<<<<< HEAD
 	Member memberList;
-=======
->>>>>>> origin/master
 	
 	KakaoMain kakaoMain;
 	

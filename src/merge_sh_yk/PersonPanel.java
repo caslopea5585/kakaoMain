@@ -12,8 +12,10 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Vector;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -41,11 +43,8 @@ public class PersonPanel extends JPanel{
 	AddFriend pop; //내 프로필 변경을 위한 임시창.
 	DBManager manager;
 	Connection con;
-<<<<<<< HEAD
 	ArrayList<Member> memberList = new ArrayList<Member>();
-=======
 	KakaoMain kakaoMain;
->>>>>>> origin/master
 	
 	
 	public PersonPanel(KakaoMain kakaoMain, String photoPath, String name, String statusMsg){
@@ -107,7 +106,6 @@ public class PersonPanel extends JPanel{
 	}
 	
 	
-<<<<<<< HEAD
 	
 	
 	public void getFriendList(){
@@ -140,7 +138,5 @@ public class PersonPanel extends JPanel{
 		System.out.println(memberList.size()+" 사이즈");
 		System.out.println(memberList.get(0).getE_mail()+" 있는 값");
 	}
-=======
 
->>>>>>> origin/master
 }
