@@ -46,7 +46,7 @@ public class KakaoMain extends JFrame{
 
 		System.out.println("로그인 성공한 아이디는?? " + loginEmail);
 		System.out.println("멤버안에들어있는 사람의 주소는??" + memberList);
-		System.out.println("두번째 안에 있는 사람의 e_mail은? "+ memberList.get(1).getE_mail());
+		
 		
 		
 		p_center=new JPanel();

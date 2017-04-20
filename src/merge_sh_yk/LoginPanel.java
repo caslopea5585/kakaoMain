@@ -147,6 +147,7 @@ public class LoginPanel extends JPanel{
       bt_login.addKeyListener(new KeyAdapter() {
     	public void keyPressed(KeyEvent e) {
     		if(e.getKeyCode()==e.VK_ENTER){ 
+    			
     			login();
     		}	
     	}
@@ -236,17 +237,18 @@ public class LoginPanel extends JPanel{
      // String sql="select * from members where e_mail=? and password=?";
       //회원로그인시 필요한 정보 확인을 위한정보...
       
-      String sql ="select * from members";
+      String sql ="select * from member";
       //멤버테이블에 전체를 가져오기 위한 테이블
       Vector<MemberList> memberList=new Vector<MemberList>();
       
       try {
          pstmt=con.prepareStatement(sql);
+         rs = pstmt.executeQuery();
          /* 회원 로그인시 필요한..정보...임시로막아둠..
          pstmt.setString(1, t_email.getText()); //내가 입력한 값
          pstmt.setString(2, t_pw.getText());
-         */ 
-         rs=pstmt.executeQuery();
+         
+          */
          
          while(rs.next()){
  			MemberList memberListDto = new MemberList();
@@ -278,7 +280,8 @@ public class LoginPanel extends JPanel{
          if(memberList.size()!=0){
         	 JOptionPane.showMessageDialog(this, "로그인성공");  
         	
-        	 //로그인 정보의 e_mail,password정보를 가져온다.
+        	 
+        	 //로그인 정보의 e_mail정보를 가져온다.
         	 kakaoMain.seeMain(t_email.getText(),memberList);
          }	else {
         	 JOptionPane.showMessageDialog(this, "아이디나 비밀번호를 확인해주세요.");
