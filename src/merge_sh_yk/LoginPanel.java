@@ -65,8 +65,13 @@ public class LoginPanel extends JPanel{
    DBManager manager;
    
  
+<<<<<<< HEAD
   String ip="211.238.142.113";//////////////////임시 아이피
    
+=======
+  //String ip="211.238.142.113";//////////////////임시 아이피
+   String ip="211.238.142.102";
+>>>>>>> sangwoon/master
    Socket socket;
    ClientThread ct;
    int port=7777;
@@ -247,6 +252,7 @@ public class LoginPanel extends JPanel{
          rs=pstmt.executeQuery();
          
          while(rs.next()){
+<<<<<<< HEAD
  			MemberList memberListDto = new MemberList();
 			memberListDto.setE_mail(rs.getString("e_mail"));
 			memberListDto.setNik_id(rs.getString("nik_id"));
@@ -259,6 +265,17 @@ public class LoginPanel extends JPanel{
          }            
          
          if(memberList.size()!=0){
+=======
+            member=new Member();//인스턴스 한건 생성
+            member.setEmail(rs.getString("e_mail"));
+            member.setName(rs.getString("nik_id"));
+            member.setPw(rs.getString("password"));
+            
+            list.add(member);
+         }            
+         
+         if(list.size()!=0){
+>>>>>>> sangwoon/master
         	 JOptionPane.showMessageDialog(this, "로그인성공");  
         	
         	 
@@ -308,4 +325,8 @@ public class LoginPanel extends JPanel{
 		}	
 	}
  
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> sangwoon/master

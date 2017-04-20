@@ -96,6 +96,9 @@ public class FriendsListPanel extends JPanel{
 		//setPreferredSize(new Dimension(360, 450));
 		
 	}
+<<<<<<< HEAD
 	
+=======
+>>>>>>> sangwoon/master
 }
 
