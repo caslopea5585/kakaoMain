@@ -19,8 +19,10 @@ public class KakaoMain extends JFrame{
 	JPanel menuPanel, friendsListPanel, chattingListPanel, settingPanel, p_center;
 	DBManager manager;
 	Connection con;
-	String loginEmail;
+	public String loginEmail;
 	public Vector<MemberList> memberList;
+	
+	
 	
 	Client_chat chat;//채널 새창*채팅목록에서 새로열기 가능하게 바꾸기
 	
@@ -41,7 +43,7 @@ public class KakaoMain extends JFrame{
 	
 	public void seeMain(String loginEmail,Vector<MemberList> memberList){
 		
-		this.loginEmail=loginEmail;
+		 this.loginEmail=loginEmail;
 		this.memberList=memberList;
 
 		System.out.println("로그인 성공한 아이디는?? " + loginEmail);
@@ -55,6 +57,8 @@ public class KakaoMain extends JFrame{
 		friendsListPanel=new FriendsListPanel(this);
 		chattingListPanel=new ChattingListPanel(this);
 		settingPanel=new SettingPanel();
+		
+		
 		
 		chat=new Client_chat(this);/////////채팅
 		

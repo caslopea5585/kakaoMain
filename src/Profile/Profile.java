@@ -70,6 +70,7 @@ public class Profile extends JFrame implements ActionListener{
 			e.printStackTrace();
 		}
 		
+		System.out.println(kakaoMain.loginEmail);
 		
 		can_north_img = new Canvas(){
 			public void paint(Graphics g) {
@@ -84,7 +85,7 @@ public class Profile extends JFrame implements ActionListener{
 		        Ellipse2D.Double ellipse1 = new Ellipse2D.Double(99,181,100,98); 
 		        Area circle = new Area(ellipse1);
 		        
-		        g.drawImage(buffr_north, 0, 0, 300,250,this);  //백그라운드이미지
+		        g.drawImage(buffr_north, 0, 0, 400,250,this);  //백그라운드이미지
 		        
 		        g.setFont(new Font("돋움", Font.PLAIN, 25));
 		        g.setColor(Color.BLACK);
@@ -146,22 +147,36 @@ public class Profile extends JFrame implements ActionListener{
 		
 
 		//                            x  y   width  height
-		can_north_img.setBounds(0, 0, 300, 300);
+		can_north_img.setBounds(0, 0, 400, 300);
 		la_name.setBounds(115, 280, 70, 50);
 		bt_chat.setBounds(65, 340, 50, 50);
-		bt_manager.setBounds(165, 340, 50, 50);
+		
 		la_chat.setBounds(65, 390, 70, 30);
 		la_manager.setBounds(165, 390, 70, 30);
-		bt_back_profile.setBounds(245, 250, 45, 45);
+		
 				
 		
 		layeredPane.add(can_north_img, 1);
 		layeredPane.add(la_name, 2,1);
 		layeredPane.add(bt_chat, 3,2);
-		layeredPane.add(bt_manager, 4,3);
+		
 		layeredPane.add(la_chat, 4,3);
 		layeredPane.add(la_manager, 4,3);
-		layeredPane.add(bt_back_profile, 4,3);
+		
+		
+		
+		for(int i=0;i<kakaoMain.memberList.size();i++){
+			System.out.println("e_mail"+kakaoMain.memberList.get(i).getE_mail());
+		}
+		
+		System.out.println("dd"+kakaoMain.memberList.get(1).getE_mail());
+		if(kakaoMain.loginEmail.equals(kakaoMain.memberList.get(0).getE_mail()) ){
+			System.out.println("다찍힘?");
+			bt_manager.setBounds(165, 340, 50, 50);
+			bt_back_profile.setBounds(245, 250, 45, 45);
+			layeredPane.add(bt_manager, 4,3);
+			layeredPane.add(bt_back_profile, 4,3);
+		}
 		
 		
 		can_north_img.addMouseListener(new MouseAdapter() {
@@ -215,7 +230,6 @@ public class Profile extends JFrame implements ActionListener{
 			public void mouseDragged(MouseEvent e) {
 				Point currCoords = e.getLocationOnScreen();
 		        setLocation(currCoords.x - mouseDownCompCoords.x, currCoords.y - mouseDownCompCoords.y);
-				System.out.println("mouseDragged2");
 			}
 		});
 	}

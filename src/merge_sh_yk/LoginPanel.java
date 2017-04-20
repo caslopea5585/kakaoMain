@@ -65,7 +65,7 @@ public class LoginPanel extends JPanel{
    DBManager manager;
    
  
-  String ip="211.238.142.121";//////////////////임시 아이피
+  String ip="211.238.142.103";//////////////////임시 아이피
    
   //String ip="211.238.142.113";//////////////////임시 아이피
  //  String ip="211.238.142.102";
@@ -261,22 +261,8 @@ public class LoginPanel extends JPanel{
 			
 			memberList.add(memberListDto);
          }            
+
          
-/*         if(memberList.size()!=0){
-            member=new Member();//인스턴스 한건 생성
-<<<<<<< HEAD
-            member.setE_mail(rs.getString("e_mail"));
-            member.setNik_id(rs.getString("nik_id"));
-            member.setPassword(rs.getString("password"));
-=======
-            member.setEmail(rs.getString("e_mail"));
-            member.setName(rs.getString("nik_id"));
-            member.setPw(rs.getString("password"));
-            
->>>>>>> origin/master
-            list.add(member);
-         }            
-         */
          if(memberList.size()!=0){
         	 JOptionPane.showMessageDialog(this, "로그인성공");  
         	
