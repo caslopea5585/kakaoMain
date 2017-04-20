@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 import db.DBManager;
 
-public class KakaoMain extends JFrame {
+public class KakaoMain extends JFrame{
 	Point mouseDownCompCoords = null;
 	JPanel[] panel;
 	JPanel menuPanel, friendsListPanel, chattingListPanel, settingPanel, p_center;
@@ -20,16 +20,18 @@ public class KakaoMain extends JFrame {
 	Connection con;
 
 	Client_chat chat;//채널 새창*채팅목록에서 새로열기 가능하게 바꾸기
+	boolean flag=false;
 	
 	public KakaoMain(){
 		DBConn();
 		panel=new JPanel[2];
 		p_center=new JPanel();
-		
+
 		menuPanel=new MenuPanel(this);
 		friendsListPanel=new FriendsListPanel();
 		chattingListPanel=new ChattingListPanel(this);
 		settingPanel=new SettingPanel();
+	
 		
 		chat=new Client_chat(this);/////////채팅
 		
@@ -59,6 +61,7 @@ public class KakaoMain extends JFrame {
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
+
 	
 	//윈도우안에 어떤 패널이 올지를 결정해주는 메서드 정의
 	public void setPage(int index){
@@ -106,4 +109,5 @@ public class KakaoMain extends JFrame {
 	public static void main(String[] args) {
 		new KakaoMain();
 	}
+	
 }

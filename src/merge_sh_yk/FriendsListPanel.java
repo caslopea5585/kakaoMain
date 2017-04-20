@@ -46,6 +46,7 @@ public class FriendsListPanel extends JPanel{
 		
 		p_search.add(t_search);	
 		
+		
 		friends_count=people.length;
 		la_friends=new JLabel("    친구   "+friends_count);
 		
@@ -63,6 +64,8 @@ public class FriendsListPanel extends JPanel{
 			people[i]=new PersonPanel("/p1.jpg", "차유경", "여름!!!");
 			p_list.add(people[i]);
 		}
+		
+		
 
 		add(p_search, BorderLayout.NORTH);
 		add(scroll);
@@ -72,5 +75,6 @@ public class FriendsListPanel extends JPanel{
 		//setPreferredSize(new Dimension(360, 450));
 		
 	}
+	
 }
 

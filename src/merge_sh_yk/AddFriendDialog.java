@@ -77,8 +77,9 @@ public class AddFriendDialog extends JDialog{
 		
 		p_search.add(t_search);
 		p_center.add(p_search, BorderLayout.NORTH);
-		p_center.add(la_des);
 		
+		p_center.add(la_des);
+
 		add(p_north, BorderLayout.NORTH);
 		add(p_center);
 		
@@ -119,7 +120,7 @@ public class AddFriendDialog extends JDialog{
 		
 		String sql="select * from member where nik_id=?";
 		String input_id=t_search.getText();
-		String ori_nik="";
+		String ori_nik=null;
 		//System.out.println(input_id);
 		
 		try {

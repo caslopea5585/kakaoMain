@@ -1,7 +1,5 @@
 package merge_sh_yk;
 
-
-
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Checkbox;
@@ -62,7 +60,7 @@ public class LoginPanel extends JPanel implements ActionListener{
    DBManager manager;
    
 
-   String ip="211.238.142.113";//////////////////임시 아이피
+   String ip="211.238.142.102";//////////////////임시 아이피
    
    Socket socket;
    ClientThread ct;
@@ -72,7 +70,6 @@ public class LoginPanel extends JPanel implements ActionListener{
        this.kakaoMain=kakaoMain; 
        setLayout(new BorderLayout());
 
-      
       //db와 연동
       manager=DBManager.getInstance();
       con=manager.getConnection();
@@ -250,7 +247,8 @@ public class LoginPanel extends JPanel implements ActionListener{
          System.out.println("input_pw"+input_pw);
          System.out.println("ori_pw"+ori_pw);
          if((input_email.equals(ori_email))&&(input_pw.equals(ori_pw))){
-            JOptionPane.showMessageDialog(this, "로그인성공");      
+            JOptionPane.showMessageDialog(this, "로그인성공");  
+
          } else{
             JOptionPane.showMessageDialog(this, "로그인실패");
          }
@@ -297,10 +295,13 @@ public class LoginPanel extends JPanel implements ActionListener{
    @Override
    public void actionPerformed(ActionEvent e) {
       login();
+
        kakaoMain.panel[0].setVisible(false);
        kakaoMain.panel[1].setVisible(true);
          
        System.out.println("버튼");
    }
 
+
 }
+
