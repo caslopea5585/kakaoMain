@@ -5,9 +5,8 @@ public class MemberList {
 	private String nik_id;
 	private String password;
 	private String profile_img;
-	private String profileBackImg;
+	private String profile_Back_Img;
 	private String status_msg;
-	
 	public String getE_mail() {
 		return e_mail;
 	}
@@ -32,11 +31,11 @@ public class MemberList {
 	public void setProfile_img(String profile_img) {
 		this.profile_img = profile_img;
 	}
-	public String getProfileBackImg() {
-		return profileBackImg;
+	public String getProfile_Back_Img() {
+		return profile_Back_Img;
 	}
-	public void setProfileBackImg(String profileBackImg) {
-		this.profileBackImg = profileBackImg;
+	public void setProfile_Back_Img(String profile_Back_Img) {
+		this.profile_Back_Img = profile_Back_Img;
 	}
 	public String getStatus_msg() {
 		return status_msg;
@@ -44,4 +43,5 @@ public class MemberList {
 	public void setStatus_msg(String status_msg) {
 		this.status_msg = status_msg;
 	}
+
 }

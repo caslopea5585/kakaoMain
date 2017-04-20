@@ -12,10 +12,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -40,23 +38,20 @@ public class PersonPanel extends JPanel{
 	String name;
 	String statusMsg;
 	
-	ChangeProfile pop; //내 프로필 변경을 위한 임시창.
+	AddFriend pop; //내 프로필 변경을 위한 임시창.
 	DBManager manager;
 	Connection con;
-	ArrayList<MemberList> memberList = new ArrayList<MemberList>();
+	KakaoMain kakaoMain;
 	
 	
-	public PersonPanel(String photoPath, String name, String statusMsg){
-		
-		getFriendList();
-		
+	public PersonPanel(KakaoMain kakaoMain, String photoPath, String name, String statusMsg){
+		this.kakaoMain=kakaoMain;
 		this.photoPath=photoPath;
 		this.name=name;
 		this.statusMsg=statusMsg;
 
+		
 		p_info=new JPanel();
-		//p_name=new JPanel();
-		//p_statusMsg=new JPanel();
 		la_name=new JLabel(name);
 		la_statusMsg=new JLabel(statusMsg);
 		
@@ -98,7 +93,7 @@ public class PersonPanel extends JPanel{
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("사진클릭");
 				//pop=new ChangeProfile();
-				Profile profile=new Profile(photoPath); //"/ryan1.png"
+				Profile profile=new Profile(photoPath,kakaoMain); //"/ryan1.png"
 			}
 		});
 		
@@ -108,36 +103,5 @@ public class PersonPanel extends JPanel{
 	}
 	
 	
-	
-	
-	public void getFriendList(){
-		manager=DBManager.getInstance();
-		con=manager.getConnection();
-		String sql="select * from member";
-		PreparedStatement pstmt;
-		ResultSet rs =null;
-		
-		
-		try {
-			pstmt = con.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-			while(rs.next()){
-				MemberList memberListDto = new MemberList();
-				memberListDto.setE_mail(rs.getString("e_mail"));
-				memberListDto.setNik_id(rs.getString("nik_id"));
-				memberListDto.setPassword(rs.getString("password"));
-				memberListDto.setProfile_img(rs.getString("profile_img"));
-				memberListDto.setProfileBackImg(rs.getString("profilebackimg"));
-				memberListDto.setStatus_msg(rs.getString("status_msg"));
-				
-				memberList.add(memberListDto);
-				
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		System.out.println(memberList.size()+" 사이즈");
-		System.out.println(memberList.get(0).getE_mail()+" 있는 값");
-	}
+
 }

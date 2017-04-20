@@ -3,11 +3,9 @@ package Profile;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -18,6 +16,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Vector;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -27,7 +26,9 @@ import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
+
+import merge_sh_yk.KakaoMain;
+import merge_sh_yk.MemberList;
 
 public class EditProfile extends JDialog implements ActionListener{
 	Profile Profile;
@@ -40,10 +41,13 @@ public class EditProfile extends JDialog implements ActionListener{
 	URL url;
 	Canvas can;
 	JFileChooser chooser;
-
+	Vector<MemberList> memberList;
+	KakaoMain kakaoMain;
 	
-	public EditProfile(Profile Profile) {
+	public EditProfile(Profile Profile,KakaoMain kakaoMain) {
 		this.Profile = Profile;
+		this.kakaoMain=kakaoMain;
+		this.memberList=memberList;
 		this.url = Profile.url_profileImage;
 		p_north = new JPanel();
 		p_center = new JPanel();
@@ -108,6 +112,9 @@ public class EditProfile extends JDialog implements ActionListener{
 				if(result == JFileChooser.APPROVE_OPTION){
 					File file = chooser.getSelectedFile();
 					url=this.getClass().getResource("/"+file.getName()+""); //프로필사진
+					//멤버리스트속 사진 바꾸기, 향후 업데이트문...대상
+					kakaoMain.memberList.get(0).setProfile_img(file.getName());
+					
 					Profile.url_profileImage=this.getClass().getResource("/"+file.getName()+""); //프로필사진
 					can.repaint();
 					can.imageUpdate(profile, can.PROPERTIES, 0, 0, 100, 100);
@@ -131,6 +138,10 @@ public class EditProfile extends JDialog implements ActionListener{
 	public void dataSet(){
 		Profile.la_name.setText(name.getText());
 		Profile.status_msg=status_msg.getText();
+		//DB속 상태메시지도 바꾸기
+		kakaoMain.memberList.get(0).setStatus_msg(Profile.status_msg);
+		
+		
 		Profile.can_north_img.repaint();
 	}
 	

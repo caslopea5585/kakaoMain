@@ -1,11 +1,7 @@
 package merge_sh_yk;
-<<<<<<< HEAD
-
-=======
  
  
  
->>>>>>> 463f2dccc345ab054d8de881ba7a16d6ad4d98d9
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Checkbox;
@@ -68,13 +64,8 @@ public class LoginPanel extends JPanel{
    Connection con;
    DBManager manager;
    
-<<<<<<< HEAD
-
-   String ip="211.238.142.102";//////////////////임시 아이피
-=======
  
   String ip="211.238.142.113";//////////////////임시 아이피
->>>>>>> 463f2dccc345ab054d8de881ba7a16d6ad4d98d9
    
    Socket socket;
    ClientThread ct;
@@ -83,12 +74,8 @@ public class LoginPanel extends JPanel{
    public LoginPanel(KakaoMain kakaoMain) {
        this.kakaoMain=kakaoMain; 
        setLayout(new BorderLayout());
-<<<<<<< HEAD
-
-=======
  
       
->>>>>>> 463f2dccc345ab054d8de881ba7a16d6ad4d98d9
       //db와 연동
       manager=DBManager.getInstance();
       con=manager.getConnection();
@@ -244,45 +231,43 @@ public class LoginPanel extends JPanel{
 	   ///////////////////////////////
       PreparedStatement pstmt=null;
       ResultSet rs=null;
-      String sql="select * from member where e_mail=? and password=?";
-      Vector<Member> list=new Vector<Member>();
+     // String sql="select * from members where e_mail=? and password=?";
+      //회원로그인시 필요한 정보 확인을 위한정보...
+      
+      String sql ="select * from members";
+      //멤버테이블에 전체를 가져오기 위한 테이블
+      Vector<MemberList> memberList=new Vector<MemberList>();
       
       try {
          pstmt=con.prepareStatement(sql);
+         /* 회원 로그인시 필요한..정보...임시로막아둠..
          pstmt.setString(1, t_email.getText()); //내가 입력한 값
-         pstmt.setString(2, t_pw.getText()); 
+         pstmt.setString(2, t_pw.getText());
+         */ 
          rs=pstmt.executeQuery();
          
          while(rs.next()){
-            member=new Member();//인스턴스 한건 생성
-            member.setEmail(rs.getString("e_mail"));
-            member.setName(rs.getString("nik_id"));
-            member.setPw(rs.getString("password"));
-            list.add(member);
+ 			MemberList memberListDto = new MemberList();
+			memberListDto.setE_mail(rs.getString("e_mail"));
+			memberListDto.setNik_id(rs.getString("nik_id"));
+			memberListDto.setPassword(rs.getString("password"));
+			memberListDto.setProfile_img(rs.getString("profile_img"));
+			memberListDto.setProfile_Back_Img(rs.getString("profile_back_img"));
+			memberListDto.setStatus_msg(rs.getString("status_msg"));
+			
+			memberList.add(memberListDto);
          }            
          
-<<<<<<< HEAD
-         ori_email=member.getEmail();
-         ori_pw=member.getPw();
-
-         System.out.println("input_email="+input_email);
-         System.out.println("ori_email"+ori_email);
-         System.out.println("input_pw"+input_pw);
-         System.out.println("ori_pw"+ori_pw);
-         if((input_email.equals(ori_email))&&(input_pw.equals(ori_pw))){
-            JOptionPane.showMessageDialog(this, "로그인성공");  
-
-         } else{
-            JOptionPane.showMessageDialog(this, "로그인실패");
-=======
-         if(list.size()!=0){
+         if(memberList.size()!=0){
         	 JOptionPane.showMessageDialog(this, "로그인성공");  
-        	 kakaoMain.seeMain();
+        	
+        	 
+        	 //로그인 정보의 e_mail,password정보를 가져온다.
+        	 kakaoMain.seeMain(t_email.getText(),memberList);
          }	else {
         	 JOptionPane.showMessageDialog(this, "아이디나 비밀번호를 확인해주세요.");
         	 t_pw.setText("");
             
->>>>>>> 463f2dccc345ab054d8de881ba7a16d6ad4d98d9
          }
 
       } catch (SQLException e) {
@@ -322,22 +307,5 @@ public class LoginPanel extends JPanel{
 			e.printStackTrace();
 		}	
 	}
-<<<<<<< HEAD
-   
-   @Override
-   public void actionPerformed(ActionEvent e) {
-      login();
-
-       kakaoMain.panel[0].setVisible(false);
-       kakaoMain.panel[1].setVisible(true);
-         
-       System.out.println("버튼");
-   }
-
-
-}
-
-=======
  
 }
->>>>>>> 463f2dccc345ab054d8de881ba7a16d6ad4d98d9

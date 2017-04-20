@@ -6,6 +6,7 @@ import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
+import java.util.Vector;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -18,8 +19,9 @@ public class KakaoMain extends JFrame{
 	JPanel menuPanel, friendsListPanel, chattingListPanel, settingPanel, p_center;
 	DBManager manager;
 	Connection con;
+	String loginEmail;
+	public Vector<MemberList> memberList;
 	
-
 	Client_chat chat;//채널 새창*채팅목록에서 새로열기 가능하게 바꾸기
 	boolean flag=false;
 	
@@ -38,13 +40,20 @@ public class KakaoMain extends JFrame{
 
 	}
 	
-	public void seeMain(){
+	public void seeMain(String loginEmail,Vector<MemberList> memberList){
+		
+		this.loginEmail=loginEmail;
+		this.memberList=memberList;
+
+		System.out.println("로그인 성공한 아이디는?? " + loginEmail);
+		System.out.println("멤버안에들어있는 사람의 주소는??" + memberList);
+		System.out.println("두번째 안에 있는 사람의 e_mail은? "+ memberList.get(1).getE_mail());
 		
 		
 		p_center=new JPanel();
 
 		menuPanel=new MenuPanel(this);
-		friendsListPanel=new FriendsListPanel();
+		friendsListPanel=new FriendsListPanel(this);
 		chattingListPanel=new ChattingListPanel(this);
 		settingPanel=new SettingPanel();
 	
@@ -94,12 +103,10 @@ public class KakaoMain extends JFrame{
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				mouseDownCompCoords = null;
-				System.out.println("mouseReleased1");
 			}
 			@Override
 			public void mousePressed(MouseEvent e) {
 				mouseDownCompCoords = e.getPoint();
-				System.out.println("mousePressed1");
 			}
 		});
 
@@ -108,7 +115,6 @@ public class KakaoMain extends JFrame{
 			public void mouseDragged(MouseEvent e) {
 				Point currCoords = e.getLocationOnScreen();
 		        setLocation(currCoords.x - mouseDownCompCoords.x, currCoords.y - mouseDownCompCoords.y);
-				System.out.println("mouseDragged2");
 			}
 		});
 	}

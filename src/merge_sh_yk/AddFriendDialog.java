@@ -133,19 +133,19 @@ public class AddFriendDialog extends JDialog{
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		
-		String sql="select * from member where e_mail=?";
+		String sql="select * from members where e_mail=?";
 		String input_id=t_search.getText();
-<<<<<<< HEAD
+
 		String ori_nik=null;
-=======
+
 		
 		String ori_email="";
-		String ori_nik="";
+		
 		//String ori_pw="";
 		String ori_img="";
 		//String ori_bgimg="";
 		//String ori_status="";
->>>>>>> 463f2dccc345ab054d8de881ba7a16d6ad4d98d9
+
 		//System.out.println(input_id);
 		
 		try {
@@ -159,7 +159,7 @@ public class AddFriendDialog extends JDialog{
 				member.setNik_id(rs.getString("nik_id"));
 				member.setPassword(rs.getString("password"));
 				member.setProfile_img(rs.getString("profile_img"));
-				member.setProfileBackImg(rs.getString("profilebackimg"));
+				member.setProfile_Back_Img(rs.getString("profilebackimg"));
 				member.setStatus_msg(rs.getString("status_msg"));
 			}
 			if(member!=null){
