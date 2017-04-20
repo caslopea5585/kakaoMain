@@ -82,10 +82,5 @@ public class FriendsListPanel extends JPanel{
 		//setPreferredSize(new Dimension(360, 450));
 		
 	}
-	
-<<<<<<< HEAD
-=======
-
->>>>>>> 463f2dccc345ab054d8de881ba7a16d6ad4d98d9
 }
 

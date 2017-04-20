@@ -135,17 +135,15 @@ public class AddFriendDialog extends JDialog{
 		
 		String sql="select * from member where e_mail=?";
 		String input_id=t_search.getText();
-<<<<<<< HEAD
 		String ori_nik=null;
-=======
-		
+	
 		String ori_email="";
-		String ori_nik="";
+		
 		//String ori_pw="";
 		String ori_img="";
 		//String ori_bgimg="";
 		//String ori_status="";
->>>>>>> 463f2dccc345ab054d8de881ba7a16d6ad4d98d9
+
 		//System.out.println(input_id);
 		
 		try {

@@ -21,7 +21,6 @@ public class KakaoMain extends JFrame{
 	
 
 	Client_chat chat;//채널 새창*채팅목록에서 새로열기 가능하게 바꾸기
-	boolean flag=false;
 	
 	public KakaoMain(){
 		DBConn();
@@ -47,7 +46,6 @@ public class KakaoMain extends JFrame{
 		friendsListPanel=new FriendsListPanel();
 		chattingListPanel=new ChattingListPanel(this);
 		settingPanel=new SettingPanel();
-	
 		
 		chat=new Client_chat(this);/////////채팅
 		
