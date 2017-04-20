@@ -65,7 +65,7 @@ public class LoginPanel extends JPanel{
    DBManager manager;
    
  
-  String ip="211.238.142.113";//////////////////임시 아이피
+  String ip="211.238.142.121";//////////////////임시 아이피
    
   //String ip="211.238.142.113";//////////////////임시 아이피
  //  String ip="211.238.142.102";
