@@ -245,6 +245,7 @@ public class LoginPanel extends JPanel{
             member.setEmail(rs.getString("e_mail"));
             member.setName(rs.getString("nik_id"));
             member.setPw(rs.getString("password"));
+            
             list.add(member);
          }            
          
