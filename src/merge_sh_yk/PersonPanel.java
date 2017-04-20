@@ -43,7 +43,7 @@ public class PersonPanel extends JPanel{
 	ChangeProfile pop; //내 프로필 변경을 위한 임시창.
 	DBManager manager;
 	Connection con;
-	ArrayList<MemberList> memberList = new ArrayList<MemberList>();
+	ArrayList<Member> memberList = new ArrayList<Member>();
 	
 	
 	public PersonPanel(String photoPath, String name, String statusMsg){
@@ -122,7 +122,7 @@ public class PersonPanel extends JPanel{
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while(rs.next()){
-				MemberList memberListDto = new MemberList();
+				Member memberListDto = new Member();
 				memberListDto.setE_mail(rs.getString("e_mail"));
 				memberListDto.setNik_id(rs.getString("nik_id"));
 				memberListDto.setPassword(rs.getString("password"));

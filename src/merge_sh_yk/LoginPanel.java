@@ -242,9 +242,9 @@ public class LoginPanel extends JPanel{
          
          while(rs.next()){
             member=new Member();//인스턴스 한건 생성
-            member.setEmail(rs.getString("e_mail"));
-            member.setName(rs.getString("nik_id"));
-            member.setPw(rs.getString("password"));
+            member.setE_mail(rs.getString("e_mail"));
+            member.setNik_id(rs.getString("nik_id"));
+            member.setPassword(rs.getString("password"));
             list.add(member);
          }            
          

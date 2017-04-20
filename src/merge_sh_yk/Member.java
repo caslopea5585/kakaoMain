@@ -1,48 +1,47 @@
 package merge_sh_yk;
 
 public class Member {
-	   private String email;
-	   private String pw;
-	   private String name;
-	   private String status;
-	   private String image;
-	   private String id;
-	   
-
-	   public String getEmail() {
-	      return email;
-	   }
-	   public void setEmail(String email) {
-	      this.email = email;
-	   }
-	   public String getPw() {
-	      return pw;
-	   }
-	   public void setPw(String pw) {
-	      this.pw = pw;
-	   }
-	   public String getName() {
-	      return name;
-	   }
-	   public void setName(String name) {
-	      this.name = name;
-	   }
-	   public String getStatus() {
-	      return status;
-	   }
-	   public void setStatus(String status) {
-	      this.status = status;
-	   }
-	   public String getImage() {
-	      return image;
-	   }
-	   public void setImage(String image) {
-	      this.image = image;
-	   }
-	   public String getId() {
-	      return id;
-	   }
-	   public void setId(String id) {
-	      this.id = id;
-	   }
+	private String e_mail;
+	private String nik_id;
+	private String password;
+	private String profile_img;
+	private String profileBackImg;
+	private String status_msg;
+	
+	public String getE_mail() {
+		return e_mail;
 	}
+	public void setE_mail(String e_mail) {
+		this.e_mail = e_mail;
+	}
+	public String getNik_id() {
+		return nik_id;
+	}
+	public void setNik_id(String nik_id) {
+		this.nik_id = nik_id;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getProfile_img() {
+		return profile_img;
+	}
+	public void setProfile_img(String profile_img) {
+		this.profile_img = profile_img;
+	}
+	public String getProfileBackImg() {
+		return profileBackImg;
+	}
+	public void setProfileBackImg(String profileBackImg) {
+		this.profileBackImg = profileBackImg;
+	}
+	public String getStatus_msg() {
+		return status_msg;
+	}
+	public void setStatus_msg(String status_msg) {
+		this.status_msg = status_msg;
+	}
+}

@@ -91,9 +91,9 @@ public class Register extends JDialog {
 	   public void join(){   
 	       member=new Member();//인스턴스 한건 생성
 	      
-	      member.setEmail(t_email.getText());
-	      member.setName(t_name.getText());
-	      member.setPw(t_pw.getText());
+	      member.setE_mail(t_email.getText());
+	      member.setNik_id(t_name.getText());
+	      member.setPassword(t_pw.getText());
 	      
 	      PreparedStatement pstmt=null;
 	      ResultSet rs=null;
@@ -101,13 +101,13 @@ public class Register extends JDialog {
 	      
 	      try {
 	         pstmt=kakaoMain.con.prepareStatement(sql);
-	         System.out.println("멤버 아이디 = " + member.getEmail());
-	         System.out.println("멤버 아이디 = " + member.getName());
-	         System.out.println("멤버 아이디 = " + member.getPw());
+	         System.out.println("멤버 아이디 = " + member.getE_mail());
+	         System.out.println("멤버 아이디 = " + member.getNik_id());
+	         System.out.println("멤버 아이디 = " + member.getPassword());
 	         
-	         pstmt.setString(1, member.getEmail());
-	         pstmt.setString(2, member.getName());
-	         pstmt.setString(3, member.getPw());
+	         pstmt.setString(1, member.getE_mail());
+	         pstmt.setString(2, member.getNik_id());
+	         pstmt.setString(3, member.getPassword());
 	         rs=pstmt.executeQuery();
 	      
 	         JOptionPane.showMessageDialog(this, "회원가입성공!");

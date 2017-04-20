@@ -31,7 +31,7 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
-import merge_sh_yk.MemberList;
+import merge_sh_yk.Member;
 
 public class Profile extends JFrame implements ActionListener{
 	Point mouseDownCompCoords = null;
@@ -48,7 +48,7 @@ public class Profile extends JFrame implements ActionListener{
 	RoundButton bt_chat,bt_manager,bt_back_profile;
 	String status_msg="상태메시지";
 	JFileChooser chooser;
-	MemberList memberList;
+	Member memberList;
 	
 	public Profile(String photopath) {
 		
