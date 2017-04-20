@@ -65,13 +65,10 @@ public class LoginPanel extends JPanel{
    DBManager manager;
    
  
-<<<<<<< HEAD
   String ip="211.238.142.113";//////////////////임시 아이피
    
-=======
   //String ip="211.238.142.113";//////////////////임시 아이피
-   String ip="211.238.142.102";
->>>>>>> sangwoon/master
+ //  String ip="211.238.142.102";
    Socket socket;
    ClientThread ct;
    int port=7777;
@@ -252,7 +249,6 @@ public class LoginPanel extends JPanel{
          rs=pstmt.executeQuery();
          
          while(rs.next()){
-<<<<<<< HEAD
  			MemberList memberListDto = new MemberList();
 			memberListDto.setE_mail(rs.getString("e_mail"));
 			memberListDto.setNik_id(rs.getString("nik_id"));
@@ -264,8 +260,7 @@ public class LoginPanel extends JPanel{
 			memberList.add(memberListDto);
          }            
          
-         if(memberList.size()!=0){
-=======
+/*         if(memberList.size()!=0){
             member=new Member();//인스턴스 한건 생성
             member.setEmail(rs.getString("e_mail"));
             member.setName(rs.getString("nik_id"));
@@ -273,12 +268,10 @@ public class LoginPanel extends JPanel{
             
             list.add(member);
          }            
-         
-         if(list.size()!=0){
->>>>>>> sangwoon/master
+         */
+         if(memberList.size()!=0){
         	 JOptionPane.showMessageDialog(this, "로그인성공");  
         	
-        	 
         	 //로그인 정보의 e_mail,password정보를 가져온다.
         	 kakaoMain.seeMain(t_email.getText(),memberList);
          }	else {
@@ -325,8 +318,5 @@ public class LoginPanel extends JPanel{
 		}	
 	}
  
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> sangwoon/master
+
