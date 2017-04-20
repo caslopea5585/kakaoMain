@@ -25,15 +25,17 @@ public class FriendsListPanel extends JPanel{
 	JLabel la_myProfile, la_friends;
 	JScrollPane scroll;
 	int friends_count=0; //친구 수
-	PersonPanel person; //나
-	PersonPanel[] people=new PersonPanel[2];
+	
+	PersonPanel[] people=new PersonPanel[10];
+	KakaoMain kakaoMain;
+	
 	
 	String myPhotoPath, myName, myStatusMsg;
+	int j=0; //로그인한사람의 정보를 멤버리스트에서 찾기위한 변수.
 
 	
-	public FriendsListPanel(){
-		setLayout(new BorderLayout());
-		
+	public FriendsListPanel(KakaoMain kakaoMain){
+		this.kakaoMain= kakaoMain;
 		
 		p_search=new JPanel();
 		t_search=new JTextField("이름검색", 30);
@@ -54,25 +56,37 @@ public class FriendsListPanel extends JPanel{
 		p_search.add(t_search);	
 		
 		
-		friends_count=people.length;
+		friends_count=kakaoMain.memberList.size()-1;
 		la_friends=new JLabel("    친구   "+friends_count);
 		
-		myPhotoPath="/jeju2.jpg";
-		myName="차유경";
-		myStatusMsg="봄여름가을겨울";
-		
-		person=new PersonPanel(myPhotoPath, myName, myStatusMsg); //나
-		
 		p_list.add(la_myProfile);
-		p_list.add(person);
-		p_list.add(la_friends);
 		
-		for(int i=0; i<people.length; i++){
-			people[i]=new PersonPanel("/p1.jpg", "차유경", "여름!!!");
-			p_list.add(people[i]);
+		//프렌드 멤버속 나찾기..
+		for(int i=0;i<kakaoMain.memberList.size();i++){
+
+			if(i==0){
+				
+			while( !(kakaoMain.loginEmail.equals(kakaoMain.memberList.get(j).getE_mail())) ){
+				j++;
+			}
+			people[0]=new PersonPanel(kakaoMain,kakaoMain.memberList.get(j).getProfile_img(), kakaoMain.memberList.get(j).getNik_id(),  kakaoMain.memberList.get(j).getStatus_msg() );
+			p_list.add(people[0]);
+			p_list.add(la_friends);
+			
+			}
+			
 		}
 		
-		
+		//나빼고 나머지를 친구로 등록하기
+		for(int i=0;i<kakaoMain.memberList.size();i++){
+			if(kakaoMain.memberList.get(i).getE_mail().equals(kakaoMain.memberList.get(j).getE_mail()     )){
+				continue;
+				
+			}else{
+				people[i+1]=new PersonPanel(kakaoMain,kakaoMain.memberList.get(i).getProfile_img(), kakaoMain.memberList.get(i).getNik_id(),  kakaoMain.memberList.get(i).getStatus_msg() );
+				p_list.add(people[i+1]);
+			}
+		}
 
 		add(p_search, BorderLayout.NORTH);
 		add(scroll);
@@ -82,5 +96,6 @@ public class FriendsListPanel extends JPanel{
 		//setPreferredSize(new Dimension(360, 450));
 		
 	}
+	
 }
 

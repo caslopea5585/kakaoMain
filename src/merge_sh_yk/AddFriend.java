@@ -8,14 +8,14 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JTextField;
 
-public class ChangeProfile extends JDialog implements ActionListener{
+public class AddFriend extends JDialog implements ActionListener{
 	JTextField t_photo, t_status, t_name;
 	JButton bt_change;
 	
 	String photo="1", status="2", name="3";
 	FriendsListPanel friendsPanel;
 	
-	public ChangeProfile(FriendsListPanel friendsPanel){
+	public AddFriend(FriendsListPanel friendsPanel){
 		this.friendsPanel=friendsPanel;
 		
 		setLayout(new FlowLayout());

@@ -20,8 +20,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.Vector;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -31,7 +31,12 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
+<<<<<<< HEAD
 import merge_sh_yk.Member;
+=======
+import merge_sh_yk.KakaoMain;
+import merge_sh_yk.MemberList;
+>>>>>>> origin/master
 
 public class Profile extends JFrame implements ActionListener{
 	Point mouseDownCompCoords = null;
@@ -48,13 +53,19 @@ public class Profile extends JFrame implements ActionListener{
 	RoundButton bt_chat,bt_manager,bt_back_profile;
 	String status_msg="상태메시지";
 	JFileChooser chooser;
+<<<<<<< HEAD
 	Member memberList;
+=======
+>>>>>>> origin/master
 	
-	public Profile(String photopath) {
+	KakaoMain kakaoMain;
+	
+	public Profile(String photopath,KakaoMain kakaoMain) {
 		
 		profile = this;
+		this.kakaoMain=kakaoMain;
 		
-		
+
 		layeredPane = new JLayeredPane();
 		url_profileBackground = this.getClass().getResource("/bg_north.png");	//상단배경
 		url_profileSouth=this.getClass().getResource("/bg_south.png");	//하단
@@ -202,12 +213,10 @@ public class Profile extends JFrame implements ActionListener{
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				mouseDownCompCoords = null;
-				System.out.println("mouseReleased1");
 			}
 			@Override
 			public void mousePressed(MouseEvent e) {
 				mouseDownCompCoords = e.getPoint();
-				System.out.println("mousePressed1");
 			}
 		});
 		panel.addMouseMotionListener(new MouseAdapter() {
@@ -224,12 +233,14 @@ public class Profile extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
 		if(obj==bt_manager){
-			EditProfile editProfile = new EditProfile(this);
+			EditProfile editProfile = new EditProfile(this,kakaoMain);
+			
 		}else if(obj==bt_back_profile){
 			int result = chooser.showOpenDialog(this);
 			if(result == JFileChooser.APPROVE_OPTION){
 				File file = chooser.getSelectedFile();
 				url_profileBackground=this.getClass().getResource("/"+file.getName()+""); //프로필사진
+				kakaoMain.memberList.get(0).setProfile_Back_Img(file.getName());
 				can_north_img.repaint();
 			}
 		}

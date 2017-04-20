@@ -12,10 +12,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -40,23 +38,24 @@ public class PersonPanel extends JPanel{
 	String name;
 	String statusMsg;
 	
-	ChangeProfile pop; //내 프로필 변경을 위한 임시창.
+	AddFriend pop; //내 프로필 변경을 위한 임시창.
 	DBManager manager;
 	Connection con;
+<<<<<<< HEAD
 	ArrayList<Member> memberList = new ArrayList<Member>();
+=======
+	KakaoMain kakaoMain;
+>>>>>>> origin/master
 	
 	
-	public PersonPanel(String photoPath, String name, String statusMsg){
-		
-		getFriendList();
-		
+	public PersonPanel(KakaoMain kakaoMain, String photoPath, String name, String statusMsg){
+		this.kakaoMain=kakaoMain;
 		this.photoPath=photoPath;
 		this.name=name;
 		this.statusMsg=statusMsg;
 
+		
 		p_info=new JPanel();
-		//p_name=new JPanel();
-		//p_statusMsg=new JPanel();
 		la_name=new JLabel(name);
 		la_statusMsg=new JLabel(statusMsg);
 		
@@ -98,7 +97,7 @@ public class PersonPanel extends JPanel{
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("사진클릭");
 				//pop=new ChangeProfile();
-				Profile profile=new Profile(photoPath); //"/ryan1.png"
+				Profile profile=new Profile(photoPath,kakaoMain); //"/ryan1.png"
 			}
 		});
 		
@@ -108,6 +107,7 @@ public class PersonPanel extends JPanel{
 	}
 	
 	
+<<<<<<< HEAD
 	
 	
 	public void getFriendList(){
@@ -140,4 +140,7 @@ public class PersonPanel extends JPanel{
 		System.out.println(memberList.size()+" 사이즈");
 		System.out.println(memberList.get(0).getE_mail()+" 있는 값");
 	}
+=======
+
+>>>>>>> origin/master
 }

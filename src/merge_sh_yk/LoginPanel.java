@@ -65,8 +65,10 @@ public class LoginPanel extends JPanel{
    DBManager manager;
    
  
+  String ip="211.238.142.113";//////////////////임시 아이피
+   
   //String ip="211.238.142.113";//////////////////임시 아이피
-   String ip="211.238.142.102";
+ //  String ip="211.238.142.102";
    Socket socket;
    ClientThread ct;
    int port=7777;
@@ -231,26 +233,53 @@ public class LoginPanel extends JPanel{
 	   ///////////////////////////////
       PreparedStatement pstmt=null;
       ResultSet rs=null;
-      String sql="select * from member where e_mail=? and password=?";
-      Vector<Member> list=new Vector<Member>();
+     // String sql="select * from members where e_mail=? and password=?";
+      //회원로그인시 필요한 정보 확인을 위한정보...
+      
+      String sql ="select * from members";
+      //멤버테이블에 전체를 가져오기 위한 테이블
+      Vector<MemberList> memberList=new Vector<MemberList>();
       
       try {
          pstmt=con.prepareStatement(sql);
+         /* 회원 로그인시 필요한..정보...임시로막아둠..
          pstmt.setString(1, t_email.getText()); //내가 입력한 값
-         pstmt.setString(2, t_pw.getText()); 
+         pstmt.setString(2, t_pw.getText());
+         */ 
          rs=pstmt.executeQuery();
          
          while(rs.next()){
+ 			MemberList memberListDto = new MemberList();
+			memberListDto.setE_mail(rs.getString("e_mail"));
+			memberListDto.setNik_id(rs.getString("nik_id"));
+			memberListDto.setPassword(rs.getString("password"));
+			memberListDto.setProfile_img(rs.getString("profile_img"));
+			memberListDto.setProfile_Back_Img(rs.getString("profile_back_img"));
+			memberListDto.setStatus_msg(rs.getString("status_msg"));
+			
+			memberList.add(memberListDto);
+         }            
+         
+/*         if(memberList.size()!=0){
             member=new Member();//인스턴스 한건 생성
+<<<<<<< HEAD
             member.setE_mail(rs.getString("e_mail"));
             member.setNik_id(rs.getString("nik_id"));
             member.setPassword(rs.getString("password"));
+=======
+            member.setEmail(rs.getString("e_mail"));
+            member.setName(rs.getString("nik_id"));
+            member.setPw(rs.getString("password"));
+            
+>>>>>>> origin/master
             list.add(member);
          }            
-         
-         if(list.size()!=0){
+         */
+         if(memberList.size()!=0){
         	 JOptionPane.showMessageDialog(this, "로그인성공");  
-        	 kakaoMain.seeMain();
+        	
+        	 //로그인 정보의 e_mail,password정보를 가져온다.
+        	 kakaoMain.seeMain(t_email.getText(),memberList);
          }	else {
         	 JOptionPane.showMessageDialog(this, "아이디나 비밀번호를 확인해주세요.");
         	 t_pw.setText("");
@@ -296,3 +325,4 @@ public class LoginPanel extends JPanel{
 	}
  
 }
+

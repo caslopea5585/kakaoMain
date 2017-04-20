@@ -140,10 +140,22 @@ public class AddFriendDialog extends JDialog{
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		
+<<<<<<< HEAD
 		Member member;
 		
 		String sql="select * from member where e_mail=?";
 		String input_id=t_search.getText();
+=======
+		String sql="select * from members where e_mail=?";
+		String input_id=t_search.getText();
+
+		String ori_nik=null;
+
+		
+		//String ori_nik=null;
+	
+		String ori_email="";
+>>>>>>> origin/master
 		
 		String ori_email="";	
 		String ori_nik="";	
@@ -181,6 +193,7 @@ public class AddFriendDialog extends JDialog{
 				member.setNik_id(rs.getString("nik_id"));
 				//member.setPassword(rs.getString("password"));
 				member.setProfile_img(rs.getString("profile_img"));
+<<<<<<< HEAD
 				//member.setProfileBackImg(rs.getString("profilebackimg"));
 				//member.setStatus_msg(rs.getString("status_msg"));
 				showFriend(member,p_friend);
@@ -201,6 +214,10 @@ public class AddFriendDialog extends JDialog{
 				bt_add.setEnabled(false);
 				la_des.setText("\'"+t_search.getText()+"\'"+"를 찾을 수 없습니다.");
 				System.out.println("정보 없 음");
+=======
+				member.setProfile_Back_Img(rs.getString("profilebackimg"));
+				member.setStatus_msg(rs.getString("status_msg"));
+>>>>>>> origin/master
 			}
 			
 			
