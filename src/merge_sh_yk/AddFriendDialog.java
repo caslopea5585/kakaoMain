@@ -43,7 +43,7 @@ public class AddFriendDialog extends JDialog{
 	
 	Connection con;
 	DBManager manager;
-	
+	KakaoMain kakaoMain;
 	//Vector<MemberList> member= new Vector<MemberList>(); //dto
 	
 	
@@ -58,9 +58,9 @@ public class AddFriendDialog extends JDialog{
 	JPanel p_friend, p_img, p_add;
 	JButton bt_add;
 	
-	public AddFriendDialog(Connection con){
+	public AddFriendDialog(Connection con, KakaoMain kakaoMain){
 		getRootPane().setBorder( BorderFactory.createLineBorder(Color.DARK_GRAY) );
-		
+		this.kakaoMain=kakaoMain;
 		this.con=con;
 		 manager=DBManager.getInstance();
 	      con=manager.getConnection();
@@ -140,7 +140,7 @@ public class AddFriendDialog extends JDialog{
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		
-		Member member;
+		MemberList memberlist;
 		
 		String sql="select * from member where e_mail=?";
 		String input_id=t_search.getText();
@@ -167,27 +167,27 @@ public class AddFriendDialog extends JDialog{
 		p_friend.add(p_add, BorderLayout.SOUTH);
 		
 		
-		
 		try {
 			pstmt=con.prepareStatement(sql);
 			pstmt.setString(1, input_id);
 			rs=pstmt.executeQuery();
 			
 			if(rs.next()){
-				member=new Member();
-				member.setE_mail(rs.getString("e_mail"));
-				member.setNik_id(rs.getString("nik_id"));
+				memberlist=new MemberList();
+				memberlist.setE_mail(rs.getString("e_mail"));
+				memberlist.setNik_id(rs.getString("nik_id"));
 				//member.setPassword(rs.getString("password"));
-				member.setProfile_img(rs.getString("profile_img"));
+				memberlist.setProfile_img(rs.getString("profile_img"));
 				//member.setProfileBackImg(rs.getString("profilebackimg"));
 				//member.setStatus_msg(rs.getString("status_msg"));
-				showFriend(member,p_friend);
+				showFriend(memberlist,p_friend);
 				
 				bt_add.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						Object obj=e.getSource();
 						if(obj==bt_add){
-							System.out.println("模备 眠啊 "+member.getE_mail()+", "+member.getNik_id());
+							System.out.println("模备 眠啊 "+memberlist.getE_mail()+", "+memberlist.getNik_id());
+							//kakaoMain.friendsListPanel.people.add(new PersonPanel(kakaoMain, memberlist.getProfile_img(), memberlist.getNik_id(), memberlist.getStatus_msg()));
 						}
 					}
 				});
@@ -242,7 +242,7 @@ public class AddFriendDialog extends JDialog{
 	         }
 		}
 	}
-	public void showFriend(Member member, JPanel p_friend){
+	public void showFriend(MemberList member, JPanel p_friend){
 		System.out.println(member.getE_mail()+", "+member.getNik_id()+", "+member.getProfile_img());
 		url=this.getClass().getResource(member.getProfile_img());
 		bgurl=this.getClass().getResource("/emptyCircle.png");

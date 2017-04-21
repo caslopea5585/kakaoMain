@@ -29,7 +29,8 @@ public class FriendsListPanel extends JPanel{
 	
 	//PersonPanel[] people=new PersonPanel[10];
 	
-	ArrayList<PersonPanel> people = new ArrayList<PersonPanel>();
+	ArrayList<PersonPanel> people = new ArrayList<PersonPanel>(); //전체 member테이블 레코드 저장
+	ArrayList<PersonPanel> myFriends = new ArrayList<PersonPanel>(); //friends 테이블 레코드 저장
 
 	KakaoMain kakaoMain;
 	
@@ -59,40 +60,38 @@ public class FriendsListPanel extends JPanel{
 		
 		p_search.add(t_search);	
 		
-		
 		friends_count=kakaoMain.memberList.size()-1;
-		la_friends=new JLabel("    친구   "+friends_count);
 		
 		p_list.add(la_myProfile);
+		la_friends=new JLabel("    친구   "+friends_count);
 		
-		//프렌드 멤버속 나찾기..
-		for(int i=0;i<kakaoMain.memberList.size();i++){
-
-			if(i==0){
-				
-			while( !(kakaoMain.loginEmail.equals(kakaoMain.memberList.get(j).getE_mail())) ){
-				j++;
-			}
-			people.add(new PersonPanel(kakaoMain,kakaoMain.memberList.get(j).getProfile_img(), kakaoMain.memberList.get(j).getNik_id(),  kakaoMain.memberList.get(j).getStatus_msg() ));
-			
-			p_list.add(people.get(0));
-			p_list.add(la_friends);
-			
-			}
-			
+		
+		///프렌드 멤버속 나찾기..
+		while( !(kakaoMain.loginEmail.equals(kakaoMain.memberList.get(j).getE_mail())) ){
+			j++;
 		}
+		people.add(new PersonPanel(kakaoMain,kakaoMain.memberList.get(j).getProfile_img(), kakaoMain.memberList.get(j).getNik_id(),  kakaoMain.memberList.get(j).getStatus_msg() ));
+		System.out.println("나: "+kakaoMain.memberList.get(j).getNik_id());
+		p_list.add(people.get(0));
+		p_list.add(la_friends);
 		
 		//나빼고 나머지를 친구로 등록하기
-		for(int i=0;i<kakaoMain.memberList.size();i++){
-			if(kakaoMain.memberList.get(i).getE_mail().equals(kakaoMain.memberList.get(j).getE_mail()     )){
-				continue;
-				
-			}else{
+		int cnt=0;
+		for(int i=0;i<kakaoMain.memberList.size();i++){//a가 로그인한 경우(j=1)
+			System.out.println("로그인한사람(j):"+j+"번째");
+			if(!(kakaoMain.memberList.get(i).getE_mail().equals(kakaoMain.memberList.get(j).getE_mail()))){
+				cnt++;
 				people.add(new PersonPanel(kakaoMain,kakaoMain.memberList.get(i).getProfile_img(), kakaoMain.memberList.get(i).getNik_id(),  kakaoMain.memberList.get(i).getStatus_msg() ));
-				p_list.add(people.get(i));
-				System.out.println("사이즈"+people.size());
+				p_list.add(people.get(cnt));
+
+				System.out.println("친구:"+people.get(cnt).name);
+				System.out.println("사이즈:"+people.size());
 			}
 		}
+		
+		
+		
+		
 
 		add(p_search, BorderLayout.NORTH);
 		add(scroll);
