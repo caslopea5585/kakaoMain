@@ -82,14 +82,18 @@ public class FriendsListPanel extends JPanel{
 			
 		}
 		
+		int b=1; //추가등록 카운트 증가 하기위해
 		//나빼고 나머지를 친구로 등록하기
 		for(int i=0;i<kakaoMain.memberList.size();i++){
 			if(kakaoMain.memberList.get(i).getE_mail().equals(kakaoMain.memberList.get(j).getE_mail()     )){
+				i--;
 				continue;
+				
 				
 			}else{
 				people.add(new PersonPanel(kakaoMain,kakaoMain.memberList.get(i).getProfile_img(), kakaoMain.memberList.get(i).getNik_id(),  kakaoMain.memberList.get(i).getStatus_msg() ));
-				p_list.add(people.get(i));
+				p_list.add(people.get(b));
+				b++;
 				System.out.println("사이즈"+people.size());
 			}
 		}
