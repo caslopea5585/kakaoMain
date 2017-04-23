@@ -21,6 +21,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Vector;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -32,7 +33,7 @@ import javax.swing.JTextField;
 
 import db.DBManager;
 
-public class AddFriendDialog extends JDialog{
+public class AddFriendDialog2 extends JDialog{
 	Point mouseDownCompCoords = null;
 	
 	JPanel p_north, p_center, p_search;
@@ -54,12 +55,11 @@ public class AddFriendDialog extends JDialog{
 	URL bgurl=null;
 	
 	
-	JPanel p_friend, p_img, p_add, p_margin;
+	JPanel p_friend, p_img, p_add;
+	JPanel[] p_view=new JPanel[3];
 	JButton bt_add;
 	
-	MemberList memberList;
-	
-	public AddFriendDialog(Connection con, KakaoMain kakaoMain){
+	public AddFriendDialog2(Connection con, KakaoMain kakaoMain){
 		getRootPane().setBorder( BorderFactory.createLineBorder(Color.DARK_GRAY) );
 		this.kakaoMain=kakaoMain;
 		this.con=con;
@@ -73,7 +73,18 @@ public class AddFriendDialog extends JDialog{
 		p_center=new JPanel(); //border
 		p_search=new JPanel();
 		
-		//p_friend.setLayout(new BorderLayout());
+		bt_add=new JButton("친구 추가");
+		
+		p_friend=new JPanel(); //친구 이미지,닉네임 붙일 패널(flow)
+		p_friend.setBackground(Color.WHITE);
+		
+		/*p_img=new JPanel();
+		p_img.setBackground(Color.WHITE);
+		p_add=new JPanel();
+		p_add.setBackground(Color.WHITE);
+		p_add.add(bt_add);
+		p_friend.add(p_img);
+		p_friend.add(p_add, BorderLayout.SOUTH);*/
 		
 		p_north.setBackground(Color.WHITE);
 		p_center.setBackground(Color.WHITE);
@@ -90,7 +101,7 @@ public class AddFriendDialog extends JDialog{
 		
 		la_des=new JLabel("이메일로 친구를 추가하세요", JLabel.CENTER);
         la_des.setForeground(new Color(30,170,170));
-        
+        la_des.setBackground(Color.WHITE);
 		bt_close=new JButton("X");
 
 		
@@ -99,9 +110,21 @@ public class AddFriendDialog extends JDialog{
 		
 		p_search.add(t_search);
 		p_center.add(p_search, BorderLayout.NORTH);
+		p_center.add(p_friend);
+		for(int  i=0; i<3; i++){
+			p_view[i]=new JPanel();
+			
+		}
+		p_view[0].setLayout(new BorderLayout());
+		p_view[0].add(la_des);
+		p_view[1].setVisible(false);
+		p_view[2].setVisible(false);
+		//p_friend.add(la_des);
 		
-		p_center.add(la_des);
-
+		for(int  i=0; i<3; i++){
+			p_friend.add(p_view[i]);
+		}
+		
 		add(p_north, BorderLayout.NORTH);
 		add(p_center);
 		
@@ -139,6 +162,8 @@ public class AddFriendDialog extends JDialog{
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		
+		MemberList memberlist;
+		
 		String sql="select * from members where e_mail=?";
 		String input_id=t_search.getText();
 
@@ -149,24 +174,6 @@ public class AddFriendDialog extends JDialog{
 		//String ori_bgimg="";
 		//String ori_status="";
 		
-		bt_add=new JButton("친구 추가");
-		
-		p_friend=new JPanel(); //친구 이미지,닉네임 붙일 패널
-		p_friend.setBackground(Color.WHITE);
-		p_friend.setLayout(new BorderLayout());
-		
-		//p_margin=new JPanel();
-		//p_margin.setPreferredSize(new Dimension(230, 100));
-		p_img=new JPanel();
-		p_img.setBackground(Color.WHITE);
-		p_img.setPreferredSize(new Dimension(250, 100));
-		p_add=new JPanel();
-		p_add.setBackground(Color.WHITE);
-		p_add.add(bt_add);
-		
-		//p_friend.add(p_margin);
-		p_friend.add(p_img);
-		p_friend.add(p_add, BorderLayout.SOUTH);
 		
 		
 		try {
@@ -175,25 +182,36 @@ public class AddFriendDialog extends JDialog{
 			rs=pstmt.executeQuery();
 			
 			if(rs.next()){
-				 memberList=new MemberList();
-				memberList.setE_mail(rs.getString("e_mail"));
-				memberList.setNik_id(rs.getString("nik_id"));
+				memberlist=new MemberList();
+				memberlist.setE_mail(rs.getString("e_mail"));
+				memberlist.setNik_id(rs.getString("nik_id"));
 				//member.setPassword(rs.getString("password"));
-				memberList.setProfile_img(rs.getString("profile_img"));
+				memberlist.setProfile_img(rs.getString("profile_img"));
 				//member.setProfileBackImg(rs.getString("profilebackimg"));
 				//member.setStatus_msg(rs.getString("status_msg"));
-				showFriend(memberList,p_friend);
+				showFriend(memberlist,p_friend);
+				
+				bt_add.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						Object obj=e.getSource();
+						if(obj==bt_add){
+							System.out.println("친구 추가 "+memberlist.getE_mail()+", "+memberlist.getNik_id());
+							//kakaoMain.friendsListPanel.people.add(new PersonPanel(kakaoMain, memberlist.getProfile_img(), memberlist.getNik_id(), memberlist.getStatus_msg()));
+						}
+					}
+				});
 				
 			}else{
 				la_des.setVisible(true);
 				p_friend.setVisible(false);
-				p_add.setVisible(false);
 				bt_add.setVisible(false);
 				bt_add.setEnabled(false);
 				la_des.setText("\'"+t_search.getText()+"\'"+"를 찾을 수 없습니다.");
 				System.out.println("정보 없 음");
 				//member.setStatus_msg(rs.getString("status_msg"));
 			}
+			
+			
 			/*
 			if(member!=null){
 				ori_email=member.getE_mail();
@@ -247,8 +265,8 @@ public class AddFriendDialog extends JDialog{
 		
 		can=new Canvas(){
 			public void paint(Graphics g) {
-				g.drawImage(image, 0, 20, 100,100, this);
-				g.drawImage(bgimage, 0, 20, 100,100, this);
+				g.drawImage(image, 0, 0, 100,100, this);
+				g.drawImage(bgimage, 0, 0, 100,100, this);
 			}
 		};
 		//can.repaint();
@@ -265,52 +283,7 @@ public class AddFriendDialog extends JDialog{
 		p_friend.setVisible(true);
 		p_friend.updateUI();
 		System.out.println(member.getNik_id());
-		
-		bt_add.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Object obj=e.getSource();
-				if(obj==bt_add){
-					addFriend();
-						
-				}
-			}
-		});
-	}
-	public void addFriend(){
-		//System.out.println("친구 추가 "+memberlist.getE_mail()+", "+memberlist.getNik_id());
-		//kakaoMain.friendsListPanel.people.add(new PersonPanel(kakaoMain, memberlist.getProfile_img(), memberlist.getNik_id(), memberlist.getStatus_msg()));
-		for(int i=0; i<kakaoMain.friendsList.size(); i++){
-			if(!(t_search.getText().equals(kakaoMain.friendsList.get(i).getYour_email()))){ //검색한 사람이 이미 있는 친구가 아니라면
-				//1.friends테이블에  insert
-				String sql2="insert into friends(e_mail, your_email) values("+"\'"+kakaoMain.friendsList.get(0).getE_mail()+"\'"+","+"\'"+t_search.getText()+"\'"+")";
-				PreparedStatement pstmt=null;
-				try {
-					pstmt = con.prepareStatement(sql2);
-					pstmt.executeQuery();
-					
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}finally{
-					if(pstmt!=null){
-						try {
-							pstmt.close();
-						} catch (SQLException e1) {
-							e1.printStackTrace();
-						}
-					}
-				}
-				
-				//2.kakaoMain의 friendsList에 추가, friendsListPanel의 myfriends에 추가,뿌리기
-				Friends friend=new Friends();
-				friend.setE_mail(kakaoMain.loginEmail); //내 이메일
-				friend.setYour_email(memberList.getE_mail());
-				kakaoMain.friendsList.add(friend);
-				
-				
-			}else{
-				System.out.println("이미 친구입니다.");
-			}
-		}		
+
 	}
 	
 	//다이얼로그 위치

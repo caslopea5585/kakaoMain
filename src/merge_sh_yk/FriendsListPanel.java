@@ -29,7 +29,8 @@ public class FriendsListPanel extends JPanel{
 	
 	//PersonPanel[] people=new PersonPanel[10];
 	
-	ArrayList<PersonPanel> people = new ArrayList<PersonPanel>();
+	//ArrayList<PersonPanel> people = new ArrayList<PersonPanel>(); //전체 member테이블 레코드 저장
+	public ArrayList<PersonPanel> myFriends = new ArrayList<PersonPanel>(); //friends 테이블 레코드 저장
 
 	KakaoMain kakaoMain;
 	
@@ -59,31 +60,25 @@ public class FriendsListPanel extends JPanel{
 		
 		p_search.add(t_search);	
 		
-		
-		friends_count=kakaoMain.memberList.size()-1;
-		la_friends=new JLabel("    친구   "+friends_count);
+		//friends_count=kakaoMain.memberList.size()-1;
+		friends_count=kakaoMain.friendsList.size();
 		
 		p_list.add(la_myProfile);
+		la_friends=new JLabel("    친구   "+friends_count);
 		
-		//프렌드 멤버속 나찾기..
-		for(int i=0;i<kakaoMain.memberList.size();i++){
-
-			if(i==0){
-				
-			while( !(kakaoMain.loginEmail.equals(kakaoMain.memberList.get(j).getE_mail())) ){
-				j++;
-			}
-			people.add(new PersonPanel(kakaoMain,kakaoMain.memberList.get(j).getProfile_img(), kakaoMain.memberList.get(j).getNik_id(),  kakaoMain.memberList.get(j).getStatus_msg() ));
-			
-			p_list.add(people.get(0));
-			p_list.add(la_friends);
-			
-			}
-			
+		
+		/*//프렌드 멤버속 나찾기..
+		while( !(kakaoMain.loginEmail.equals(kakaoMain.memberList.get(j).getE_mail())) ){
+			j++;
 		}
+		people.add(new PersonPanel(kakaoMain,kakaoMain.memberList.get(j).getProfile_img(), kakaoMain.memberList.get(j).getNik_id(),  kakaoMain.memberList.get(j).getStatus_msg() ));
+		System.out.println("나: "+kakaoMain.memberList.get(j).getNik_id());
+		p_list.add(people.get(0));
+		p_list.add(la_friends);
 		
 		int b=1; //추가등록 카운트 증가 하기위해
 		//나빼고 나머지를 친구로 등록하기
+<<<<<<< HEAD
 		for(int i=0;i<kakaoMain.memberList.size();i++){
 			if(kakaoMain.memberList.get(i).getE_mail().equals(kakaoMain.memberList.get(j).getE_mail()     )){
 				i--;
@@ -95,8 +90,49 @@ public class FriendsListPanel extends JPanel{
 				p_list.add(people.get(b));
 				b++;
 				System.out.println("사이즈"+people.size());
+=======
+		int cnt=0;
+		for(int i=0;i<kakaoMain.memberList.size();i++){//a가 로그인한 경우(j=1)
+			System.out.println("로그인한사람(j):"+j+"번째");
+			if(!(kakaoMain.memberList.get(i).getE_mail().equals(kakaoMain.memberList.get(j).getE_mail()))){
+				cnt++;
+				people.add(new PersonPanel(kakaoMain,kakaoMain.memberList.get(i).getProfile_img(), kakaoMain.memberList.get(i).getNik_id(),  kakaoMain.memberList.get(i).getStatus_msg() ));
+				p_list.add(people.get(cnt));
+
+				System.out.println("친구:"+people.get(cnt).name);
+				System.out.println("사이즈:"+people.size());
+			}
+		}*/
+		
+		//나를 패널에 붙이기
+		while( !(kakaoMain.loginEmail.equals(kakaoMain.memberList.get(j).getE_mail())) ){
+			j++;
+		}
+		myFriends.add(new PersonPanel(kakaoMain,kakaoMain.memberList.get(j).getProfile_img(), kakaoMain.memberList.get(j).getNik_id(),  kakaoMain.memberList.get(j).getStatus_msg() ));
+		System.out.println("나: "+kakaoMain.memberList.get(j).getNik_id());
+		p_list.add(myFriends.get(0)); //myFriends의 첫번째 인덱스에 나를 등록. 
+		p_list.add(la_friends);
+		
+		//친구들을 패널에 붙이기
+		int cnt=0;
+		System.out.println("friendsList size:"+kakaoMain.friendsList.size());
+		System.out.println("memberList size:"+kakaoMain.memberList.size());
+		for(int i=0; i<kakaoMain.friendsList.size();i ++){
+			for(int j=0; j<kakaoMain.memberList.size(); j++){
+				if(kakaoMain.friendsList.get(i).getYour_email().equals(kakaoMain.memberList.get(j).getE_mail())){
+					System.out.println("j");
+					cnt++;
+					myFriends.add(new PersonPanel(kakaoMain,kakaoMain.memberList.get(j).getProfile_img(), kakaoMain.memberList.get(j).getNik_id(),  kakaoMain.memberList.get(j).getStatus_msg() ));
+					p_list.add(myFriends.get(cnt));
+					
+					System.out.println("친구:"+myFriends.get(cnt).name);
+					System.out.println("사이즈:"+myFriends.size());
+				}
+>>>>>>> f0995b0918a1547d87aaf1e38cd30c9aff7579c2
 			}
 		}
+		
+		
 
 		add(p_search, BorderLayout.NORTH);
 		add(scroll);

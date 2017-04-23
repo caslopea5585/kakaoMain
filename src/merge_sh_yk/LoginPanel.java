@@ -58,7 +58,7 @@ public class LoginPanel extends JPanel{
    URL url=this.getClass().getResource("/icon.png");
    
    Register register;
-   Member member;//DBDTO
+   
    
    Thread thread;
    Connection con;
@@ -67,7 +67,7 @@ public class LoginPanel extends JPanel{
  
 
    
-  String ip="211.238.142.113";//////////////////임시 아이피
+  String ip="211.238.142.102";//////////////////임시 아이피
 
    Socket socket;
    ClientThread ct;
@@ -234,12 +234,16 @@ public class LoginPanel extends JPanel{
 	   ///////////////////////////////
       PreparedStatement pstmt=null;
       ResultSet rs=null;
+      ResultSet rs2=null;
      // String sql="select * from members where e_mail=? and password=?";
       //회원로그인시 필요한 정보 확인을 위한정보...
       
-      String sql ="select * from member";
+      String sql ="select * from members";
       //멤버테이블에 전체를 가져오기 위한 테이블
       Vector<MemberList> memberList=new Vector<MemberList>();
+      
+      //나와 내 친구 레코드 들어있는 테이블
+      Vector<Friends> friendsList=new Vector<Friends>();
       
       try {
          pstmt=con.prepareStatement(sql);
@@ -249,8 +253,10 @@ public class LoginPanel extends JPanel{
          pstmt.setString(2, t_pw.getText());
          
           */
+         boolean loginFlag=false;
          
          while(rs.next()){
+        	 //System.out.println("while");
  			MemberList memberListDto = new MemberList();
 			memberListDto.setE_mail(rs.getString("e_mail"));
 			memberListDto.setNik_id(rs.getString("nik_id"));
@@ -260,21 +266,32 @@ public class LoginPanel extends JPanel{
 			memberListDto.setStatus_msg(rs.getString("status_msg"));
 			
 			memberList.add(memberListDto);
+			
+			if(t_email.getText().equals(memberListDto.getE_mail()) && t_pw.getText().equals(memberListDto.getPassword())){
+				loginFlag=true;
+			}
          }            
-
+         System.out.println("memberList에 들어 있는 사람 수: "+memberList.size()+"명");
          
-         if(memberList.size()!=0){
+         if(loginFlag){
         	 JOptionPane.showMessageDialog(this, "로그인성공");  
         	
+        	 //내 친구정보(friends 테이블) 찾기
+        	 String sql2="select * from friends where e_mail="+"\'"+t_email.getText()+"\'";
+        	 pstmt=con.prepareStatement(sql2);
+        	 rs2=pstmt.executeQuery();
         	 
-        	 //로그인 정보의 e_mail정보를 가져온다.
-        	 kakaoMain.seeMain(t_email.getText(),memberList);
+        	 while(rs2.next()){
+	        	 Friends friendsListDto=new Friends();
+	        	 friendsListDto.setE_mail(rs2.getString("e_mail"));
+	        	 friendsListDto.setYour_email(rs2.getString("your_email"));
+	        	 friendsList.add(friendsListDto);
+        	 }
+        	 kakaoMain.seeMain(t_email.getText(),memberList, friendsList);
          }	else {
         	 JOptionPane.showMessageDialog(this, "아이디나 비밀번호를 확인해주세요.");
         	 t_pw.setText("");
-            
          }
-
       } catch (SQLException e) {
          e.printStackTrace();
       } finally {
@@ -284,8 +301,7 @@ public class LoginPanel extends JPanel{
             } catch (SQLException e) {
                e.printStackTrace();
             }
-         }
-         
+         }        
          if(pstmt!=null){
             try {
                pstmt.close();

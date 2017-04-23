@@ -21,7 +21,7 @@ public class KakaoMain extends JFrame{
 	Connection con;
 	public String loginEmail;
 	public Vector<MemberList> memberList;
-	
+	public Vector<Friends> friendsList;
 	
 	
 	Client_chat chat;//채널 새창*채팅목록에서 새로열기 가능하게 바꾸기
@@ -41,25 +41,29 @@ public class KakaoMain extends JFrame{
 
 	}
 	
-	public void seeMain(String loginEmail,Vector<MemberList> memberList){
+	public void seeMain(String loginEmail,Vector<MemberList> memberList, Vector<Friends> friendsList){
 		
-		 this.loginEmail=loginEmail;
+		this.loginEmail=loginEmail;
 		this.memberList=memberList;
-
+		this.friendsList=friendsList;
+		
 		System.out.println("로그인 성공한 아이디는?? " + loginEmail);
 		System.out.println("멤버안에들어있는 사람의 주소는??" + memberList);
-
+		System.out.println("멤버안에들어있는 사람의 주소는??" + friendsList);
+		/*System.out.println("첫번째 안에 있는 사람의 e_mail은? "+ memberList.get(0).getE_mail());
 		System.out.println("두번째 안에 있는 사람의 e_mail은? "+ memberList.get(1).getE_mail());
-
-
+		System.out.println("두번째 안에 있는 사람의 e_mail은? "+ memberList.get(2).getE_mail());*/
+		
+		for(int i=0; i<friendsList.size(); i++){
+			System.out.println("내 이메일: "+ friendsList.get(i).getE_mail()+", 친구 이메일: "+friendsList.get(i).getYour_email());
+		}
+		
 		p_center=new JPanel();
 
 		menuPanel=new MenuPanel(this);
 		friendsListPanel=new FriendsListPanel(this);
 		chattingListPanel=new ChattingListPanel(this);
 		settingPanel=new SettingPanel();
-		
-		
 		
 		chat=new Client_chat(this);/////////채팅
 		
@@ -72,7 +76,6 @@ public class KakaoMain extends JFrame{
 		p_center.add(settingPanel);
 		panel[1].add(p_center);
 		
-		
 		add(panel[1]);
 
 		panel[0].setBackground(new Color(255, 235, 051));
@@ -83,10 +86,7 @@ public class KakaoMain extends JFrame{
 
 		dragMouse(panel[0]);
 		
-
 	}
-
-	
 	
 	//윈도우안에 어떤 패널이 올지를 결정해주는 메서드 정의
 	public void setPage(int index){
