@@ -34,6 +34,7 @@ public class AddFriend extends JDialog implements ActionListener{
 		 this.setSize(150,200);
          this.setModal(true);
          this.setVisible(true);
+         
 	}
 	public void addFriends(){
 		name=t_name.getText();
