@@ -276,6 +276,7 @@ public class AddFriendDialog extends JDialog{
 		if(kakaoMain.friendsList.size()!=0){
 			if(t_search.getText().equals(kakaoMain.memberList.get(0).getE_mail())){
 				JOptionPane.showMessageDialog(this, "자신을 친구등록할 수 없습니다.");
+				flag=!flag;
 			}
 			
 			for(int i=0;i<friendsSize;i++){
@@ -290,7 +291,7 @@ public class AddFriendDialog extends JDialog{
 				System.out.println("친구생성");
 			}
 		}else if(kakaoMain.friendsList.size()==0){
-			 if(t_search.getText().equals(kakaoMain.memberList.get(0).getE_mail())){
+			 if(t_search.getText().equals(kakaoMain.loginEmail )){
 				JOptionPane.showMessageDialog(this, "자신의 친구등록할 수 없습니다.");
 			}else{
 				addFriend();
@@ -300,7 +301,7 @@ public class AddFriendDialog extends JDialog{
 	}
 	
 	public void addFriend(){
-		String sql="insert into friends(e_mail, your_email) values("+"\'"+kakaoMain.memberList.get(0).getE_mail()+"\'"+","+"\'"+t_search.getText()+"\'"+")";
+		String sql="insert into friends(e_mail, your_email) values("+"\'"+kakaoMain.loginEmail+"\'"+","+"\'"+t_search.getText()+"\'"+")";
 		PreparedStatement pstmt=null;
 		try {
 			pstmt = con.prepareStatement(sql);
