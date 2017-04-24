@@ -103,6 +103,8 @@ public class PersonPanel extends JPanel{
 		setPreferredSize(new Dimension(360, 60));
 		setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 		setBackground(Color.WHITE);
+		
+		System.out.println("퍼슨 패널 생성 완료.");
 	}
 	
 	
