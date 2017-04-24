@@ -292,7 +292,11 @@ public class AddFriendDialog extends JDialog{
 				System.out.println("친구생성");
 			}
 		}else if(kakaoMain.friendsList.size()==0){
+<<<<<<< HEAD
+			 if(t_search.getText().equals(kakaoMain.loginEmail )){
+=======
 			 if(t_search.getText().equals(kakaoMain.loginEmail)){
+>>>>>>> b14b1df9f265eecc08fadf904d784f2bfa3b8036
 				JOptionPane.showMessageDialog(this, "자신의 친구등록할 수 없습니다.");
 			}else{
 				addFriend();
