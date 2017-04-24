@@ -39,7 +39,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
- 
+import javax.swing.plaf.synth.SynthSeparatorUI;
+
 import db.DBManager;
  
  
@@ -206,6 +207,7 @@ public class LoginPanel extends JPanel{
 	   ///////////////////////////////
       PreparedStatement pstmt=null;
       ResultSet rs=null;
+      ResultSet rs2=null;
      // String sql="select * from members where e_mail=? and password=?";
       //회원로그인시 필요한 정보 확인을 위한정보...
       
@@ -250,16 +252,21 @@ public class LoginPanel extends JPanel{
         	 //내 친구정보(friends 테이블) 찾기
         	 //밑에 seeMain의 memberList자리에 
         	 //로그인 정보의 e_mail정보를 가져온다.
-        	 String sql2="select * from friends where e_mail="+"\'"+t_email+"\'";
+        	 String sql2="select * from friends where e_mail="+"\'"+t_email.getText()+"\'";
+        	 System.out.println(sql2);
         	 pstmt=con.prepareStatement(sql2);
-        	 rs=pstmt.executeQuery();
+        	 rs2=pstmt.executeQuery();
         	 
-        	 while(rs.next()){
+        	 int cnt=0;
+        	 while(rs2.next()){
 	        	 Friends friendsListDto=new Friends();
-	        	 friendsListDto.setE_mail(rs.getString("e_mail"));
-	        	 friendsListDto.setYour_email(rs.getString("your_email"));
+	        	 friendsListDto.setE_mail(rs2.getString("e_mail"));
+	        	 friendsListDto.setYour_email(rs2.getString("your_email"));
 	        	 friendsList.add(friendsListDto);
+	        	 cnt++;
+	        	 System.out.println("내 친구수:"+cnt);
         	 }
+        	 System.out.println("loginpanel 내친구수:"+friendsList.size());
         	 kakaoMain.seeMain(t_email.getText(),memberList, friendsList);
          }	else {
         	 JOptionPane.showMessageDialog(this, "아이디나 비밀번호를 확인해주세요.");
@@ -274,7 +281,14 @@ public class LoginPanel extends JPanel{
             } catch (SQLException e) {
                e.printStackTrace();
             }
-         }        
+         }
+         if(rs2!=null){
+             try {
+                rs2.close();
+             } catch (SQLException e) {
+                e.printStackTrace();
+             }
+          }     
          if(pstmt!=null){
             try {
                pstmt.close();

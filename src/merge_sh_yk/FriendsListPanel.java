@@ -47,11 +47,12 @@ public class FriendsListPanel extends JPanel{
 		p_list=new JPanel();
 		p_myProfile=new JPanel();
 		la_myProfile=new JLabel("    내 프로필 ");
+	
 		
 		scroll=new JScrollPane(p_list, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		
 		//p_list.setPreferredSize(new Dimension(360, 100));
-		p_list.setLayout(new GridLayout(20,1));
+		p_list.setLayout(new GridLayout(10,1));
 		p_list.setBackground(Color.WHITE);
 		
 		t_search.setPreferredSize(new Dimension(350, 30));
@@ -117,6 +118,7 @@ public class FriendsListPanel extends JPanel{
 		int cnt=0;
 		System.out.println("friendsList size:"+kakaoMain.friendsList.size());
 		System.out.println("memberList size:"+kakaoMain.memberList.size());
+		
 		for(int i=0; i<kakaoMain.friendsList.size();i ++){
 			for(int j=0; j<kakaoMain.memberList.size(); j++){
 				if(kakaoMain.friendsList.get(i).getYour_email().equals(kakaoMain.memberList.get(j).getE_mail())){
@@ -134,6 +136,7 @@ public class FriendsListPanel extends JPanel{
 		kakaoMain.myFriends=myFriends;
 		kakaoMain.p_list=p_list;
 		kakaoMain.friendsListPanel=this;
+		
 		
 		
 		add(p_search, BorderLayout.NORTH);

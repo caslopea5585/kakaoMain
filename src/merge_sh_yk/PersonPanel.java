@@ -113,7 +113,7 @@ public class PersonPanel extends JPanel{
 	public void getFriendList(){
 		manager=DBManager.getInstance();
 		con=manager.getConnection();
-		String sql="select * from member";
+		String sql="select * from members";
 		PreparedStatement pstmt;
 		ResultSet rs =null;
 		
