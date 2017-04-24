@@ -45,10 +45,9 @@ import db.DBManager;
  
 public class LoginPanel extends JPanel{
    KakaoMain kakaoMain;
-   JPanel p_north, p_center, p_south, p_id_pw, p_pw;
-   HintTextField_FIRST t_email;
-   JTextField t_info;
-   JPasswordField t_pw;
+   JPanel p_north, p_center, p_south, p_id_pw;
+   HintedTextField t_email;
+   HintedPasswordField t_pw;
    JButton bt_login, bt_find_pw;
    Checkbox auto_login;
    JLabel info, link, temp;
@@ -66,8 +65,8 @@ public class LoginPanel extends JPanel{
    
  
 
-   
-  String ip="211.238.142.102";//////////////////임시 아이피
+   String ip="127.0.0.1";
+  //String ip="211.238.142.102";//////////////////임시 아이피
 
    Socket socket;
    ClientThread ct;
@@ -87,26 +86,22 @@ public class LoginPanel extends JPanel{
       p_center=new JPanel();
       p_south=new JPanel();
       p_id_pw=new JPanel();
-      p_pw=new JPanel();
             
       p_north.setPreferredSize(new Dimension(360, 250));
       p_center.setPreferredSize(new Dimension(360, 170));
       p_south.setPreferredSize(new Dimension(360, 170));
-      p_id_pw.setPreferredSize(new Dimension(250, 100));
-      p_pw.setPreferredSize(new Dimension(250, 55));
+      p_id_pw.setPreferredSize(new Dimension(250, 70));
       
       p_north.setBackground(new Color(255, 235, 051));
       p_center.setBackground(new Color(255, 235, 051));
       p_south.setBackground(new Color(255, 235, 051));
       p_id_pw.setBackground(new Color(255, 235, 051));
-      p_pw.setBackground(new Color(255, 235, 051));
       
       p_north.setLayout(new BorderLayout());
       p_center.setLayout(new FlowLayout());
       p_south.setLayout(new FlowLayout());
       p_id_pw.setLayout(new GridLayout(2,1));
-      p_pw.setLayout(new FlowLayout());
-      
+
       //캔버스
       try {
          image=ImageIO.read(url);
@@ -120,94 +115,28 @@ public class LoginPanel extends JPanel{
          }
       };
       logo.setPreferredSize(new Dimension(150, 150));
-      logo.addMouseListener(new MouseAdapter() {
-         @Override
-         public void mouseClicked(MouseEvent e) {
-            register=new Register(kakaoMain);
-         }
-      });
       
-      t_email=new HintTextField_FIRST("카카오계정(이메일)");
-      t_info=new JTextField("비밀번호");
-      t_info.setForeground(Color.GRAY);
-      t_pw=new JPasswordField();
+      t_email=new HintedTextField("카카오계정(이메일)");
+      t_pw=new HintedPasswordField("비밀번호");
       bt_login=new JButton("로그인");
       auto_login=new Checkbox("잠금모드로 자동로그인");
       
-      t_email.setPreferredSize(new Dimension(250, 25));
-      t_info.setPreferredSize(new Dimension(250, 45));
-      t_pw.setPreferredSize(new Dimension(250, 45));
-      bt_login.setPreferredSize(new Dimension(250, 35));
+      bt_login.setPreferredSize(new Dimension(250, 30));
       bt_login.setBackground(new Color(113, 92, 94));
-      bt_login.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			login();
-		}
-      });
-      bt_login.addKeyListener(new KeyAdapter() {
-    	public void keyPressed(KeyEvent e) {
-    		if(e.getKeyCode()==e.VK_ENTER){ 
-    			
-    			login();
-    		}	
-    	}
-      });
-   
+      
       info=new JLabel("모바일에서 카카오계정을 확인할 수 있습니다.");
       link= new JLabel("<HTML><U>카카오계정안내</U></HTML>");
       link.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));   
-      link.addMouseListener(new MouseAdapter() {
-         public void mouseClicked(MouseEvent e) {
-             JOptionPane.showMessageDialog(LoginPanel.this, "카카오계정이란 모바일 카카오톡에서 등록한 이메일 주소입니다."+"\n" +"모바일 카카오톡의 '더보기>설정>개인/보안>카카오계정을 확인해주세요"); 
-         }
-      });
-      
+
       temp=new JLabel();
       temp.setPreferredSize(new Dimension(300, 35));
       
       bt_find_pw=new JButton("비밀번호를 잊어버리셨나요?");
       bt_find_pw.setBackground(new Color(255, 235, 051));
-      bt_find_pw.addMouseListener(new MouseAdapter() {
-         public void mouseClicked(MouseEvent e) {
-            JOptionPane.showMessageDialog(LoginPanel.this, "모바일 카카오톡에서 '더보기>설정>개인/보안>카카오계정'을 선택한 후"+"\n" +"계정 비밀번호 변경을 실행해주세요."); 
-         }
-      });
-   
-      t_info.addFocusListener(new FocusAdapter() {
-         @Override
-         public void focusGained(FocusEvent e) {
-            t_info.setVisible(false);
-            t_pw.setVisible(true);
-            SwingUtilities.invokeLater(new Runnable() {
-               public void run() {
-                  t_pw.requestFocus();
-               }
-             });
-            p_pw.updateUI();
-         }
-         @Override
-         public void focusLost(FocusEvent e) {}
-      }); 
- 
-      t_pw.addFocusListener(new FocusListener() {
-         @Override
-         public void focusLost(FocusEvent e) {
-            t_pw.setVisible(false);
-            t_info.setVisible(true);
-            p_pw.updateUI();
-         }
-         
-         @Override
-         public void focusGained(FocusEvent e) {
-            t_pw.setText("");
-         }
-      });
-      
+
       p_north.add(logo);
-      p_pw.add(t_info);
-      p_pw.add(t_pw);
       p_id_pw.add(t_email);
-      p_id_pw.add(p_pw);
+      p_id_pw.add(t_pw);
       p_center.add(p_id_pw);
       p_center.add(bt_login);
       p_center.add(auto_login);
@@ -221,12 +150,55 @@ public class LoginPanel extends JPanel{
       add(p_center, BorderLayout.CENTER);
       add(p_south, BorderLayout.SOUTH);
       
-       kakaoMain.dragMouse(p_north);
+      logo.addMouseListener(new MouseAdapter() {
+          @Override
+          public void mouseClicked(MouseEvent e) {
+             register=new Register(kakaoMain);
+          }
+       });
+      t_email.addKeyListener(new KeyAdapter() {
+    	  public void keyPressed(KeyEvent e) {
+    		if(e.getKeyCode()==KeyEvent.VK_ENTER){
+    			t_pw.requestFocus();
+    		}
+    	} 
+      });
+      t_pw.addKeyListener(new KeyAdapter() {
+    	  public void keyPressed(KeyEvent e) {
+    		if(e.getKeyCode()==KeyEvent.VK_ENTER){
+    			bt_login.requestFocus();
+    			login();
+    		}
+    	} 
+      });
+      bt_login.addActionListener(new ActionListener() {
+  		public void actionPerformed(ActionEvent e) {
+  			login();
+  		}
+      });
+	  bt_login.addKeyListener(new KeyAdapter() {
+	  	public void keyPressed(KeyEvent e) {
+	  		if(e.getKeyCode()==e.VK_ENTER){ 
+	  			login();
+	  		}	
+	  	}
+	   });
+	   link.addMouseListener(new MouseAdapter() {
+	        public void mouseClicked(MouseEvent e) {
+	            JOptionPane.showMessageDialog(LoginPanel.this, "카카오계정이란 모바일 카카오톡에서 등록한 이메일 주소입니다."+"\n" +"모바일 카카오톡의 '더보기>설정>개인/보안>카카오계정을 확인해주세요"); 
+	        }
+	  });
+	  bt_find_pw.addMouseListener(new MouseAdapter() {
+        public void mouseClicked(MouseEvent e) {
+           JOptionPane.showMessageDialog(LoginPanel.this, "모바일 카카오톡에서 '더보기>설정>개인/보안>카카오계정'을 선택한 후"+"\n" +"계정 비밀번호 변경을 실행해주세요."); 
+        }
+	   });
+	  
+      kakaoMain.dragMouse(p_north);
       //pack();
       //setVisible(true);
       //setDefaultCloseOperation(EXIT_ON_CLOSE);
-   }
-   
+   }   
  
    public void login(){
 	   ///////////서버연결//////////////
@@ -234,11 +206,10 @@ public class LoginPanel extends JPanel{
 	   ///////////////////////////////
       PreparedStatement pstmt=null;
       ResultSet rs=null;
-      ResultSet rs2=null;
      // String sql="select * from members where e_mail=? and password=?";
       //회원로그인시 필요한 정보 확인을 위한정보...
       
-      String sql ="select * from members";
+      String sql ="select * from member";
       //멤버테이블에 전체를 가져오기 위한 테이블
       Vector<MemberList> memberList=new Vector<MemberList>();
       
@@ -256,7 +227,7 @@ public class LoginPanel extends JPanel{
          boolean loginFlag=false;
          
          while(rs.next()){
-        	 //System.out.println("while");
+        	 System.out.println("while");
  			MemberList memberListDto = new MemberList();
 			memberListDto.setE_mail(rs.getString("e_mail"));
 			memberListDto.setNik_id(rs.getString("nik_id"));
@@ -277,14 +248,16 @@ public class LoginPanel extends JPanel{
         	 JOptionPane.showMessageDialog(this, "로그인성공");  
         	
         	 //내 친구정보(friends 테이블) 찾기
-        	 String sql2="select * from friends where e_mail="+"\'"+t_email.getText()+"\'";
+        	 //밑에 seeMain의 memberList자리에 
+        	 //로그인 정보의 e_mail정보를 가져온다.
+        	 String sql2="select * from friends where e_mail="+"\'"+t_email+"\'";
         	 pstmt=con.prepareStatement(sql2);
-        	 rs2=pstmt.executeQuery();
+        	 rs=pstmt.executeQuery();
         	 
-        	 while(rs2.next()){
+        	 while(rs.next()){
 	        	 Friends friendsListDto=new Friends();
-	        	 friendsListDto.setE_mail(rs2.getString("e_mail"));
-	        	 friendsListDto.setYour_email(rs2.getString("your_email"));
+	        	 friendsListDto.setE_mail(rs.getString("e_mail"));
+	        	 friendsListDto.setYour_email(rs.getString("your_email"));
 	        	 friendsList.add(friendsListDto);
         	 }
         	 kakaoMain.seeMain(t_email.getText(),memberList, friendsList);
@@ -310,6 +283,9 @@ public class LoginPanel extends JPanel{
             }
          }
       }//finally
+   }
+   public void getFriends(){
+	  
    }
    
 	public void connect(){

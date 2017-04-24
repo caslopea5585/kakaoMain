@@ -95,7 +95,7 @@ public class AddFriendDialog2 extends JDialog{
 		
 		la_add=new JLabel("친구 추가", JLabel.CENTER);
 
-		t_search=new HintTextField_FIRST("email 검색");
+		t_search=new HintedTextField("email 검색");
 		t_search.setPreferredSize(new Dimension(250, 25));
 		t_search.setBorder(BorderFactory.createLineBorder(new Color(30,170,170)));
 		
