@@ -55,7 +55,6 @@ public class Profile extends JFrame implements ActionListener{
 		
 		profile = this;
 		this.kakaoMain=kakaoMain;
-		
 
 		layeredPane = new JLayeredPane();
 		url_profileBackground = this.getClass().getResource("/bg_north.png");	//상단배경
@@ -248,6 +247,8 @@ public class Profile extends JFrame implements ActionListener{
 				kakaoMain.memberList.get(0).setProfile_Back_Img(file.getName());
 				can_north_img.repaint();
 			}
+		}else if(obj==bt_chat){
+			
 		}
 		
 	}
