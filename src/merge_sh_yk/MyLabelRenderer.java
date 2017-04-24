@@ -1,4 +1,4 @@
-package settingPanel;
+ package merge_sh_yk;
 
 import java.awt.BorderLayout;
 import java.awt.Canvas;
@@ -31,9 +31,8 @@ import javax.swing.table.TableCellRenderer;
 import Profile.Profile;
 import db.DBManager;
 
-public class MyTableCellRenderer implements TableCellRenderer{
-	makeRoundedPhotoLabel label;
-	
+public class MyLabelRenderer implements TableCellRenderer{
+
 	String[] list={
 			"/setting_1.png", "/setting_2.png", "/setting_3.png", "/setting_4.png", "/setting_5.png", "/setting_6.png", "/setting_7.png" 
 	};
@@ -54,19 +53,15 @@ public class MyTableCellRenderer implements TableCellRenderer{
 	}
 	
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, final int row, final int column){
-        JLabel label = null; 
+    	JLabel label = null; 
 
-        for(int i=0; i<=list.length; i++){
+        for(int i=0; i<list.length; i++){
 	        if(row==i){
 	        	label = createLabel(list[i]);
 	        }
         }
-        
-        if(row==8){
-        	label =makeRoundedPhotoLabel.makeRoundedPhotoLabel("/p1.jpg");
-        }
-   
-        table.setRowHeight(50);   
+ 
+        table.setRowHeight(50);  
         return label;
     }
 }
