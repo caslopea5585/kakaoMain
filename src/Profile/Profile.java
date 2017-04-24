@@ -153,7 +153,6 @@ public class Profile extends JFrame implements ActionListener{
 		la_chat.setBounds(65, 390, 70, 30);
 		la_manager.setBounds(165, 390, 70, 30);
 		
-				
 		
 		layeredPane.add(can_north_img, 1);
 		layeredPane.add(la_name, 2,1);
@@ -175,6 +174,8 @@ public class Profile extends JFrame implements ActionListener{
 			bt_back_profile.setBounds(245, 250, 45, 45);
 			layeredPane.add(bt_manager, 4,3);
 			layeredPane.add(bt_back_profile, 4,3);
+		}else{
+			bt_manager.setVisible(false);
 		}
 		
 		
