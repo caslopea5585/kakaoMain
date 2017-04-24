@@ -37,7 +37,7 @@ public class KakaoMain extends JFrame implements Runnable{
 		add(panel[0]);
 		
 		
-		setUndecorated(true); //타이틀바 제거
+		//setUndecorated(true); //타이틀바 제거
 		setBounds(100,100,360,590);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -60,6 +60,8 @@ public class KakaoMain extends JFrame implements Runnable{
 		for(int i=0; i<friendsList.size(); i++){
 			System.out.println("내 이메일: "+ friendsList.get(i).getE_mail()+", 친구 이메일: "+friendsList.get(i).getYour_email());
 		}
+		
+		p_list=new JPanel();
 		
 		p_center=new JPanel();
 
