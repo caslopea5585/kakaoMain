@@ -268,9 +268,7 @@ public class AddFriendDialog extends JDialog{
 			}
 		});
 	}
-<<<<<<< HEAD
-	
-=======
+
 	public void validateFriend(){
 		System.out.println("검사 전 친구 사이즈는???"+ kakaoMain.friendsList.size());
 		int friendsSize = kakaoMain.friendsList.size();
@@ -279,6 +277,7 @@ public class AddFriendDialog extends JDialog{
 		if(kakaoMain.friendsList.size()!=0){
 			if(t_search.getText().equals(kakaoMain.memberList.get(0).getE_mail())){
 				JOptionPane.showMessageDialog(this, "자신을 친구등록할 수 없습니다.");
+				flag=!flag;
 			}
 			
 			for(int i=0;i<friendsSize;i++){
@@ -339,7 +338,6 @@ public class AddFriendDialog extends JDialog{
 			}
 		}
 	}
->>>>>>> ed68db1d1b8c5abd1cb4c0b1d73e9902bd4ce2b1
 	
 	//다이얼로그 위치
 	public void point(JDialog dialog){
