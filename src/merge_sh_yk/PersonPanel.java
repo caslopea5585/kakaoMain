@@ -103,6 +103,8 @@ public class PersonPanel extends JPanel{
 		setPreferredSize(new Dimension(360, 60));
 		setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 		setBackground(Color.WHITE);
+		
+		System.out.println("퍼슨 패널 생성 완료.");
 	}
 	
 	
@@ -111,7 +113,7 @@ public class PersonPanel extends JPanel{
 	public void getFriendList(){
 		manager=DBManager.getInstance();
 		con=manager.getConnection();
-		String sql="select * from member";
+		String sql="select * from members";
 		PreparedStatement pstmt;
 		ResultSet rs =null;
 		
