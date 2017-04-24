@@ -126,14 +126,15 @@ public class FriendsListPanel extends JPanel{
 					p_list.add(myFriends.get(cnt));
 					
 					System.out.println("친구:"+myFriends.get(cnt).name);
-					System.out.println("사이즈:"+myFriends.size());
+					System.out.println(" 리스트 패널 사이즈:"+myFriends.size());
+					
+					kakaoMain.myFriends=myFriends;
+					kakaoMain.p_list=p_list;
+					
 				}
->>>>>>> f0995b0918a1547d87aaf1e38cd30c9aff7579c2
 			}
 		}
 		
-		
-
 		add(p_search, BorderLayout.NORTH);
 		add(scroll);
 		

@@ -270,47 +270,71 @@ public class AddFriendDialog extends JDialog{
 			public void actionPerformed(ActionEvent e) {
 				Object obj=e.getSource();
 				if(obj==bt_add){
-					addFriend();
+					validateFriend();
 						
 				}
 			}
 		});
 	}
+	public void validateFriend(){
+		if(kakaoMain.friendsList.size()!=0){
+			for(int i=0; i<kakaoMain.friendsList.size(); i++){
+				if(t_search.getText().equals(kakaoMain.friendsList.get(i))){
+					System.out.println("이미 등록된 친구입니다.");
+				}else{
+					addFriend();
+				}
+			}
+		}else{
+			addFriend();
+		}
+	}
+	
 	public void addFriend(){
-		//System.out.println("친구 추가 "+memberlist.getE_mail()+", "+memberlist.getNik_id());
-		//kakaoMain.friendsListPanel.people.add(new PersonPanel(kakaoMain, memberlist.getProfile_img(), memberlist.getNik_id(), memberlist.getStatus_msg()));
-		for(int i=0; i<kakaoMain.friendsList.size(); i++){
-			if(!(t_search.getText().equals(kakaoMain.friendsList.get(i).getYour_email()))){ //검색한 사람이 이미 있는 친구가 아니라면
-				//1.friends테이블에  insert
-				String sql2="insert into friends(e_mail, your_email) values("+"\'"+kakaoMain.friendsList.get(0).getE_mail()+"\'"+","+"\'"+t_search.getText()+"\'"+")";
-				PreparedStatement pstmt=null;
-				try {
-					pstmt = con.prepareStatement(sql2);
-					pstmt.executeQuery();
-					
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}finally{
-					if(pstmt!=null){
-						try {
-							pstmt.close();
-						} catch (SQLException e1) {
-							e1.printStackTrace();
-						}
+		String sql="insert into friends(e_mail, your_email) values("+"\'"+kakaoMain.memberList.get(0).getE_mail()+"\'"+","+"\'"+t_search.getText()+"\'"+")";
+		PreparedStatement pstmt=null;
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.executeQuery();
+			
+			Friends friend=new Friends();
+			friend.setE_mail(kakaoMain.memberList.get(0).getE_mail()); //내 이메일
+			friend.setYour_email(t_search.getText());
+			kakaoMain.friendsList.add(friend);
+			
+			kakaoMain.myFriends.add(new PersonPanel(kakaoMain,kakaoMain.memberList.get(0).getProfile_img(), kakaoMain.memberList.get(0).getNik_id(),  kakaoMain.memberList.get(0).getStatus_msg() ));
+			kakaoMain.p_list.add(kakaoMain.myFriends.get(0));
+			
+			kakaoMain.p_center.updateUI();
+			
+			//kakaoMain.myFriends.add(new PersonPanel(kakaoMain,kakaoMain.memberList.get(j).getProfile_img(), kakaoMain.memberList.get(j).getNik_id(),  kakaoMain.memberList.get(j).getStatus_msg() ));
+	
+				/*for(int j=0; j<kakaoMain.memberList.size(); j++){
+					if(kakaoMain.friendsList.get(kakaoMain.friendsList.size()-1).getYour_email().equals(kakaoMain.memberList.get(j).getE_mail())){
+						System.out.println(j);
+
+						kakaoMain.myFriends.add(new PersonPanel(kakaoMain,kakaoMain.memberList.get(j).getProfile_img(), kakaoMain.memberList.get(j).getNik_id(),  kakaoMain.memberList.get(j).getStatus_msg() ));
+						System.out.println(kakaoMain.myFriends.size());
+						System.out.println(kakaoMain.myFriends.get(0));
+						kakaoMain.p_list.add(kakaoMain.myFriends.get(kakaoMain.myFriends.size()-1));
 					}
 				}
-				
-				//2.kakaoMain의 friendsList에 추가, friendsListPanel의 myfriends에 추가,뿌리기
-				Friends friend=new Friends();
-				friend.setE_mail(kakaoMain.loginEmail); //내 이메일
-				friend.setYour_email(memberList.getE_mail());
-				kakaoMain.friendsList.add(friend);
-				
-				
-			}else{
-				System.out.println("이미 친구입니다.");
+			
+			System.out.println("카카오메인서 받은거"+kakaoMain.myFriends.size());
+			
+			kakaoMain.p_center.updateUI();*/
+			
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}finally{
+			if(pstmt!=null){
+				try {
+					pstmt.close();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
 			}
-		}		
+		}
 	}
 	
 	//다이얼로그 위치

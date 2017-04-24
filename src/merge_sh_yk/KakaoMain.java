@@ -6,6 +6,7 @@ import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.swing.JFrame;
@@ -13,16 +14,18 @@ import javax.swing.JPanel;
 
 import db.DBManager;
 
-public class KakaoMain extends JFrame{
+public class KakaoMain extends JFrame implements Runnable{
 	Point mouseDownCompCoords = null;
 	JPanel[] panel;
-	JPanel menuPanel, friendsListPanel, chattingListPanel, settingPanel, p_center;
+	JPanel p_list; //p_search부분 제외한 아랫부분 전체 패널-그리드
+	public JPanel menuPanel, friendsListPanel, chattingListPanel, settingPanel, p_center;
 	DBManager manager;
 	Connection con;
 	public String loginEmail;
 	public Vector<MemberList> memberList;
 	public Vector<Friends> friendsList;
-	
+	//Thread updateUIThread;
+	ArrayList<PersonPanel> myFriends = new ArrayList<PersonPanel>(); //friends 테이블 레코드 저장
 	
 	Client_chat chat;//채널 새창*채팅목록에서 새로열기 가능하게 바꾸기
 	
@@ -65,9 +68,15 @@ public class KakaoMain extends JFrame{
 		chattingListPanel=new ChattingListPanel(this);
 		settingPanel=new SettingPanel();
 		
+		System.out.println(friendsListPanel);
+		
 		chat=new Client_chat(this);/////////채팅
 		
 		panel[1]=new JPanel();	
+		
+		//updateUIThread=new Thread(this);
+				//updateUIThread.start();
+		
 		panel[1].setLayout(new BorderLayout()); //panel[1]의 북쪽에 메뉴바, 센터에 패널3개
 	
 		panel[1].add(menuPanel, BorderLayout.NORTH);
@@ -86,6 +95,18 @@ public class KakaoMain extends JFrame{
 
 		dragMouse(panel[0]);
 		
+	}
+	
+	public void run() {
+		while(true){
+			try {
+				Thread.sleep(500);
+				//p_center.updateUI();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	//윈도우안에 어떤 패널이 올지를 결정해주는 메서드 정의
@@ -131,5 +152,7 @@ public class KakaoMain extends JFrame{
 	public static void main(String[] args) {
 		new KakaoMain();
 	}
+
+	
 	
 }

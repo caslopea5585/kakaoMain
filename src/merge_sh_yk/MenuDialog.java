@@ -57,6 +57,7 @@ public class MenuDialog extends JDialog implements ActionListener{
 		
 		point(this);
 		
+		
 		bt_addFriend.addActionListener(this);
 		bt_logout.addActionListener(this);
 		bt_exit.addActionListener(this);
