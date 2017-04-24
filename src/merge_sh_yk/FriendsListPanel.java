@@ -128,7 +128,6 @@ public class FriendsListPanel extends JPanel{
 					System.out.println("친구:"+myFriends.get(cnt).name);
 					System.out.println("사이즈:"+myFriends.size());
 				}
->>>>>>> f0995b0918a1547d87aaf1e38cd30c9aff7579c2
 			}
 		}
 		
