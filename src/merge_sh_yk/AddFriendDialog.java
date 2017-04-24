@@ -30,6 +30,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.Scrollable;
+
+import org.mariadb.jdbc.MySQLDataSource;
 
 import db.DBManager;
 
@@ -57,8 +60,10 @@ public class AddFriendDialog extends JDialog{
 	
 	JPanel p_friend, p_img, p_add, p_margin;
 	JButton bt_add;
+	Friends friend;
 	
 	MemberList memberList;
+	PersonPanel personPanel;
 	
 	public AddFriendDialog(Connection con, KakaoMain kakaoMain){
 		getRootPane().setBorder( BorderFactory.createLineBorder(Color.DARK_GRAY) );
@@ -198,24 +203,7 @@ public class AddFriendDialog extends JDialog{
 				System.out.println("정보 없 음");
 				//member.setStatus_msg(rs.getString("status_msg"));
 			}
-			/*
-			if(member!=null){
-				ori_email=member.getE_mail();
-				ori_nik=member.getNik_id();
-				ori_img=member.getProfile_img();
-			}else{
-				ori_email=null;
-			}
-			
-			if(input_id.equalsIgnoreCase(ori_email)){
-				//JOptionPane.showMessageDialog(this, "친구가 있습니다");
-				showFriend();
-			}else{
-				//JOptionPane.showMessageDialog(this, "친구가 없습니다");
-				la_des.setText("\'"+t_search.getText()+"\'"+"를 찾을 수 없습니다.");
-			}
-			member=null;
-			*/
+
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -280,7 +268,78 @@ public class AddFriendDialog extends JDialog{
 			}
 		});
 	}
+<<<<<<< HEAD
 	
+=======
+	public void validateFriend(){
+		System.out.println("검사 전 친구 사이즈는???"+ kakaoMain.friendsList.size());
+		int friendsSize = kakaoMain.friendsList.size();
+		String getText = t_search.getText();
+		boolean flag =true;
+		if(kakaoMain.friendsList.size()!=0){
+			if(t_search.getText().equals(kakaoMain.memberList.get(0).getE_mail())){
+				JOptionPane.showMessageDialog(this, "자신을 친구등록할 수 없습니다.");
+			}
+			
+			for(int i=0;i<friendsSize;i++){
+				if(t_search.getText().equals(kakaoMain.friendsList.get(i).getYour_email())){
+					JOptionPane.showMessageDialog(this, "이미등록된 친구입니다.");
+					flag=!flag;
+				}
+			}
+			
+			if(flag){
+				addFriend();
+				System.out.println("친구생성");
+			}
+		}else if(kakaoMain.friendsList.size()==0){
+			 if(t_search.getText().equals(kakaoMain.memberList.get(0).getE_mail())){
+				JOptionPane.showMessageDialog(this, "자신의 친구등록할 수 없습니다.");
+			}else{
+				addFriend();
+				JOptionPane.showMessageDialog(this, " 첫 친구등록완료");
+			}
+		}
+	}
+	
+	public void addFriend(){
+		String sql="insert into friends(e_mail, your_email) values("+"\'"+kakaoMain.memberList.get(0).getE_mail()+"\'"+","+"\'"+t_search.getText()+"\'"+")";
+		PreparedStatement pstmt=null;
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.executeUpdate();
+			
+			friend=new Friends();
+			friend.setE_mail(kakaoMain.memberList.get(0).getE_mail()); //내 이메일
+			friend.setYour_email(t_search.getText());
+			kakaoMain.friendsList.add(friend);
+			
+			for(int i=0;i<kakaoMain.memberList.size();i++){
+				if(kakaoMain.memberList.get(i).getE_mail().equals(t_search.getText())){
+					System.out.println("추가 전 mYFriend 의 사이즈는?" + kakaoMain.myFriends.size());
+					kakaoMain.myFriends.add(new PersonPanel(kakaoMain,kakaoMain.memberList.get(i).getProfile_img(), kakaoMain.memberList.get(i).getNik_id(),  kakaoMain.memberList.get(i).getStatus_msg() ));
+					System.out.println("추가 후 mYFriend 의 사이즈는?" + kakaoMain.myFriends.size());
+					kakaoMain.p_list.add(kakaoMain.myFriends.get(kakaoMain.myFriends.size()-1 ));
+					System.out.println("");
+
+				}
+			}
+			kakaoMain.friendsListPanel.updateUI();
+			kakaoMain.p_center.updateUI();
+			
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}finally{
+			if(pstmt!=null){
+				try {
+					pstmt.close();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+		}
+	}
+>>>>>>> ed68db1d1b8c5abd1cb4c0b1d73e9902bd4ce2b1
 	
 	//다이얼로그 위치
 	public void point(JDialog dialog){

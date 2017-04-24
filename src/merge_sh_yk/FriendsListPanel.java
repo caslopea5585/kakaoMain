@@ -130,12 +130,13 @@ public class FriendsListPanel extends JPanel{
 					System.out.println("친구:"+myFriends.get(cnt).name);
 					System.out.println(" 리스트 패널 사이즈:"+myFriends.size());
 					
-					kakaoMain.myFriends=myFriends;
-					kakaoMain.p_list=p_list;
-					
 				}
 			}
 		}
+		kakaoMain.myFriends=myFriends;
+		kakaoMain.p_list=p_list;
+		kakaoMain.friendsListPanel=this;
+		
 		
 		
 		add(p_search, BorderLayout.NORTH);
@@ -145,6 +146,9 @@ public class FriendsListPanel extends JPanel{
 		setPreferredSize(new Dimension(360, 497));
 		//setPreferredSize(new Dimension(360, 450));
 		
+	}
+	public void gogo(){
+		updateUI();
 	}
 	
 }

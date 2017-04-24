@@ -17,7 +17,7 @@ import db.DBManager;
 public class KakaoMain extends JFrame implements Runnable{
 	Point mouseDownCompCoords = null;
 	JPanel[] panel;
-	JPanel p_list; //p_search부분 제외한 아랫부분 전체 패널-그리드
+	JPanel p_list=new JPanel(); //p_search부분 제외한 아랫부분 전체 패널-그리드
 	public JPanel menuPanel, friendsListPanel, chattingListPanel, settingPanel, p_center;
 	DBManager manager;
 	Connection con;
@@ -64,13 +64,15 @@ public class KakaoMain extends JFrame implements Runnable{
 		p_list=new JPanel();
 		
 		p_center=new JPanel();
-
+		
+		
 		menuPanel=new MenuPanel(this);
 		friendsListPanel=new FriendsListPanel(this);
 		chattingListPanel=new ChattingListPanel(this);
 		settingPanel=new SettingPanel();
 		
-		System.out.println(friendsListPanel);
+		
+		
 		
 		chat=new Client_chat(this);/////////채팅
 		
@@ -104,6 +106,7 @@ public class KakaoMain extends JFrame implements Runnable{
 			try {
 				Thread.sleep(500);
 				//p_center.updateUI();
+				
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
