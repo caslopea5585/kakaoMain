@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import db.DBManager;
@@ -29,6 +30,9 @@ public class KakaoMain extends JFrame implements Runnable{
 	
 	Client_chat chat;//채널 새창*채팅목록에서 새로열기 가능하게 바꾸기
 	
+	
+	int friends_count;
+	JLabel la_friends=new JLabel();
 	public KakaoMain(){
 		DBConn();
 		panel=new JPanel[2];
