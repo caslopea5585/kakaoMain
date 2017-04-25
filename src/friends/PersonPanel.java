@@ -109,22 +109,16 @@ public class PersonPanel extends JPanel {
 				kakaoMain.chat.setVisible(true);//화면 교체
 			}
 		});
-<<<<<<< HEAD:src/merge_sh_yk/PersonPanel.java
-		
+
 		setPreferredSize(new Dimension(340, 60));
 		setBorder(BorderFactory.createEmptyBorder(5,15,5,5));
-=======
 
 		setPreferredSize(new Dimension(360, 60));
 		setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
->>>>>>> origin/master:src/friends/PersonPanel.java
 		setBackground(Color.WHITE);
 		
 		System.out.println("퍼슨 패널 생성 완료.");
 	}
-	
-	
-	
 	
 	public void getFriendList(){
 		manager=DBManager.getInstance();
@@ -132,7 +126,6 @@ public class PersonPanel extends JPanel {
 		String sql="select * from members";
 		PreparedStatement pstmt;
 		ResultSet rs =null;
-		
 		
 		try {
 			pstmt = con.prepareStatement(sql);

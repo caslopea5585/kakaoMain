@@ -18,7 +18,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import main.KakaoMain;
-import profile.Profile;
 
 public class ChatRoomPanel extends JPanel{
 	Canvas can=null;

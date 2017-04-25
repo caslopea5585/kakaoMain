@@ -65,14 +65,12 @@ public class AddFriendDialog extends JDialog{
 	
 	MemberList memberList;
 	PersonPanel personPanel;
-<<<<<<< HEAD:src/merge_sh_yk/AddFriendDialog.java
 	
 	JLabel la_nick, la_status;
-	
-=======
+
 	Profile profile;
 	int q=0;
->>>>>>> origin/master:src/friends/AddFriendDialog.java
+
 	public AddFriendDialog(Connection con, KakaoMain kakaoMain){
 		getRootPane().setBorder( BorderFactory.createLineBorder(Color.DARK_GRAY) );
 		this.kakaoMain=kakaoMain;

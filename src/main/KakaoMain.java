@@ -37,16 +37,9 @@ public class KakaoMain extends JFrame implements Runnable{
 	public ArrayList<PersonPanel> myFriends = new ArrayList<PersonPanel>(); //friends 테이블 레코드 저장
 	
 	public ChatMain chat;//채널 새창*채팅목록에서 새로열기 가능하게 바꾸기
-	
-<<<<<<< HEAD:src/merge_sh_yk/KakaoMain.java
-	
-	int friends_count;
-	JLabel la_friends=new JLabel();
-	
-=======
+
 	public int friends_count;
 	public JLabel la_friends=new JLabel();
->>>>>>> origin/master:src/main/KakaoMain.java
 	public KakaoMain(){
 		getRootPane().setBorder( BorderFactory.createLineBorder(Color.DARK_GRAY) );
 		DBConn();

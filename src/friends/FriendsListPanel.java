@@ -5,13 +5,10 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-<<<<<<< HEAD:src/merge_sh_yk/FriendsListPanel.java
 import java.awt.Insets;
 import java.awt.Rectangle;
-=======
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
->>>>>>> origin/master:src/friends/FriendsListPanel.java
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,6 +24,7 @@ import javax.swing.ScrollPaneLayout;
 
 import db.DBManager;
 import main.KakaoMain;
+import merge_sh_yk.MyScrollBarUI;
 import profile.Profile;
 
 public class FriendsListPanel extends JPanel {
@@ -47,11 +45,8 @@ public class FriendsListPanel extends JPanel {
 	
 	String myPhotoPath, myName, myStatusMsg;
 	int j=0; //로그인한사람의 정보를 멤버리스트에서 찾기위한 변수.
-<<<<<<< HEAD:src/merge_sh_yk/FriendsListPanel.java
 	int x=7, y=1;
-=======
 	int q=0; //내부익명변수 처리카운트.
->>>>>>> origin/master:src/friends/FriendsListPanel.java
 	
 	public FriendsListPanel(KakaoMain kakaoMain){
 		this.kakaoMain= kakaoMain;
