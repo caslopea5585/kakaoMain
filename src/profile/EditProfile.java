@@ -1,4 +1,4 @@
-package Profile;
+package profile;
 
 import java.awt.BorderLayout;
 import java.awt.Canvas;
@@ -27,8 +27,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import merge_sh_yk.KakaoMain;
-import merge_sh_yk.MemberList;
+import main.KakaoMain;
+import main.MemberList;
 
 public class EditProfile extends JDialog implements ActionListener{
 	Profile Profile;

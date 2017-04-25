@@ -24,9 +24,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextPane;
 
-import merge_sh_yk.ClientThread;
-import merge_sh_yk.KakaoMain;
-import merge_sh_yk.LoginPanel;
+import login.LoginPanel;
+import main.ClientThread;
+import main.KakaoMain;
 import net.miginfocom.swing.MigLayout;
 
 

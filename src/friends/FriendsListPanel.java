@@ -1,4 +1,4 @@
-package merge_sh_yk;
+package friends;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -17,8 +17,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-import Profile.Profile;
 import db.DBManager;
+import main.KakaoMain;
+import profile.Profile;
 
 public class FriendsListPanel extends JPanel {
 	JPanel p_search; //검색 패널

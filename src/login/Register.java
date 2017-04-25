@@ -1,4 +1,4 @@
-package merge_sh_yk;
+package login;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -20,6 +20,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import main.KakaoMain;
+import main.MemberList;
+import util.HintedPasswordField;
+import util.HintedTextField;
+
 //회원가입
 public class Register extends JDialog {
 	   JLabel la_title, la_checkId, la_checkPw;
@@ -29,7 +34,7 @@ public class Register extends JDialog {
 	   JButton bt;
 	   boolean flag=true;
 	   
-	   Member me;
+	   MemberList me;
 	   KakaoMain kakaoMain;
 	   private static final String EMAIL_PATTERN ="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 		
@@ -227,7 +232,7 @@ public class Register extends JDialog {
 			JOptionPane.showMessageDialog(this, "비밀번호가 일치하지 않습니다.");
 		   }	
 		   
-		   me=new Member();//인스턴스 한건 생성
+		   me=new MemberList();//인스턴스 한건 생성
 		   me.setE_mail(t_email.getText());
 		   me.setNik_id(t_name.getText());
 		   me.setPassword(t_pw.getText());

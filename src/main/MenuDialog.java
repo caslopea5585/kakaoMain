@@ -1,4 +1,4 @@
-package merge_sh_yk;
+package main;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -12,6 +12,9 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+
+import friends.AddFriendDialog;
+
 
 public class MenuDialog extends JDialog implements ActionListener{
 	KakaoMain kakaoMain;

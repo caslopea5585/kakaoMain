@@ -8,11 +8,17 @@ import java.sql.SQLException;
 //인스턴스의 갯수를 한개만. 어플리케이션 가동 중 생성되는 커넥션 객체를 하나로 통일
 public class DBManager {
 	static private DBManager instance;
-	
+
 	private String driver="oracle.jdbc.driver.OracleDriver";
 	private String url="jdbc:oracle:thin:@localhost:1521:XE";
 	private String user="bread";
 	private String pass="bread";
+/*	
+	private String driver="org.mariadb.jdbc.Driver";
+	private String url="jdbc:mariadb://localhost:3306/kakao";
+	private String user="root";
+	private String pass="";
+*/		
 	
 	private Connection con;
 	

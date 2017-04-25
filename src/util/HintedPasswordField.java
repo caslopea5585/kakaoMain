@@ -1,4 +1,4 @@
-package merge_sh_yk;
+package util;
 
 import java.awt.Color;
 import java.awt.Graphics;

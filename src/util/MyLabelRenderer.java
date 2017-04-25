@@ -1,4 +1,4 @@
- package merge_sh_yk;
+ package util;
 
 import java.awt.BorderLayout;
 import java.awt.Canvas;
@@ -28,8 +28,8 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
-import Profile.Profile;
 import db.DBManager;
+import profile.Profile;
 
 public class MyLabelRenderer implements TableCellRenderer{
 

@@ -1,4 +1,4 @@
-package merge_sh_yk;
+package friends;
 
 public class Friends {
 	private String e_mail;

@@ -1,4 +1,4 @@
-package merge_sh_yk;
+package login;
  
  
  
@@ -42,6 +42,12 @@ import javax.swing.SwingUtilities;
 import javax.swing.plaf.synth.SynthSeparatorUI;
 
 import db.DBManager;
+import friends.Friends;
+import main.ClientThread;
+import main.KakaoMain;
+import main.MemberList;
+import util.HintedPasswordField;
+import util.HintedTextField;
  
  
 public class LoginPanel extends JPanel{

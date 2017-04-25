@@ -1,4 +1,4 @@
-package merge_sh_yk;
+package friends;
 
 import java.awt.BorderLayout;
 import java.awt.Canvas;
@@ -10,6 +10,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.lang.reflect.Member;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,10 +23,12 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import Profile.Profile;
 import db.DBManager;
+import main.KakaoMain;
+import main.MemberList;
+import profile.Profile;
 
-public class PersonPanel extends JPanel{
+public class PersonPanel extends JPanel {
 	Canvas can=null;
 	BufferedImage image=null; //프로필 사진
 	BufferedImage bgimage=null; //프로필 사진 원형처리 위한 이미지
@@ -43,7 +46,7 @@ public class PersonPanel extends JPanel{
 	AddFriend pop; //내 프로필 변경을 위한 임시창.
 	DBManager manager;
 	Connection con;
-	ArrayList<Member> memberList = new ArrayList<Member>();
+	ArrayList<MemberList> memberList = new ArrayList<MemberList>();
 	KakaoMain kakaoMain;
 	boolean flag=false;
 	Profile profile;
@@ -91,6 +94,13 @@ public class PersonPanel extends JPanel{
 		add(can, BorderLayout.WEST);
 		add(p_info);
 		
+		this.addMouseListener(new MouseAdapter() {
+			
+			public void mouseClicked(MouseEvent arg0) {
+				kakaoMain.chat.setLocation(kakaoMain.getLocation().x+360,kakaoMain.getLocation().y);
+				kakaoMain.chat.setVisible(true);//화면 교체
+			}
+		});
 
 		setPreferredSize(new Dimension(360, 60));
 		setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
@@ -114,12 +124,12 @@ public class PersonPanel extends JPanel{
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while(rs.next()){
-				Member memberListDto = new Member();
+				MemberList memberListDto = new MemberList();
 				memberListDto.setE_mail(rs.getString("e_mail"));
 				memberListDto.setNik_id(rs.getString("nik_id"));
 				memberListDto.setPassword(rs.getString("password"));
 				memberListDto.setProfile_img(rs.getString("profile_img"));
-				memberListDto.setProfileBackImg(rs.getString("profilebackimg"));
+				memberListDto.setProfile_Back_Img(rs.getString("profilebackimg"));
 				memberListDto.setStatus_msg(rs.getString("status_msg"));
 				
 				memberList.add(memberListDto);

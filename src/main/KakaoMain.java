@@ -1,4 +1,4 @@
-package merge_sh_yk;
+package main;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -13,27 +13,32 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import chatting.ChattingListPanel;
 import client.chat.ChatMain;
 import db.DBManager;
+import friends.Friends;
+import friends.FriendsListPanel;
+import friends.PersonPanel;
+import login.LoginPanel;
+import setting.SettingPanel;
 
 public class KakaoMain extends JFrame implements Runnable{
 	Point mouseDownCompCoords = null;
 	public JPanel[] panel;
-	JPanel p_list=new JPanel(); //p_search부분 제외한 아랫부분 전체 패널-그리드
+	public JPanel p_list=new JPanel(); //p_search부분 제외한 아랫부분 전체 패널-그리드
 	public JPanel menuPanel, friendsListPanel, chattingListPanel, settingPanel, p_center;
 	DBManager manager;
-	Connection con;
+	public Connection con;
 	public String loginEmail;
 	public Vector<MemberList> memberList;
 	public Vector<Friends> friendsList;
 	//Thread updateUIThread;
-	ArrayList<PersonPanel> myFriends = new ArrayList<PersonPanel>(); //friends 테이블 레코드 저장
+	public ArrayList<PersonPanel> myFriends = new ArrayList<PersonPanel>(); //friends 테이블 레코드 저장
 	
-	ChatMain chat;//채널 새창*채팅목록에서 새로열기 가능하게 바꾸기
+	public ChatMain chat;//채널 새창*채팅목록에서 새로열기 가능하게 바꾸기
 	
-	
-	int friends_count;
-	JLabel la_friends=new JLabel();
+	public int friends_count;
+	public JLabel la_friends=new JLabel();
 	public KakaoMain(){
 		DBConn();
 		panel=new JPanel[2];
@@ -75,9 +80,7 @@ public class KakaoMain extends JFrame implements Runnable{
 		menuPanel=new MenuPanel(this);
 		friendsListPanel=new FriendsListPanel(this);
 		chattingListPanel=new ChattingListPanel(this);
-		settingPanel=new SettingPanel();
-		
-		
+		settingPanel=new SettingPanel(this);
 		
 		
 		
