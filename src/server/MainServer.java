@@ -40,8 +40,8 @@ public class MainServer extends JFrame implements Runnable{
 				
 				ThreadManager tm=new ThreadManager(socket,userThread);
 				tm.start();
-				
 				userThread.add(tm);
+				
 			}
 			
 		} catch (IOException e) {

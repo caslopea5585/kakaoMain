@@ -24,7 +24,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextPane;
 
-import merge_sh_yk.ClientThread;
+
 import merge_sh_yk.KakaoMain;
 import merge_sh_yk.LoginPanel;
 import net.miginfocom.swing.MigLayout;
@@ -96,6 +96,7 @@ public class ChatMain extends JDialog implements ActionListener{
 		//센터영역
 		table = new JTable();
 		scroll = new JScrollPane();
+		System.out.println("테이블이 만들어지나?");
 		
 		table.setTableHeader(null);
 		table.setModel(model);
@@ -157,8 +158,6 @@ public class ChatMain extends JDialog implements ActionListener{
 		
 		LoginPanel log=(LoginPanel)main.panel[0];
 		log.ct.sendMsg(msg,time,sender);
-
-		
 		chatDto=log.ct.chatDto;
 		
 		model.addRow(chatDto);

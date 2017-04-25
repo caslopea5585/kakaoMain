@@ -7,7 +7,6 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
@@ -17,6 +16,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+
+import client.chat.Chat;
 
 //DB가 가져야할 정보 num/users/내용
 public class Server_chat extends Thread{
@@ -28,6 +29,7 @@ public class Server_chat extends Thread{
 	JSONArray value;
 	String msgValue,timeValue,senderValue;
 	JSONObject valueCheck;
+	
 	
 	
 	public Server_chat(Socket socket,Vector<ThreadManager> userThread) {
@@ -43,7 +45,8 @@ public class Server_chat extends Thread{
 	}
 	
 	public void listen(){
-		//클라에서 받는 것
+		//클라에서 받는 것ㄴ
+		
 		String msg=null;
 		DataInputStream dis =null;
 		File file=null;
@@ -51,10 +54,12 @@ public class Server_chat extends Thread{
 		BufferedOutputStream bos=null;
 		try {
 			msg=buffr.readLine();
+			System.out.println("서버 파서대상"+  msg);
 			//여기서 판단하기
-			System.out.println(msg);
+			System.out.println(msg+"ServerChat에서 파서할 내용.....");
 			JSONParser parser=new JSONParser();
 			JSONObject obj=(JSONObject)parser.parse(msg);
+			
 			
 			String type=(String)obj.get("type");
 			if(type.equals("chat")){
@@ -73,10 +78,19 @@ public class Server_chat extends Thread{
 							 timeValue=(String)json.get("time");
 						 }else if(i==2){
 							 JSONObject json = (JSONObject)value.get(i);
-							 
 							 senderValue=(String)json.get("sender");
 						 }
 					 }
+					 
+					/* 
+					 System.out.println("클라이언트에서 받는 메세지는???: "+msgValue+senderValue+timeValue);
+					 chatDto.setMsg(msgValue);
+					 chatDto.setSender(senderValue);
+					 chatDto.setTime(timeValue);
+					 System.out.println("클라이언트 쓰레드에서 셋한 dto메세지 값은??:"+chatDto.getMsg());
+					 */
+					 
+					 
 					 
 					 sendMsg(msgValue,timeValue,senderValue);
 					 System.out.println(msgValue+senderValue+timeValue);
@@ -134,7 +148,7 @@ public class Server_chat extends Thread{
 	
 	public void sendMsg(String msg,String time,String sender){
 		//서버가 보내주는 것
-		
+			System.out.println("보내지니????");
 			//판단해서 보내주기
 			StringBuffer sb = new StringBuffer();
 			sb.append("{");
@@ -142,7 +156,10 @@ public class Server_chat extends Thread{
 			sb.append("\"contents\":[{\"msg\":\""+msg+"\"},{\"time\":\""+time+"\"},{\"sender\":\""+sender+"\"}]");
 			sb.append("}");
 			String myString = sb.toString();
-			
+/*			
+			 chatDto.setMsg(msgValue);
+			 chatDto.setSender(senderValue);
+			 chatDto.setTime(timeValue);*/
 			
 /*			try {
 				buffw.write(myString+"\n");
@@ -151,10 +168,16 @@ public class Server_chat extends Thread{
 				e.printStackTrace();
 			}*/
 			
+			System.out.println("유저쓰레드 사이즈 = "+userThread.size());
 		for(int i=0;i<userThread.size();i++){
+			
 				try {
-					userThread.get(i).chat.buffw.write(myString+"\n");
-					userThread.get(i).chat.buffw.flush();
+					System.out.println("유저 쓰레드???"+userThread.get(i));
+					userThread.elementAt(i).chat.buffw.write(myString+"\n");
+					userThread.elementAt(i).chat.buffw.flush();
+					
+					/*userThread.get(i).chat.buffw.write(myString+"\n");
+					userThread.get(i).chat.buffw.flush();*/
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -179,8 +202,13 @@ public class Server_chat extends Thread{
 		String myString = obj.toString();
 	    try {
 			for(int i=0;i<userThread.size();i++){
+				userThread.elementAt(i).chat.buffw.write(myString+"\n");
+				userThread.elementAt(i).chat.buffw.flush();
+				
+				
+				/*
 				userThread.get(i).chat.buffw.write(myString+"\n");
-				userThread.get(i).chat.buffw.flush();
+				userThread.get(i).chat.buffw.flush();*/
 			}
 			
 		} catch (IOException e) {

@@ -319,6 +319,26 @@ public class AddFriendDialog extends JDialog{
 					q=i;
 					System.out.println("추가 전 mYFriend 의 사이즈는?" + kakaoMain.myFriends.size());
 					kakaoMain.myFriends.add(personPanel=new PersonPanel(kakaoMain,true,kakaoMain.memberList.get(i).getProfile_img(), kakaoMain.memberList.get(i).getNik_id(),  kakaoMain.memberList.get(i).getStatus_msg() ));
+					kakaoMain.myFriends.get(kakaoMain.myFriends.size()-1).can.addMouseListener(new MouseAdapter() {
+						public void mouseClicked(MouseEvent e) {
+							Object obj = e.getSource();
+							for(int i=0;i<kakaoMain.myFriends.size();i++){
+								if(obj==kakaoMain.myFriends.get(i).can){
+									System.out.println(i+"리스너속 아이는?");
+									//프렌즈에 있는 i의 이메일가지고 멤버리스트의 아이가 일치하는 것을 찾아서 그것의 이미지를 불러와야 한다.
+									System.out.println(kakaoMain.myFriends.get(i) + "이메일 가져와야함");
+									System.out.println(kakaoMain.myFriends.get(i).name);
+									for(int j=0;j<kakaoMain.memberList.size();j++){
+										if(kakaoMain.myFriends.get(i).name.equals(kakaoMain.memberList.get(j).getNik_id())){
+											profile=new Profile(kakaoMain.memberList.get(j).getProfile_img(),kakaoMain,false,j);
+											
+										}
+									}
+								}
+							}
+						}
+						
+					});
 					/*personPanel.can.addMouseListener(new MouseAdapter() {
 						public void mouseClicked(MouseEvent e) {
 							profile=new Profile(kakaoMain.memberList.get(q).getProfile_img(),kakaoMain,true); //f

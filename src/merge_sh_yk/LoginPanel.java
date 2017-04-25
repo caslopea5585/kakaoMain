@@ -41,6 +41,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.plaf.synth.SynthSeparatorUI;
 
+import client.chat.ClientThread;
 import db.DBManager;
  
  
@@ -66,7 +67,7 @@ public class LoginPanel extends JPanel{
    
  
 
-   String ip="127.0.0.1";
+   String ip="211.238.142.113";
   //String ip="211.238.142.102";//////////////////임시 아이피
 
    Socket socket;

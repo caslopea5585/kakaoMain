@@ -1,4 +1,4 @@
-package merge_sh_yk;
+package client.chat;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -22,9 +22,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import client.chat.Chat;
-import client.chat.ChatMain;
-
 public class ClientThread extends Thread{
 	Socket socket;
 	Socket imgsocket;
@@ -33,7 +30,7 @@ public class ClientThread extends Thread{
 	BufferedReader buffr;
 	BufferedWriter buffw;
 	
-	public Chat chatDto;
+	 Chat chatDto;
 	String msgValue,timeValue,senderValue;
 	JSONArray value;
 	JSONObject valueCheck;
@@ -90,6 +87,8 @@ public class ClientThread extends Thread{
 					 chatDto.setSender(senderValue);
 					 chatDto.setTime(timeValue);
 					 System.out.println("클라이언트 쓰레드에서 셋한 dto메세지 값은??:"+chatDto.getMsg());
+					 sendMsg(msgValue, timeValue, senderValue);
+					
 				 }
 		
 				
@@ -122,6 +121,8 @@ public class ClientThread extends Thread{
 			String myString = sb.toString();
 			
 			System.out.println("클라이언트에서 서버로 보내는말: "+myString);
+			System.out.println("");
+			
 			buffw.write(myString+"\n");
 			buffw.flush();
 		} catch (IOException e) {
@@ -173,6 +174,7 @@ public class ClientThread extends Thread{
 		
 		while(true){
 			listen();
+			
 			main.table.setModel(main.model);
 			main.table.updateUI();
 		}
