@@ -86,9 +86,6 @@ public class KakaoMain extends JFrame implements Runnable{
 		
 		settingPanel=new SettingPanel(this);
 		
-		
-		
-		
 		panel[1]=new JPanel();	
 		
 		//updateUIThread=new Thread(this);
