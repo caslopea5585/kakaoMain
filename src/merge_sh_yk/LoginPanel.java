@@ -70,7 +70,7 @@ public class LoginPanel extends JPanel{
   //String ip="211.238.142.102";//////////////////임시 아이피
 
    Socket socket;
-   ClientThread ct;
+   public ClientThread ct;
    int port=7777;
    
    public LoginPanel(KakaoMain kakaoMain) {

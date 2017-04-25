@@ -13,11 +13,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import client.chat.ChatMain;
 import db.DBManager;
 
 public class KakaoMain extends JFrame implements Runnable{
 	Point mouseDownCompCoords = null;
-	JPanel[] panel;
+	public JPanel[] panel;
 	JPanel p_list=new JPanel(); //p_search부분 제외한 아랫부분 전체 패널-그리드
 	public JPanel menuPanel, friendsListPanel, chattingListPanel, settingPanel, p_center;
 	DBManager manager;
@@ -28,7 +29,7 @@ public class KakaoMain extends JFrame implements Runnable{
 	//Thread updateUIThread;
 	ArrayList<PersonPanel> myFriends = new ArrayList<PersonPanel>(); //friends 테이블 레코드 저장
 	
-	Client_chat chat;//채널 새창*채팅목록에서 새로열기 가능하게 바꾸기
+	ChatMain chat;//채널 새창*채팅목록에서 새로열기 가능하게 바꾸기
 	
 	
 	int friends_count;
@@ -37,6 +38,7 @@ public class KakaoMain extends JFrame implements Runnable{
 		DBConn();
 		panel=new JPanel[2];
 		panel[0]=new LoginPanel(this);
+		chat=new ChatMain(this);/////////채팅
 		
 		add(panel[0]);
 		
@@ -78,7 +80,7 @@ public class KakaoMain extends JFrame implements Runnable{
 		
 		
 		
-		chat=new Client_chat(this);/////////채팅
+		
 		
 		panel[1]=new JPanel();	
 		
