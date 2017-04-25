@@ -55,8 +55,8 @@ public class FriendsListPanel extends JPanel {
 		
 		scroll=new JScrollPane(p_list, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		
-		//p_list.setPreferredSize(new Dimension(360, 100));
-		p_list.setLayout(new GridLayout(10,1));
+		//p_list.setPreferredSize(new Dimension(360, 497));
+		p_list.setLayout(new GridLayout(20,1));
 		p_list.setBackground(Color.WHITE);
 		
 		t_search.setPreferredSize(new Dimension(350, 30));
@@ -183,6 +183,9 @@ public class FriendsListPanel extends JPanel {
 		kakaoMain.p_list=p_list;
 		kakaoMain.friendsListPanel=this;
 		
+		
+		kakaoMain.friends_count=friends_count;
+		kakaoMain.la_friends=la_friends;
 		
 		
 		add(p_search, BorderLayout.NORTH);
