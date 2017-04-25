@@ -2,7 +2,6 @@ package client.chat;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -10,29 +9,20 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Vector;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextPane;
 
-<<<<<<< HEAD
-
-import merge_sh_yk.KakaoMain;
-import merge_sh_yk.LoginPanel;
-=======
 import login.LoginPanel;
-import main.ClientThread;
 import main.KakaoMain;
->>>>>>> 916f4cedbecceb89754e6bb45aa640fc5e21c67d
 import net.miginfocom.swing.MigLayout;
 
 
@@ -62,7 +52,7 @@ public class ChatMain extends JDialog implements ActionListener{
 	JFileChooser chooser;
 	
 	KakaoMain main;
-	//Chat chatDto;
+	Chat chatDto;
 	
 	
 	
@@ -78,8 +68,7 @@ public class ChatMain extends JDialog implements ActionListener{
 		p_south = new JPanel();
 		
 		//북쪽영역의 패널
-		bt_profil = new RButton(new ImageIcon(this.getClass().getResource(
-				"/head2.png")));
+		bt_profil = new RButton(new ImageIcon(this.getClass().getResource("/head2.png")));
 		la_user = new JLabel("유저");
 		bt_list = new JButton("게시판");
 		bt_totalview = new JButton("모아보기");
@@ -159,20 +148,13 @@ public class ChatMain extends JDialog implements ActionListener{
 	public void sendsMsg(){
 		String msg = area.getText().trim();
 		String sender = main.memberList.get(0).getNik_id();
-		String time =  getTime();
-		
-		
+		String time =  getTime();	
 		LoginPanel log=(LoginPanel)main.panel[0];
 		log.ct.sendMsg(msg,time,sender);
-<<<<<<< HEAD
-
-		
+	
 		//chatDto=log.ct.chatDto;
-=======
 		chatDto=log.ct.chatDto;
->>>>>>> 5a5771485676c17c86cbb02569eee61faa88166e
-		
-		//model.addRow(chatDto);
+		model.addRow(chatDto);
 		area.setText("");
 
 	}

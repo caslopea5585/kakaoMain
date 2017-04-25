@@ -13,12 +13,12 @@ public class ChatRenderer implements TableCellRenderer {
 	ChatHolder holder;
 	LeftViewHolder leftHolder= new LeftViewHolder();
 	RightViewHolder rightHolder= new RightViewHolder();
-	//Map<String, Integer> mCacheCount= new HashMap<String, Integer>();
 	int count = 0;
 
 	ChatMain main;
+	Chat chat;
 	
-	Vector<String> dto = new Vector<>();
+	//Vector<String> dto = new Vector<>();
 	
 	public ChatRenderer(ChatMain main) {
 		this.main=main;

@@ -30,7 +30,7 @@ public class ClientThread extends Thread{
 	BufferedReader buffr;
 	BufferedWriter buffw;
 	
-	 Chat chatDto;
+	Chat chatDto;
 	String msgValue,timeValue,senderValue;
 	JSONArray value;
 	JSONObject valueCheck;
@@ -81,16 +81,16 @@ public class ClientThread extends Thread{
 							 senderValue=(String)json.get("sender");
 						 }
 					 }
-					 
+
 					 System.out.println("클라이언트에서 받는 메세지는???: "+msgValue+senderValue+timeValue);
 					 chatDto.setMsg(msgValue);
 					 chatDto.setSender(senderValue);
 					 chatDto.setTime(timeValue);
 					 System.out.println("클라이언트 쓰레드에서 셋한 dto메세지 값은??:"+chatDto.getMsg());
-					 sendMsg(msgValue, timeValue, senderValue);
+					
 					
 				 }
-		
+				 
 				
 			}
 			
@@ -173,8 +173,7 @@ public class ClientThread extends Thread{
 	public void run() {
 		
 		while(true){
-			listen();
-			
+			listen();	
 			main.table.setModel(main.model);
 			main.table.updateUI();
 		}

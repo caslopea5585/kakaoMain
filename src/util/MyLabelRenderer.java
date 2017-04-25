@@ -1,6 +1,7 @@
  package util;
 
 import java.awt.BorderLayout;
+
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Component;
@@ -29,7 +30,7 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
 import db.DBManager;
-import profile.Profile;
+import Profile.Profile;
 
 public class MyLabelRenderer implements TableCellRenderer{
 

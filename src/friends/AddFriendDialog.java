@@ -1,6 +1,7 @@
 package friends;
 
 import java.awt.BorderLayout;
+
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -34,7 +35,7 @@ import javax.swing.JTextField;
 import db.DBManager;
 import main.KakaoMain;
 import main.MemberList;
-import profile.Profile;
+import Profile.Profile;
 import util.HintedTextField;
 
 public class AddFriendDialog extends JDialog{

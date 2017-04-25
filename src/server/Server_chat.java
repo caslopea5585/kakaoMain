@@ -81,17 +81,7 @@ public class Server_chat extends Thread{
 							 senderValue=(String)json.get("sender");
 						 }
 					 }
-					 
-					/* 
-					 System.out.println("클라이언트에서 받는 메세지는???: "+msgValue+senderValue+timeValue);
-					 chatDto.setMsg(msgValue);
-					 chatDto.setSender(senderValue);
-					 chatDto.setTime(timeValue);
-					 System.out.println("클라이언트 쓰레드에서 셋한 dto메세지 값은??:"+chatDto.getMsg());
-					 */
-					 
-					 
-					 
+					 				 
 					 sendMsg(msgValue,timeValue,senderValue);
 					 System.out.println(msgValue+senderValue+timeValue);
 				 }
@@ -152,38 +142,18 @@ public class Server_chat extends Thread{
 			sb.append("\"contents\":[{\"msg\":\""+msg+"\"},{\"time\":\""+time+"\"},{\"sender\":\""+sender+"\"}]");
 			sb.append("}");
 			String myString = sb.toString();
-<<<<<<< HEAD
 				
-=======
-/*			
-			 chatDto.setMsg(msgValue);
-			 chatDto.setSender(senderValue);
-			 chatDto.setTime(timeValue);*/
-			
->>>>>>> 5a5771485676c17c86cbb02569eee61faa88166e
-/*			try {
-				buffw.write(myString+"\n");
-				buffw.flush();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}*/
-			
+
 			System.out.println("유저쓰레드 사이즈 = "+userThread.size());
 		for(int i=0;i<userThread.size();i++){
 			
 				try {
-<<<<<<< HEAD
-					userThread.get(i).sever_chat.buffw.write(myString+"\n");
-					userThread.get(i).sever_chat.buffw.flush();
+					userThread.elementAt(i).sever_chat.buffw.write(myString+"\n");
+					userThread.elementAt(i).sever_chat.buffw.flush();
 					System.out.println("서버에서 참여자들에게 보내는 메세지는???"+myString);
-=======
 					System.out.println("유저 쓰레드???"+userThread.get(i));
-					userThread.elementAt(i).chat.buffw.write(myString+"\n");
-					userThread.elementAt(i).chat.buffw.flush();
-					
-					/*userThread.get(i).chat.buffw.write(myString+"\n");
-					userThread.get(i).chat.buffw.flush();*/
->>>>>>> 5a5771485676c17c86cbb02569eee61faa88166e
+
+
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -208,18 +178,15 @@ public class Server_chat extends Thread{
 		String myString = obj.toString();
 	    try {
 			for(int i=0;i<userThread.size();i++){
-<<<<<<< HEAD
 				userThread.get(i).sever_chat.buffw.write(myString+"\n");
 				userThread.get(i).sever_chat.buffw.flush();
-=======
-				userThread.elementAt(i).chat.buffw.write(myString+"\n");
-				userThread.elementAt(i).chat.buffw.flush();
+				userThread.elementAt(i).sever_chat.buffw.write(myString+"\n");
+				userThread.elementAt(i).sever_chat.buffw.flush();
 				
 				
 				/*
 				userThread.get(i).chat.buffw.write(myString+"\n");
 				userThread.get(i).chat.buffw.flush();*/
->>>>>>> 5a5771485676c17c86cbb02569eee61faa88166e
 			}
 			
 		} catch (IOException e) {
