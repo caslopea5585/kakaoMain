@@ -29,7 +29,7 @@ public class KakaoMain extends JFrame implements Runnable{
 	//Thread updateUIThread;
 	ArrayList<PersonPanel> myFriends = new ArrayList<PersonPanel>(); //friends 테이블 레코드 저장
 	
-	ChatMain chat;//채널 새창*채팅목록에서 새로열기 가능하게 바꾸기
+	public ChatMain chat;//채널 새창*채팅목록에서 새로열기 가능하게 바꾸기
 	
 	
 	int friends_count;

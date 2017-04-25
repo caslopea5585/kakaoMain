@@ -29,6 +29,7 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
+import client.chat.ChatMain;
 import merge_sh_yk.KakaoMain;
 import merge_sh_yk.Member;
 
@@ -180,11 +181,17 @@ public class Profile extends JFrame implements ActionListener{
 		
 		System.out.println("프로필시"+flag); //나이면 false, 나 아니면 true
 		if(!flag){
+			//내가 나를 눌렀을때 소스 구현
 			bt_manager.setVisible(flag);
 			bt_back_profile.setVisible(flag);
 			la_manager.setVisible(flag);
 			bt_chat.setBounds(120, 340, 50, 50);
 			la_chat.setBounds(120, 390, 70, 30);
+			
+			
+		}else{
+			//내가 다른사람을 눌렀을때 소스
+			
 		}
 		
 		can_north_img.addMouseListener(new MouseAdapter() {
@@ -210,6 +217,7 @@ public class Profile extends JFrame implements ActionListener{
 		
 		bt_manager.addActionListener(this);
 		bt_back_profile.addActionListener(this);
+		bt_chat.addActionListener(this);
 		
 		
 		add(layeredPane);
@@ -257,7 +265,9 @@ public class Profile extends JFrame implements ActionListener{
 				can_north_img.repaint();
 			}
 		}else if(obj==bt_chat){
-			
+			ChatMain chat=new ChatMain(kakaoMain);
+			kakaoMain.chat.setLocation(kakaoMain.getLocation().x+360,kakaoMain.getLocation().y);
+			kakaoMain.chat.setVisible(true);//화면 교체
 		}
 		
 	}

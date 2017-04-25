@@ -13,7 +13,7 @@ public class ChatRenderer implements TableCellRenderer {
 	ChatHolder holder;
 	LeftViewHolder leftHolder= new LeftViewHolder();
 	RightViewHolder rightHolder= new RightViewHolder();
-	Map<String, Integer> mCacheCount= new HashMap<String, Integer>();
+	//Map<String, Integer> mCacheCount= new HashMap<String, Integer>();
 	int count = 0;
 
 	ChatMain main;
@@ -36,17 +36,12 @@ public class ChatRenderer implements TableCellRenderer {
 		System.out.println("메시지"+chat.getMsg());
 		System.out.println("시간"+chat.getTime());
 		
-		
-		Integer iDisplaySide = mCacheCount.get(sender);
-		if (iDisplaySide == null) {
-			iDisplaySide = count++;
-			mCacheCount.put(sender, iDisplaySide);
+		if(main.main.memberList.get(0).getNik_id().equals(chat.getSender())){
+			holder=rightHolder;
+		}else{
+			holder=leftHolder;
 		}
-		if (iDisplaySide % 2 == 0) {
-			holder = leftHolder;
-		} else {
-			holder = rightHolder;
-		}
+
 		
 		
 		holder.la_user.setText(sender);

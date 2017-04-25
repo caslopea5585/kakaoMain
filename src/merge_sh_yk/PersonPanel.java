@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -25,7 +26,7 @@ import javax.swing.JPanel;
 import Profile.Profile;
 import db.DBManager;
 
-public class PersonPanel extends JPanel{
+public class PersonPanel extends JPanel {
 	Canvas can=null;
 	BufferedImage image=null; //프로필 사진
 	BufferedImage bgimage=null; //프로필 사진 원형처리 위한 이미지
@@ -91,6 +92,13 @@ public class PersonPanel extends JPanel{
 		add(can, BorderLayout.WEST);
 		add(p_info);
 		
+		this.addMouseListener(new MouseAdapter() {
+			
+			public void mouseClicked(MouseEvent arg0) {
+				kakaoMain.chat.setLocation(kakaoMain.getLocation().x+360,kakaoMain.getLocation().y);
+				kakaoMain.chat.setVisible(true);//화면 교체
+			}
+		});
 
 		setPreferredSize(new Dimension(360, 60));
 		setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
