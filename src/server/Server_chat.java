@@ -29,7 +29,6 @@ public class Server_chat extends Thread{
 	JSONObject valueCheck;
 	
 	
-	
 	public Server_chat(Socket socket,Vector<ThreadManager> userThread) {
 		this.socket=socket;
 		this.userThread=userThread;
@@ -122,12 +121,15 @@ public class Server_chat extends Thread{
 							bos.flush();
 							send(new File(path));
 						} catch (IOException e) {
+							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ParseException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 		    try {
@@ -135,6 +137,7 @@ public class Server_chat extends Thread{
 		    		fos.close();
 		    	}
 			} catch (IOException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -151,6 +154,7 @@ public class Server_chat extends Thread{
 			sb.append("}");
 			String myString = sb.toString();
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> b7c035aa65167b1d98bfebb1cac37305ac27a449
@@ -163,6 +167,10 @@ public class Server_chat extends Thread{
 =======
 
 >>>>>>> b7c035aa65167b1d98bfebb1cac37305ac27a449
+=======
+			
+			
+>>>>>>> parent of 2f22038... 챝이 1:1
 /*			try {
 				buffw.write(myString+"\n");
 				buffw.flush();
@@ -174,6 +182,7 @@ public class Server_chat extends Thread{
 		for(int i=0;i<userThread.size();i++){
 			
 				try {
+<<<<<<< HEAD
 <<<<<<< HEAD
 					userThread.get(i).sever_chat.buffw.write(myString+"\n");
 					userThread.get(i).sever_chat.buffw.flush();
@@ -193,6 +202,10 @@ public class Server_chat extends Thread{
 =======
 
 >>>>>>> b7c035aa65167b1d98bfebb1cac37305ac27a449
+=======
+					userThread.get(i).chat.buffw.write(myString+"\n");
+					userThread.get(i).chat.buffw.flush();
+>>>>>>> parent of 2f22038... 챝이 1:1
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -218,6 +231,7 @@ public class Server_chat extends Thread{
 	    try {
 			for(int i=0;i<userThread.size();i++){
 <<<<<<< HEAD
+<<<<<<< HEAD
 				userThread.get(i).sever_chat.buffw.write(myString+"\n");
 				userThread.get(i).sever_chat.buffw.flush();
 =======
@@ -237,6 +251,10 @@ public class Server_chat extends Thread{
 =======
 
 >>>>>>> b7c035aa65167b1d98bfebb1cac37305ac27a449
+=======
+				userThread.get(i).chat.buffw.write(myString+"\n");
+				userThread.get(i).chat.buffw.flush();
+>>>>>>> parent of 2f22038... 챝이 1:1
 			}
 			
 		} catch (IOException e) {

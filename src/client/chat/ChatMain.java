@@ -52,7 +52,7 @@ public class ChatMain extends JDialog implements ActionListener{
 	JFileChooser chooser;
 	
 	KakaoMain main;
-	//Chat chatDto;
+	Chat chatDto;
 	
 	
 	
@@ -157,8 +157,9 @@ public class ChatMain extends JDialog implements ActionListener{
 <<<<<<< HEAD
 
 		
-		//chatDto=log.ct.chatDto;
+		chatDto=log.ct.chatDto;
 		
+<<<<<<< HEAD
 =======
 
 
@@ -171,6 +172,10 @@ public class ChatMain extends JDialog implements ActionListener{
 		
 		//model.addRow(chatDto);
 		//area.setText("");
+=======
+		model.addRow(chatDto);
+		area.setText("");
+>>>>>>> parent of 2f22038... 챝이 1:1
 
 	}
 	

@@ -42,6 +42,7 @@ public class MainServer extends JFrame implements Runnable{
 				tm.start();
 				userThread.add(tm);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> b7c035aa65167b1d98bfebb1cac37305ac27a449
@@ -55,6 +56,8 @@ public class MainServer extends JFrame implements Runnable{
 =======
 
 >>>>>>> b7c035aa65167b1d98bfebb1cac37305ac27a449
+=======
+>>>>>>> parent of 2f22038... 챝이 1:1
 			}
 			
 		} catch (IOException e) {
