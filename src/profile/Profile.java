@@ -33,6 +33,7 @@ import client.chat.ChatMain;
 import main.KakaoMain;
 import main.MemberList;
 
+
 public class Profile extends JFrame implements ActionListener{
 	Point mouseDownCompCoords = null;
 	

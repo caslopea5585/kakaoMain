@@ -56,7 +56,8 @@ public class ChatMain extends JDialog implements ActionListener{
 	JFileChooser chooser;
 	
 	KakaoMain main;
-	 Chat chatDto;
+	Chat chatDto;
+	
 	
 	
 	
@@ -77,7 +78,6 @@ public class ChatMain extends JDialog implements ActionListener{
 		bt_list = new JButton("게시판");
 		bt_totalview = new JButton("모아보기");
 		bt_serch = new JButton("검색");
-		cmb = new JComboBox(new String[]{"나","상대방"});
 		bt_option = new JButton("설정");
 		chooser=new JFileChooser();
 		
@@ -89,7 +89,7 @@ public class ChatMain extends JDialog implements ActionListener{
 		p_north.add(bt_list); //게시판
 		p_north.add(bt_totalview); //모아보기
 		p_north.add(bt_serch); //검색
-		p_north.add(cmb);
+		
 		p_north.add(bt_option,"gapleft 50"); //설정	
 		add(p_north, BorderLayout.NORTH);
 		
@@ -151,7 +151,7 @@ public class ChatMain extends JDialog implements ActionListener{
 	//textpane 영역의 메세지를 보내자!!
 	public void sendsMsg(){
 		String msg = area.getText().trim();
-		String sender = (String)cmb.getSelectedItem();
+		String sender = main.memberList.get(0).getNik_id();
 		String time =  getTime();
 		
 		
