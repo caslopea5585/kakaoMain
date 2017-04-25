@@ -65,6 +65,8 @@ public class AddFriendDialog extends JDialog{
 	MemberList memberList;
 	PersonPanel personPanel;
 	
+	JLabel la_nick, la_status;
+	
 	public AddFriendDialog(Connection con, KakaoMain kakaoMain){
 		getRootPane().setBorder( BorderFactory.createLineBorder(Color.DARK_GRAY) );
 		this.kakaoMain=kakaoMain;
@@ -89,8 +91,11 @@ public class AddFriendDialog extends JDialog{
 		p_center.setLayout(new BorderLayout());
 		
 		la_add=new JLabel("친구 추가", JLabel.CENTER);
-
-
+		
+		la_nick=new JLabel("a", JLabel.CENTER);
+		la_status=new JLabel("b", JLabel.CENTER);
+		la_nick.setPreferredSize(new Dimension(240, 25));
+		la_status.setPreferredSize(new Dimension(240, 20));
 		//t_search=new HintTextField_FIRST("email 검색");
 
 		t_search=new HintedTextField("email 검색");
@@ -137,8 +142,8 @@ public class AddFriendDialog extends JDialog{
 		point(this);
 		setButton(bt_close);
 		
-		setUndecorated(true);
-		setSize(300,350);
+		//setUndecorated(true);
+		setSize(300,300);
         setModal(true);
         setVisible(true);
 	}
@@ -168,10 +173,12 @@ public class AddFriendDialog extends JDialog{
 		//p_margin.setPreferredSize(new Dimension(230, 100));
 		p_img=new JPanel();
 		p_img.setBackground(Color.WHITE);
-		p_img.setPreferredSize(new Dimension(250, 100));
+		p_img.setPreferredSize(new Dimension(250, 200));
 		p_add=new JPanel();
 		p_add.setBackground(Color.WHITE);
 		p_add.add(bt_add);
+		
+		
 		
 		//p_friend.add(p_margin);
 		p_friend.add(p_img);
@@ -190,7 +197,7 @@ public class AddFriendDialog extends JDialog{
 				//member.setPassword(rs.getString("password"));
 				memberList.setProfile_img(rs.getString("profile_img"));
 				//member.setProfileBackImg(rs.getString("profilebackimg"));
-				//member.setStatus_msg(rs.getString("status_msg"));
+				memberList.setStatus_msg(rs.getString("status_msg"));
 				showFriend(memberList,p_friend);
 				
 			}else{
@@ -239,8 +246,8 @@ public class AddFriendDialog extends JDialog{
 		
 		can=new Canvas(){
 			public void paint(Graphics g) {
-				g.drawImage(image, 0, 20, 100,100, this);
-				g.drawImage(bgimage, 0, 20, 100,100, this);
+				g.drawImage(image, 0, 0, 100,100, this);
+				g.drawImage(bgimage, 0, 0, 100,100, this);
 			}
 		};
 		//can.repaint();
@@ -248,6 +255,12 @@ public class AddFriendDialog extends JDialog{
 		
 		can.setPreferredSize(new Dimension(100,100));
 		p_img.add(can);
+		//System.out.println(member.getNik_id());
+		la_nick.setText(member.getNik_id());
+		p_img.add(la_nick);
+		//System.out.println(member.getStatus_msg());
+		la_status.setText(member.getStatus_msg());
+		p_img.add(la_status);
 		//p_add.add(bt_add);
 		//p_friend.add(bt_add);
 		la_des.setVisible(false);

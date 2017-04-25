@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -33,7 +34,9 @@ public class KakaoMain extends JFrame implements Runnable{
 	
 	int friends_count;
 	JLabel la_friends=new JLabel();
+	
 	public KakaoMain(){
+		getRootPane().setBorder( BorderFactory.createLineBorder(Color.DARK_GRAY) );
 		DBConn();
 		panel=new JPanel[2];
 		panel[0]=new LoginPanel(this);
@@ -41,7 +44,7 @@ public class KakaoMain extends JFrame implements Runnable{
 		add(panel[0]);
 		
 		
-		//setUndecorated(true); //타이틀바 제거
+		setUndecorated(true); //타이틀바 제거
 		setBounds(100,100,360,590);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);

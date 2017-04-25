@@ -8,6 +8,7 @@ import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
@@ -21,6 +22,7 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
 
 import Profile.Profile;
 import db.DBManager;
@@ -57,6 +59,11 @@ public class PersonPanel extends JPanel{
 		p_info=new JPanel();
 		la_name=new JLabel(name);
 		la_statusMsg=new JLabel(statusMsg);
+		
+		la_name.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
+		la_statusMsg.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
+		//LineBorder line = new LineBorder
+		//la_statusMsg.setBorder(line);
 		
 		setLayout(new BorderLayout());
 		
@@ -100,8 +107,8 @@ public class PersonPanel extends JPanel{
 			}
 		});
 		
-		setPreferredSize(new Dimension(360, 60));
-		setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+		setPreferredSize(new Dimension(340, 60));
+		setBorder(BorderFactory.createEmptyBorder(5,15,5,5));
 		setBackground(Color.WHITE);
 		
 		System.out.println("퍼슨 패널 생성 완료.");

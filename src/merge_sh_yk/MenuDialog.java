@@ -87,9 +87,10 @@ public class MenuDialog extends JDialog implements ActionListener{
 			System.out.println("泅犁 郴 模备绰"+kakaoMain.friendsList.size()+"疙");
 			AddFriendDialog addFriendDialog=new AddFriendDialog(kakaoMain.con, kakaoMain);//模备 眠啊 芒 积己
 			//AddFriendDialog2 addFriendDialog=new AddFriendDialog2(kakaoMain.con, kakaoMain);//模备 眠啊 芒 积己
-			
-			
 			//ChangeProfile pop=new ChangeProfile((FriendsListPanel)kakaoMain.friendsListPanel);
+		}
+		else if(obj==bt_exit){
+			System.exit(0);
 		}
 	}
 
