@@ -1,7 +1,6 @@
 package friends;
 
 import java.awt.BorderLayout;
-
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Component;
@@ -30,10 +29,6 @@ import Profile.Profile;
 import db.DBManager;
 import main.KakaoMain;
 import main.MemberList;
-<<<<<<< HEAD
-import Profile.Profile;
-=======
->>>>>>> e336f3aa61f0c432e405b1aeb98ac2f7cf895312
 
 public class PersonPanel extends JPanel {
 	Canvas can=null;

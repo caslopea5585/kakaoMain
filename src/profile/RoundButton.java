@@ -1,13 +1,8 @@
 package Profile;
-<<<<<<< HEAD
 
-=======
->>>>>>> e336f3aa61f0c432e405b1aeb98ac2f7cf895312
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Shape;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.geom.Ellipse2D;
 
 import javax.swing.ImageIcon;
