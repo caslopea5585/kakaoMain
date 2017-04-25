@@ -15,7 +15,7 @@ public class ThreadManager {
 
 		sever_chat=new Server_chat(socket,userThread);//ㅋ 잘못구현했다 이름 바꾸기 그리고 이 스레드의 send/listen에서 type값에 따라서 값 다르게 넘겨주게끔 바꿔야됨 구조 고쳐~
 
-		chat=new Server_chat(socket,userThread);
+		//chat=new Server_chat(socket,userThread);
 		
 		
 		

@@ -175,10 +175,10 @@ public class Server_chat extends Thread{
 					userThread.get(i).sever_chat.buffw.flush();
 					System.out.println("서버에서 참여자들에게 보내는 메세지는???"+myString);
 
-					System.out.println("유저 쓰레드???"+userThread.get(i));
+				/*	System.out.println("유저 쓰레드???"+userThread.get(i));
 					userThread.elementAt(i).chat.buffw.write(myString+"\n");
 					userThread.elementAt(i).chat.buffw.flush();
-					
+					*/
 					/*userThread.get(i).chat.buffw.write(myString+"\n");
 					userThread.get(i).chat.buffw.flush();*/
 
@@ -210,9 +210,6 @@ public class Server_chat extends Thread{
 				userThread.get(i).sever_chat.buffw.write(myString+"\n");
 				userThread.get(i).sever_chat.buffw.flush();
 
-				//userThread.elementAt(i).chat.buffw.write(myString+"\n");
-				//userThread.elementAt(i).chat.buffw.flush();
-				
 				
 				/*
 				userThread.get(i).chat.buffw.write(myString+"\n");
