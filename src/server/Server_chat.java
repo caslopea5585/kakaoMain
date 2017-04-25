@@ -18,6 +18,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import client.chat.Chat;
+
 //DB가 가져야할 정보 num/users/내용
 public class Server_chat extends Thread{
 	Socket socket;
@@ -28,6 +30,7 @@ public class Server_chat extends Thread{
 	JSONArray value;
 	String msgValue,timeValue,senderValue;
 	JSONObject valueCheck;
+	
 	
 	
 	public Server_chat(Socket socket,Vector<ThreadManager> userThread) {
@@ -110,15 +113,12 @@ public class Server_chat extends Thread{
 							bos.flush();
 							send(new File(path));
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 		    try {
@@ -126,7 +126,6 @@ public class Server_chat extends Thread{
 		    		fos.close();
 		    	}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -142,8 +141,7 @@ public class Server_chat extends Thread{
 			sb.append("\"contents\":[{\"msg\":\""+msg+"\"},{\"time\":\""+time+"\"},{\"sender\":\""+sender+"\"}]");
 			sb.append("}");
 			String myString = sb.toString();
-			
-			
+				
 /*			try {
 				buffw.write(myString+"\n");
 				buffw.flush();
@@ -153,8 +151,9 @@ public class Server_chat extends Thread{
 			
 		for(int i=0;i<userThread.size();i++){
 				try {
-					userThread.get(i).chat.buffw.write(myString+"\n");
-					userThread.get(i).chat.buffw.flush();
+					userThread.get(i).sever_chat.buffw.write(myString+"\n");
+					userThread.get(i).sever_chat.buffw.flush();
+					System.out.println("서버에서 참여자들에게 보내는 메세지는???"+myString);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -179,8 +178,8 @@ public class Server_chat extends Thread{
 		String myString = obj.toString();
 	    try {
 			for(int i=0;i<userThread.size();i++){
-				userThread.get(i).chat.buffw.write(myString+"\n");
-				userThread.get(i).chat.buffw.flush();
+				userThread.get(i).sever_chat.buffw.write(myString+"\n");
+				userThread.get(i).sever_chat.buffw.flush();
 			}
 			
 		} catch (IOException e) {
