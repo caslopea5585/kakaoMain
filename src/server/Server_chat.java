@@ -162,10 +162,8 @@ public class Server_chat extends Thread{
 			
 				try {
 
-
-
-					userThread.get(i).chat.buffw.write(myString+"\n");
-					userThread.get(i).chat.buffw.flush();
+					userThread.elementAt(i).chat.buffw.write(myString+"\n");
+					userThread.elementAt(i).chat.buffw.flush();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
