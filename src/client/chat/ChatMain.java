@@ -154,13 +154,13 @@ public class ChatMain extends JDialog implements ActionListener{
 		
 		LoginPanel log=(LoginPanel)main.panel[0];
 		log.ct.sendMsg(msg,time,sender);
-<<<<<<< HEAD
+
 
 		
 		//chatDto=log.ct.chatDto;
-=======
-		chatDto=log.ct.chatDto;
->>>>>>> 5a5771485676c17c86cbb02569eee61faa88166e
+
+		//chatDto=log.ct.chatDto;
+
 		
 		//model.addRow(chatDto);
 		area.setText("");

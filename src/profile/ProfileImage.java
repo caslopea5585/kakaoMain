@@ -1,4 +1,4 @@
-package Profile;
+package profile;
 
 import java.awt.Canvas;
 import java.awt.Graphics;

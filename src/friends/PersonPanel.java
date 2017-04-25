@@ -7,10 +7,8 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
-<<<<<<< HEAD
 import java.awt.Insets;
-=======
->>>>>>> origin/master
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -27,12 +25,10 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-<<<<<<< HEAD
 import javax.swing.border.Border;
-=======
->>>>>>> origin/master
 
-import Profile.Profile;
+
+import profile.Profile;
 import db.DBManager;
 import main.KakaoMain;
 import main.MemberList;

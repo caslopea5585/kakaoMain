@@ -18,7 +18,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneLayout;
 
-import Profile.Profile;
+import profile.Profile;
 import main.KakaoMain;
 import merge_sh_yk.MyScrollBarUI;
 

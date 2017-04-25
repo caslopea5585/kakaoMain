@@ -31,7 +31,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import Profile.Profile;
+import profile.Profile;
 import db.DBManager;
 import main.KakaoMain;
 import main.MemberList;
