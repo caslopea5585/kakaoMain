@@ -36,7 +36,7 @@ public class KakaoMain extends JFrame implements Runnable{
 	//Thread updateUIThread;
 	public ArrayList<PersonPanel> myFriends = new ArrayList<PersonPanel>(); //friends 테이블 레코드 저장
 	
-	public ChatMain chat;//채널 새창*채팅목록에서 새로열기 가능하게 바꾸기
+	public Vector<ChatMain> chat;//채널 새창*채팅목록에서 새로열기 가능하게 바꾸기
 
 	public int friends_count;
 	public JLabel la_friends=new JLabel();
@@ -45,7 +45,7 @@ public class KakaoMain extends JFrame implements Runnable{
 		DBConn();
 		panel=new JPanel[2];
 		panel[0]=new LoginPanel(this);
-		chat=new ChatMain(this);/////////채팅
+		chat=new Vector<ChatMain>();//채팅 리스트
 		
 		
 		add(panel[0]);
@@ -83,11 +83,14 @@ public class KakaoMain extends JFrame implements Runnable{
 		menuPanel=new MenuPanel(this);
 		friendsListPanel=new FriendsListPanel(this);
 		chattingListPanel=new ChattingListPanel(this);
-		
 		settingPanel=new SettingPanel(this);
+<<<<<<< HEAD
 		
 		
 		
+
+=======
+>>>>>>> 4919693f2a606d4f6080eb4d3b2b81929b7b85e7
 		
 		panel[1]=new JPanel();	
 		

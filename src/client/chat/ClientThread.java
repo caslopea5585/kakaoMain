@@ -22,22 +22,24 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import main.KakaoMain;
+
 public class ClientThread extends Thread{
 	Socket socket;
 	Socket imgsocket;
-	ChatMain main;
+	KakaoMain kMain;
 	
 	BufferedReader buffr;
 	BufferedWriter buffw;
 	
-	 Chat chatDto;
+	public Chat chatDto;
 	String msgValue,timeValue,senderValue;
 	JSONArray value;
 	JSONObject valueCheck;
 	
-	public ClientThread(Socket socket,ChatMain main) {
+	public ClientThread(Socket socket,KakaoMain kMain) {
 		this.socket=socket;
-		this.main=main;
+		this.kMain=kMain;
 		
 		try {
 			buffr=new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -81,16 +83,17 @@ public class ClientThread extends Thread{
 							 senderValue=(String)json.get("sender");
 						 }
 					 }
-					 
+
 					 System.out.println("클라이언트에서 받는 메세지는???: "+msgValue+senderValue+timeValue);
 					 chatDto.setMsg(msgValue);
 					 chatDto.setSender(senderValue);
 					 chatDto.setTime(timeValue);
 					 System.out.println("클라이언트 쓰레드에서 셋한 dto메세지 값은??:"+chatDto.getMsg());
-					 sendMsg(msgValue, timeValue, senderValue);
+					
+					 kMain.chat.get(index).model.addRow(chatDto);
 					
 				 }
-		
+				 
 				
 			}
 			
@@ -173,10 +176,9 @@ public class ClientThread extends Thread{
 	public void run() {
 		
 		while(true){
-			listen();
-			
-			main.table.setModel(main.model);
-			main.table.updateUI();
+			listen();	
+			kMain.chat.get(index).table.setModel(kMain.chat.get(index).model);
+			kMain.chat.get(index).table.updateUI();
 		}
 	}
 }

@@ -13,12 +13,12 @@ public class ChatRenderer implements TableCellRenderer {
 	ChatHolder holder;
 	LeftViewHolder leftHolder= new LeftViewHolder();
 	RightViewHolder rightHolder= new RightViewHolder();
-	//Map<String, Integer> mCacheCount= new HashMap<String, Integer>();
 	int count = 0;
 
 	ChatMain main;
+	Chat chat;
 	
-	Vector<String> dto = new Vector<>();
+	//Vector<String> dto = new Vector<>();
 	
 	public ChatRenderer(ChatMain main) {
 		this.main=main;
@@ -37,6 +37,7 @@ public class ChatRenderer implements TableCellRenderer {
 		System.out.println("렌더 메시지"+chat.getMsg());
 		System.out.println("렌더 시간"+chat.getTime());
 		
+		//멤버리스트 안됨...프렌즈 리스트로해야함..
 		if(main.main.memberList.get(0).getNik_id().equals(chat.getSender())){
 			holder=rightHolder;
 		}else{

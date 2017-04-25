@@ -68,8 +68,7 @@ public class ChatMain extends JDialog implements ActionListener{
 		p_south = new JPanel();
 		
 		//북쪽영역의 패널
-		bt_profil = new RButton(new ImageIcon(this.getClass().getResource(
-				"/head2.png")));
+		bt_profil = new RButton(new ImageIcon(this.getClass().getResource("/head2.png")));
 		la_user = new JLabel("유저");
 		bt_list = new JButton("게시판");
 		bt_totalview = new JButton("모아보기");
@@ -98,7 +97,7 @@ public class ChatMain extends JDialog implements ActionListener{
 		table.setModel(model);
 		table.getColumnModel().getColumn(0).setPreferredWidth(260);
 		table.getColumnModel().getColumn(0).setCellRenderer(new ChatRenderer(this));
-		table.setBackground(Color.PINK);
+		table.setBackground(Color.white);
 		table.setOpaque(true);
 		table.setShowHorizontalLines(false);
 		
@@ -149,20 +148,22 @@ public class ChatMain extends JDialog implements ActionListener{
 	public void sendsMsg(){
 		String msg = area.getText().trim();
 		String sender = main.memberList.get(0).getNik_id();
-		String time =  getTime();
-		
-		
+		String time =  getTime();	
 		LoginPanel log=(LoginPanel)main.panel[0];
 		log.ct.sendMsg(msg,time,sender);
-
-
-		
+	
 		//chatDto=log.ct.chatDto;
+<<<<<<< HEAD
+		chatDto=log.ct.chatDto;
+=======
+>>>>>>> 4919693f2a606d4f6080eb4d3b2b81929b7b85e7
 
-		//chatDto=log.ct.chatDto;
-
-		
 		//model.addRow(chatDto);
+<<<<<<< HEAD
+		//area.setText("");
+		model.addRow(chatDto);
+=======
+>>>>>>> 4919693f2a606d4f6080eb4d3b2b81929b7b85e7
 		area.setText("");
 
 	}

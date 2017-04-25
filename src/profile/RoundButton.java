@@ -1,10 +1,8 @@
-package profile;
+package Profile;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Shape;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.geom.Ellipse2D;
 
 import javax.swing.ImageIcon;
