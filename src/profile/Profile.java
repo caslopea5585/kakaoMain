@@ -266,9 +266,13 @@ public class Profile extends JFrame implements ActionListener{
 				can_north_img.repaint();
 			}
 		}else if(obj==bt_chat){
+			//ChatMain chat=new ChatMain(kakaoMain);
+			//챗메인을 여기서 만들자. (여기서 대화방 생성)
 			ChatMain chat=new ChatMain(kakaoMain);
-			kakaoMain.chat.setLocation(kakaoMain.getLocation().x+360,kakaoMain.getLocation().y);
-			kakaoMain.chat.setVisible(true);//화면 교체
+			chat.setLocation(kakaoMain.getLocation().x+360,kakaoMain.getLocation().y);
+			chat.setVisible(true);//화면 교체
+			
+			kakaoMain.chat.add(chat);
 		}
 		
 	}

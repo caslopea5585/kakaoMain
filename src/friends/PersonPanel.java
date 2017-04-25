@@ -26,6 +26,7 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 
 import Profile.Profile;
+import client.chat.ChatMain;
 import db.DBManager;
 import main.KakaoMain;
 import main.MemberList;
@@ -123,8 +124,11 @@ public class PersonPanel extends JPanel {
 		this.addMouseListener(new MouseAdapter() {
 			
 			public void mouseClicked(MouseEvent arg0) {
-				kakaoMain.chat.setLocation(kakaoMain.getLocation().x+360,kakaoMain.getLocation().y);
-				kakaoMain.chat.setVisible(true);//화면 교체
+				ChatMain chat = new ChatMain(kakaoMain);
+				chat.setLocation(kakaoMain.getLocation().x+360,kakaoMain.getLocation().y);
+				chat.setVisible(true);//화면 교체
+				
+				kakaoMain.chat.add(chat);
 			}
 		});
 

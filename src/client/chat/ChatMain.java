@@ -97,7 +97,7 @@ public class ChatMain extends JDialog implements ActionListener{
 		table.setModel(model);
 		table.getColumnModel().getColumn(0).setPreferredWidth(260);
 		table.getColumnModel().getColumn(0).setCellRenderer(new ChatRenderer(this));
-		table.setBackground(Color.PINK);
+		table.setBackground(Color.white);
 		table.setOpaque(true);
 		table.setShowHorizontalLines(false);
 		

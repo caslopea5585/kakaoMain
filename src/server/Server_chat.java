@@ -143,19 +143,7 @@ public class Server_chat extends Thread{
 			sb.append("\"contents\":[{\"msg\":\""+msg+"\"},{\"time\":\""+time+"\"},{\"sender\":\""+sender+"\"}]");
 			sb.append("}");
 			String myString = sb.toString();
-/*			
-			 chatDto.setMsg(msgValue);
-			 chatDto.setSender(senderValue);
-			 chatDto.setTime(timeValue);*/
 
-			
-			
-/*			try {
-				buffw.write(myString+"\n");
-				buffw.flush();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}*/
 			
 			System.out.println("유저쓰레드 사이즈 = "+userThread.size());
 		for(int i=0;i<userThread.size();i++){
