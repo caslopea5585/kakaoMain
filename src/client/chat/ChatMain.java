@@ -2,7 +2,6 @@ package client.chat;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -10,14 +9,12 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Vector;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -25,7 +22,6 @@ import javax.swing.JTable;
 import javax.swing.JTextPane;
 
 import login.LoginPanel;
-import main.ClientThread;
 import main.KakaoMain;
 import net.miginfocom.swing.MigLayout;
 
@@ -56,7 +52,7 @@ public class ChatMain extends JDialog implements ActionListener{
 	JFileChooser chooser;
 	
 	KakaoMain main;
-	Chat chatDto;
+	//Chat chatDto;
 	
 	
 	
@@ -96,6 +92,7 @@ public class ChatMain extends JDialog implements ActionListener{
 		//센터영역
 		table = new JTable();
 		scroll = new JScrollPane();
+		System.out.println("테이블이 만들어지나?");
 		
 		table.setTableHeader(null);
 		table.setModel(model);
@@ -157,11 +154,15 @@ public class ChatMain extends JDialog implements ActionListener{
 		
 		LoginPanel log=(LoginPanel)main.panel[0];
 		log.ct.sendMsg(msg,time,sender);
+<<<<<<< HEAD
 
 		
+		//chatDto=log.ct.chatDto;
+=======
 		chatDto=log.ct.chatDto;
+>>>>>>> 5a5771485676c17c86cbb02569eee61faa88166e
 		
-		model.addRow(chatDto);
+		//model.addRow(chatDto);
 		area.setText("");
 
 	}

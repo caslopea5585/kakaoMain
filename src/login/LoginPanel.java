@@ -13,9 +13,6 @@ import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -30,20 +27,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
- 
+
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-import javax.swing.plaf.synth.SynthSeparatorUI;
 
+import client.chat.ClientThread;
 import db.DBManager;
 import friends.Friends;
-import main.ClientThread;
 import main.KakaoMain;
 import main.MemberList;
 import util.HintedPasswordField;
@@ -72,7 +65,7 @@ public class LoginPanel extends JPanel{
    
  
 
-   String ip="127.0.0.1";
+   String ip="211.238.142.113";
   //String ip="211.238.142.102";//////////////////임시 아이피
 
    Socket socket;
