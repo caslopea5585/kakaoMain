@@ -40,7 +40,8 @@ public class FriendsListPanel extends JPanel {
 	
 	String myPhotoPath, myName, myStatusMsg;
 	int j=0; //로그인한사람의 정보를 멤버리스트에서 찾기위한 변수.
-	int x=7, y=1;
+	int x=10, y=1; //그리드사이즈
+	int listX=454; //p_list 길이
 	int q=0; //내부익명변수 처리카운트.
 	
 	public FriendsListPanel(KakaoMain kakaoMain){
@@ -52,6 +53,8 @@ public class FriendsListPanel extends JPanel {
 		p_myProfile=new JPanel();
 		la_myProfile=new JLabel("내 프로필 ");
 		la_myProfile.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0));
+		
+		//x=kakaoMain.friendsList.size()+2;
 		GridLayout grid=new GridLayout(x, y);
 
 		scroll=new JScrollPane(p_list, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -87,7 +90,8 @@ public class FriendsListPanel extends JPanel {
 		    });
 		
 		scroll.getVerticalScrollBar().setUI(new MyScrollBarUI());
-		p_list.setPreferredSize(new Dimension(360, 454));
+		//listX=kakaoMain.friendsList.size();
+		p_list.setPreferredSize(new Dimension(360, 600));
 		p_list.setLayout(grid);
 		p_list.setBackground(Color.WHITE);
 		
@@ -135,8 +139,6 @@ public class FriendsListPanel extends JPanel {
 					myFriends.add(new PersonPanel(kakaoMain,true,kakaoMain.memberList.get(j).getProfile_img(), kakaoMain.memberList.get(j).getNik_id(),  kakaoMain.memberList.get(j).getStatus_msg() ));
 					q=j;
 					
-					
-					
 					myFriends.get(myFriends.size()-1).can.addMouseListener(new MouseAdapter() {
 						public void mouseClicked(MouseEvent e) {
 							Object obj = e.getSource();
@@ -171,9 +173,14 @@ public class FriendsListPanel extends JPanel {
 					p_list.add(myFriends.get(cnt));
 					/*if(cnt>=4){
 						x=cnt+1;
-						grid=new GridLayout(x, y);
+						listX+=50;
+						grid.setRows(x);
+						grid.setColumns(y);
+						//grid=new GridLayout(x, y);
+						p_list.setPreferredSize(new Dimension(360, listX));
 						p_list.setLayout(grid);
 						p_list.updateUI();
+						validate();
 					}*/
 					System.out.println("친구:"+myFriends.get(cnt).name);
 					System.out.println(" 리스트 패널 사이즈:"+myFriends.size());

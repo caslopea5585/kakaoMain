@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.MouseInfo;
 import java.awt.Point;
@@ -98,6 +99,7 @@ public class AddFriendDialog extends JDialog{
 		
 		la_nick=new JLabel("a", JLabel.CENTER);
 		la_status=new JLabel("b", JLabel.CENTER);
+		la_status.setFont(new Font("µ¸¿ò",Font.PLAIN,15));
 		la_nick.setPreferredSize(new Dimension(240, 25));
 		la_status.setPreferredSize(new Dimension(240, 20));
 		//t_search=new HintTextField_FIRST("email °Ë»ö");
