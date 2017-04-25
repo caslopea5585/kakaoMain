@@ -1,7 +1,6 @@
 package friends;
 
 import java.awt.BorderLayout;
-
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -22,10 +21,6 @@ import javax.swing.ScrollPaneLayout;
 import Profile.Profile;
 import main.KakaoMain;
 import merge_sh_yk.MyScrollBarUI;
-<<<<<<< HEAD
-import Profile.Profile;
-=======
->>>>>>> e336f3aa61f0c432e405b1aeb98ac2f7cf895312
 
 public class FriendsListPanel extends JPanel {
 	JPanel p_search; //검색 패널
