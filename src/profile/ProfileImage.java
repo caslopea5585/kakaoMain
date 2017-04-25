@@ -1,4 +1,4 @@
-package Profile;
+package profile;
 
 import java.awt.Canvas;
 import java.awt.Graphics;
@@ -6,7 +6,7 @@ import java.awt.Image;
 
 import javax.swing.JDialog;
 
-import merge_sh_yk.KakaoMain;
+import main.KakaoMain;
 
 public class ProfileImage extends JDialog{
 	Profile profile;

@@ -1,4 +1,4 @@
-package merge_sh_yk;
+package setting;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -13,13 +13,17 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import main.KakaoMain;
+import util.MyLabelRenderer;
+import util.MyPanelRenderer;
+
 public class SettingPanel extends JPanel{
-	
-	public SettingPanel(){
+
+	public SettingPanel(KakaoMain kakaoMain){
 		JTable table1 = new JTable(1, 2);
         JTable table2 = new JTable(7, 1);
         
-        MyPanelRenderer renderer1 = new MyPanelRenderer();
+        MyPanelRenderer renderer1 = new MyPanelRenderer(kakaoMain);
         MyLabelRenderer renderer2 = new MyLabelRenderer();
         
         //내 프로필 테이블 설정
@@ -32,13 +36,13 @@ public class SettingPanel extends JPanel{
         	public void mouseClicked(java.awt.event.MouseEvent e){
         		int col=table1.columnAtPoint(e.getPoint());
         		if(col==0){
-    				System.out.println("사진누름");
+    				JOptionPane.showMessageDialog(null, "프로필수정");
     			} 
         	}	
         });
         table1.setShowVerticalLines(false);
         table1.setShowHorizontalLines(false);
-        table1.setBackground(new Color(247, 247, 247));
+        table1.setBackground(new Color(238, 238, 238));
         
         //세팅패널테이블 설정
         table2.setDefaultRenderer(Object.class, renderer2);  

@@ -1,4 +1,4 @@
-package merge_sh_yk;
+package main;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

@@ -1,4 +1,4 @@
-package merge_sh_yk;
+package chatting;
 
 import java.awt.BorderLayout;
 import java.awt.Canvas;
@@ -17,7 +17,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import Profile.Profile;
+import main.KakaoMain;
 
 public class ChatRoomPanel extends JPanel{
 	Canvas can=null;
