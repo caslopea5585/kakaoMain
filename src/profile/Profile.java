@@ -1,4 +1,4 @@
-package Profile;
+package profile;
 
 import java.awt.BasicStroke;
 import java.awt.Canvas;
@@ -30,8 +30,9 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 import client.chat.ChatMain;
-import merge_sh_yk.KakaoMain;
-import merge_sh_yk.Member;
+import main.KakaoMain;
+import main.MemberList;
+
 
 public class Profile extends JFrame implements ActionListener{
 	Point mouseDownCompCoords = null;
@@ -48,7 +49,7 @@ public class Profile extends JFrame implements ActionListener{
 	RoundButton bt_chat,bt_manager,bt_back_profile;
 	String status_msg="상태메시지";
 	JFileChooser chooser;
-	Member memberList;
+	MemberList memberList;
 	
 	
 	KakaoMain kakaoMain;

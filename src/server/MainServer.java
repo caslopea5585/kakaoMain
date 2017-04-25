@@ -40,13 +40,16 @@ public class MainServer extends JFrame implements Runnable{
 				
 				ThreadManager tm=new ThreadManager(socket,userThread);
 				tm.start();
-				
 				userThread.add(tm);
+<<<<<<< HEAD
 				System.out.println("현재 접속자 숫자는"+userThread.size());
 				
 				if(server.isClosed()){
 					System.out.println("현재 접속자는"+userThread.size()+"\n");
 				}
+=======
+				
+>>>>>>> 5a5771485676c17c86cbb02569eee61faa88166e
 			}
 			
 		} catch (IOException e) {

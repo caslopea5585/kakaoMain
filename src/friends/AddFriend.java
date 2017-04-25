@@ -1,4 +1,4 @@
-package merge_sh_yk;
+package friends;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JTextField;
+
+import friends.FriendsListPanel;
 
 public class AddFriend extends JDialog implements ActionListener{
 	JTextField t_photo, t_status, t_name;

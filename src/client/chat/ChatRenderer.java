@@ -28,13 +28,14 @@ public class ChatRenderer implements TableCellRenderer {
 		boolean isSelected, boolean hasFocus, int row, int col) {
 		ChatHolder holder = null;
 		Chat chat = (Chat)value;
+		System.out.println("랜더의 = "+value);
 		String sender = chat.getSender();
 		String msg = chat.getMsg();
 		String time = chat.getTime();
 		
-		System.out.println("센더"+chat.getSender());
-		System.out.println("메시지"+chat.getMsg());
-		System.out.println("시간"+chat.getTime());
+		System.out.println("렌더 센더"+chat.getSender());
+		System.out.println("렌더 메시지"+chat.getMsg());
+		System.out.println("렌더 시간"+chat.getTime());
 		
 		if(main.main.memberList.get(0).getNik_id().equals(chat.getSender())){
 			holder=rightHolder;

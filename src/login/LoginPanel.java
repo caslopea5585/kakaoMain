@@ -1,4 +1,4 @@
-package merge_sh_yk;
+package login;
  
  
  
@@ -41,7 +41,14 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.plaf.synth.SynthSeparatorUI;
 
+import client.chat.ClientThread;
 import db.DBManager;
+import friends.Friends;
+import main.ClientThread;
+import main.KakaoMain;
+import main.MemberList;
+import util.HintedPasswordField;
+import util.HintedTextField;
  
  
 public class LoginPanel extends JPanel{
@@ -66,7 +73,7 @@ public class LoginPanel extends JPanel{
    
  
 
-   String ip="127.0.0.1";
+   String ip="211.238.142.113";
   //String ip="211.238.142.102";//////////////////임시 아이피
 
    Socket socket;
@@ -248,7 +255,7 @@ public class LoginPanel extends JPanel{
          
          if(loginFlag){
         	 JOptionPane.showMessageDialog(this, "로그인성공");  
-        	
+        	 
         	 //내 친구정보(friends 테이블) 찾기
         	 //밑에 seeMain의 memberList자리에 
         	 //로그인 정보의 e_mail정보를 가져온다.

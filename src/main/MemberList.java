@@ -1,4 +1,4 @@
-package merge_sh_yk;
+package main;
 
 public class MemberList {
 	private String e_mail;

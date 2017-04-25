@@ -1,9 +1,12 @@
-package merge_sh_yk;
+package friends;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Insets;
+import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
@@ -12,13 +15,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneLayout;
 
-import Profile.Profile;
 import db.DBManager;
+import main.KakaoMain;
+import merge_sh_yk.MyScrollBarUI;
+import profile.Profile;
 
 public class FriendsListPanel extends JPanel {
 	JPanel p_search; //검색 패널
@@ -28,9 +35,6 @@ public class FriendsListPanel extends JPanel {
 	JLabel la_myProfile, la_friends;
 	JScrollPane scroll;
 	int friends_count=0; //친구 수
-
-	
-	//PersonPanel[] people=new PersonPanel[10];
 	
 	//ArrayList<PersonPanel> people = new ArrayList<PersonPanel>(); //전체 member테이블 레코드 저장
 	public ArrayList<PersonPanel> myFriends = new ArrayList<PersonPanel>(); //friends 테이블 레코드 저장
@@ -41,6 +45,7 @@ public class FriendsListPanel extends JPanel {
 	
 	String myPhotoPath, myName, myStatusMsg;
 	int j=0; //로그인한사람의 정보를 멤버리스트에서 찾기위한 변수.
+	int x=7, y=1;
 	int q=0; //내부익명변수 처리카운트.
 	
 	public FriendsListPanel(KakaoMain kakaoMain){
@@ -50,13 +55,45 @@ public class FriendsListPanel extends JPanel {
 		t_search=new JTextField("이름검색", 30);
 		p_list=new JPanel();
 		p_myProfile=new JPanel();
-		la_myProfile=new JLabel("    내 프로필 ");
-	
-		
+		la_myProfile=new JLabel("내 프로필 ");
+		la_myProfile.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0));
+		GridLayout grid=new GridLayout(x, y);
+
 		scroll=new JScrollPane(p_list, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scroll.setPreferredSize(new Dimension(355, 435));
+		scroll.setLayout(new ScrollPaneLayout() {
+		      @Override
+		      public void layoutContainer(Container parent) {
+		        JScrollPane scrollPane = (JScrollPane) parent;
+
+		        Rectangle availR = scrollPane.getBounds();
+		        availR.x = availR.y = 0;
+
+		        Insets parentInsets = parent.getInsets();
+		        availR.x = parentInsets.left;
+		        availR.y = parentInsets.top;
+		        availR.width -= parentInsets.left + parentInsets.right;
+		        availR.height -= parentInsets.top + parentInsets.bottom;
+
+		        Rectangle vsbR = new Rectangle();
+		        vsbR.width = 12;
+		        vsbR.height = availR.height;
+		        vsbR.x = availR.x + availR.width - vsbR.width;
+		        vsbR.y = availR.y;
+
+		        if (viewport != null) {
+		          viewport.setBounds(availR);
+		        }
+		        if (vsb != null) {
+		          vsb.setVisible(true);
+		          vsb.setBounds(vsbR);
+		        }
+		      }
+		    });
 		
-		//p_list.setPreferredSize(new Dimension(360, 497));
-		p_list.setLayout(new GridLayout(20,1));
+		scroll.getVerticalScrollBar().setUI(new MyScrollBarUI());
+		p_list.setPreferredSize(new Dimension(360, 454));
+		p_list.setLayout(grid);
 		p_list.setBackground(Color.WHITE);
 		
 		t_search.setPreferredSize(new Dimension(350, 30));
@@ -69,45 +106,9 @@ public class FriendsListPanel extends JPanel {
 		friends_count=kakaoMain.friendsList.size();
 		
 		p_list.add(la_myProfile);
-		la_friends=new JLabel("    친구   "+friends_count);
+		la_friends=new JLabel("친구    "+friends_count);
+		la_friends.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0));
 		
-		
-		/*//프렌드 멤버속 나찾기..
-		while( !(kakaoMain.loginEmail.equals(kakaoMain.memberList.get(j).getE_mail())) ){
-			j++;
-		}
-		people.add(new PersonPanel(kakaoMain,kakaoMain.memberList.get(j).getProfile_img(), kakaoMain.memberList.get(j).getNik_id(),  kakaoMain.memberList.get(j).getStatus_msg() ));
-		System.out.println("나: "+kakaoMain.memberList.get(j).getNik_id());
-		p_list.add(people.get(0));
-		p_list.add(la_friends);
-		
-		int b=1; //추가등록 카운트 증가 하기위해
-		//나빼고 나머지를 친구로 등록하기
-<<<<<<< HEAD
-		for(int i=0;i<kakaoMain.memberList.size();i++){
-			if(kakaoMain.memberList.get(i).getE_mail().equals(kakaoMain.memberList.get(j).getE_mail()     )){
-				i--;
-				continue;
-				
-				
-			}else{
-				people.add(new PersonPanel(kakaoMain,kakaoMain.memberList.get(i).getProfile_img(), kakaoMain.memberList.get(i).getNik_id(),  kakaoMain.memberList.get(i).getStatus_msg() ));
-				p_list.add(people.get(b));
-				b++;
-				System.out.println("사이즈"+people.size());
-=======
-		int cnt=0;
-		for(int i=0;i<kakaoMain.memberList.size();i++){//a가 로그인한 경우(j=1)
-			System.out.println("로그인한사람(j):"+j+"번째");
-			if(!(kakaoMain.memberList.get(i).getE_mail().equals(kakaoMain.memberList.get(j).getE_mail()))){
-				cnt++;
-				people.add(new PersonPanel(kakaoMain,kakaoMain.memberList.get(i).getProfile_img(), kakaoMain.memberList.get(i).getNik_id(),  kakaoMain.memberList.get(i).getStatus_msg() ));
-				p_list.add(people.get(cnt));
-
-				System.out.println("친구:"+people.get(cnt).name);
-				System.out.println("사이즈:"+people.size());
-			}
-		}*/
 		
 		//나를 패널에 붙이기
 		while( !(kakaoMain.loginEmail.equals(kakaoMain.memberList.get(j).getE_mail())) ){
@@ -173,7 +174,12 @@ public class FriendsListPanel extends JPanel {
 					});*/
 					
 					p_list.add(myFriends.get(cnt));
-					
+					/*if(cnt>=4){
+						x=cnt+1;
+						grid=new GridLayout(x, y);
+						p_list.setLayout(grid);
+						p_list.updateUI();
+					}*/
 					System.out.println("친구:"+myFriends.get(cnt).name);
 					System.out.println(" 리스트 패널 사이즈:"+myFriends.size());
 				}
@@ -182,7 +188,6 @@ public class FriendsListPanel extends JPanel {
 		kakaoMain.myFriends=myFriends;
 		kakaoMain.p_list=p_list;
 		kakaoMain.friendsListPanel=this;
-		
 		
 		kakaoMain.friends_count=friends_count;
 		kakaoMain.la_friends=la_friends;

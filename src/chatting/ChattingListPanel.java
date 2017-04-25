@@ -1,4 +1,4 @@
-package merge_sh_yk;
+package chatting;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -9,6 +9,8 @@ import java.util.Vector;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+
+import main.KakaoMain;
 
 public class ChattingListPanel extends JPanel{
 	KakaoMain main;
