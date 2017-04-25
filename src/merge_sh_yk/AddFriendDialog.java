@@ -30,10 +30,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.Scrollable;
 
-import org.mariadb.jdbc.MySQLDataSource;
-
+import Profile.Profile;
 import db.DBManager;
 
 public class AddFriendDialog extends JDialog{
@@ -64,7 +62,8 @@ public class AddFriendDialog extends JDialog{
 	
 	MemberList memberList;
 	PersonPanel personPanel;
-	
+	Profile profile;
+	int q=0;
 	public AddFriendDialog(Connection con, KakaoMain kakaoMain){
 		getRootPane().setBorder( BorderFactory.createLineBorder(Color.DARK_GRAY) );
 		this.kakaoMain=kakaoMain;
@@ -292,11 +291,8 @@ public class AddFriendDialog extends JDialog{
 				System.out.println("친구생성");
 			}
 		}else if(kakaoMain.friendsList.size()==0){
-<<<<<<< HEAD
-			 if(t_search.getText().equals(kakaoMain.loginEmail )){
-=======
+			 
 			 if(t_search.getText().equals(kakaoMain.loginEmail)){
->>>>>>> b14b1df9f265eecc08fadf904d784f2bfa3b8036
 				JOptionPane.showMessageDialog(this, "자신의 친구등록할 수 없습니다.");
 			}else{
 				addFriend();
@@ -319,8 +315,14 @@ public class AddFriendDialog extends JDialog{
 			
 			for(int i=0;i<kakaoMain.memberList.size();i++){
 				if(kakaoMain.memberList.get(i).getE_mail().equals(t_search.getText())){
+					q=i;
 					System.out.println("추가 전 mYFriend 의 사이즈는?" + kakaoMain.myFriends.size());
-					kakaoMain.myFriends.add(new PersonPanel(kakaoMain,kakaoMain.memberList.get(i).getProfile_img(), kakaoMain.memberList.get(i).getNik_id(),  kakaoMain.memberList.get(i).getStatus_msg() ));
+					kakaoMain.myFriends.add(personPanel=new PersonPanel(kakaoMain,true,kakaoMain.memberList.get(i).getProfile_img(), kakaoMain.memberList.get(i).getNik_id(),  kakaoMain.memberList.get(i).getStatus_msg() ));
+					/*personPanel.can.addMouseListener(new MouseAdapter() {
+						public void mouseClicked(MouseEvent e) {
+							profile=new Profile(kakaoMain.memberList.get(q).getProfile_img(),kakaoMain,true); //f
+						}
+					});*/
 					System.out.println("추가 후 mYFriend 의 사이즈는?" + kakaoMain.myFriends.size());
 					kakaoMain.p_list.add(kakaoMain.myFriends.get(kakaoMain.myFriends.size()-1 ));
 					System.out.println("");

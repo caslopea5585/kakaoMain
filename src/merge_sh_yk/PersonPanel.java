@@ -45,14 +45,15 @@ public class PersonPanel extends JPanel{
 	Connection con;
 	ArrayList<Member> memberList = new ArrayList<Member>();
 	KakaoMain kakaoMain;
+	boolean flag=false;
+	Profile profile;
 	
-	
-	public PersonPanel(KakaoMain kakaoMain, String photoPath, String name, String statusMsg){
+	public PersonPanel(KakaoMain kakaoMain, boolean flag,String photoPath, String name, String statusMsg){
 		this.kakaoMain=kakaoMain;
 		this.photoPath=photoPath;
 		this.name=name;
 		this.statusMsg=statusMsg;
-
+		this.flag = flag; //나이면 false, 나 아니면 true
 		
 		p_info=new JPanel();
 		la_name=new JLabel(name);
@@ -90,16 +91,7 @@ public class PersonPanel extends JPanel{
 		add(can, BorderLayout.WEST);
 		add(p_info);
 		
-		
-		//사진에 마우스 리스너 연결
-		can.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				System.out.println("사진클릭");
-				//pop=new ChangeProfile();
-				Profile profile=new Profile(photoPath,kakaoMain); //"/ryan1.png"
-			}
-		});
-		
+
 		setPreferredSize(new Dimension(360, 60));
 		setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 		setBackground(Color.WHITE);

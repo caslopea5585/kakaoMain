@@ -49,18 +49,23 @@ public class Profile extends JFrame implements ActionListener{
 	JFileChooser chooser;
 	Member memberList;
 	
-	KakaoMain kakaoMain;
 	
-	public Profile(String photopath,KakaoMain kakaoMain) {
+	KakaoMain kakaoMain;
+	boolean flag; //나인지 아닌지 구별
+	int index; //멤버리스트의 인덱스 찾기
+	
+	public Profile(String photopath,KakaoMain kakaoMain,boolean flag,int index) {
 		
 		profile = this;
 		this.kakaoMain=kakaoMain;
+		this.flag = flag;
+		this.index= index;
 
 		layeredPane = new JLayeredPane();
 		url_profileBackground = this.getClass().getResource("/bg_north.png");	//상단배경
 		url_profileSouth=this.getClass().getResource("/bg_south.png");	//하단
 		url_profileImage=this.getClass().getResource(photopath); //프로필사진
-		
+		status_msg=kakaoMain.memberList.get(index).getStatus_msg();
 		
 		try {
 			buffr_south = ImageIO.read(url_profileSouth);
@@ -89,7 +94,7 @@ public class Profile extends JFrame implements ActionListener{
 		        g.setFont(new Font("돋움", Font.PLAIN, 25));
 		        g.setColor(Color.BLACK);
 		        
-		        g.drawString(status_msg, 85, 100);						//상태메시지
+		        g.drawString(status_msg, 120, 100);						//상태메시지
 		        
 		        
 		        Graphics2D g2 =(Graphics2D) g;
@@ -105,7 +110,7 @@ public class Profile extends JFrame implements ActionListener{
 		        Stroke s = new BasicStroke(2);
 		        g2.setStroke(s);
 		        g2.setColor(Color.BLACK);
-		        g2.draw(circle);
+		        //g2.draw(circle);
 		        g2.dispose();
 		        
 			}
@@ -121,6 +126,7 @@ public class Profile extends JFrame implements ActionListener{
 		
 		la_name = new JLabel("아이디명");
 		la_name.setForeground(Color.black);
+		la_name.setText(kakaoMain.memberList.get(index).getNik_id());
 		
 		
 		ImageIcon chat = new ImageIcon(this.getClass().getResource("/chat.png"));
@@ -147,7 +153,7 @@ public class Profile extends JFrame implements ActionListener{
 
 		//                            x  y   width  height
 		can_north_img.setBounds(0, 0, 400, 300);
-		la_name.setBounds(115, 280, 70, 50);
+		la_name.setBounds(145, 280, 70, 50);
 		bt_chat.setBounds(65, 340, 50, 50);
 		
 		la_chat.setBounds(65, 390, 70, 30);
@@ -161,23 +167,25 @@ public class Profile extends JFrame implements ActionListener{
 		layeredPane.add(la_chat, 4,3);
 		layeredPane.add(la_manager, 4,3);
 		
+		bt_manager.setBounds(165, 340, 50, 50);
+		bt_back_profile.setBounds(245, 250, 45, 45);
+		layeredPane.add(bt_manager, 4,3);
+		layeredPane.add(bt_back_profile, 4,3);
+		
 		
 		
 		for(int i=0;i<kakaoMain.memberList.size();i++){
 			System.out.println("e_mail"+kakaoMain.memberList.get(i).getE_mail());
 		}
 		
-		System.out.println("dd"+kakaoMain.memberList.get(1).getE_mail());
-		if(kakaoMain.loginEmail.equals(kakaoMain.memberList.get(0).getE_mail()) ){
-			System.out.println("다찍힘?");
-			bt_manager.setBounds(165, 340, 50, 50);
-			bt_back_profile.setBounds(245, 250, 45, 45);
-			layeredPane.add(bt_manager, 4,3);
-			layeredPane.add(bt_back_profile, 4,3);
-		}else{
-			bt_manager.setVisible(false);
+		System.out.println("프로필시"+flag); //나이면 false, 나 아니면 true
+		if(!flag){
+			bt_manager.setVisible(flag);
+			bt_back_profile.setVisible(flag);
+			la_manager.setVisible(flag);
+			bt_chat.setBounds(120, 340, 50, 50);
+			la_chat.setBounds(120, 390, 70, 30);
 		}
-		
 		
 		can_north_img.addMouseListener(new MouseAdapter() {
 			

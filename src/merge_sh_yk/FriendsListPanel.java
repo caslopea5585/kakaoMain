@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,9 +17,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import Profile.Profile;
 import db.DBManager;
 
-public class FriendsListPanel extends JPanel{
+public class FriendsListPanel extends JPanel {
 	JPanel p_search; //검색 패널
 	JPanel p_list; //p_search부분 제외한 아랫부분 전체 패널-그리드
 	JPanel p_myProfile;
@@ -33,11 +36,12 @@ public class FriendsListPanel extends JPanel{
 	public ArrayList<PersonPanel> myFriends = new ArrayList<PersonPanel>(); //friends 테이블 레코드 저장
 
 	KakaoMain kakaoMain;
-	
+	PersonPanel pp;
+	Profile profile;
 	
 	String myPhotoPath, myName, myStatusMsg;
 	int j=0; //로그인한사람의 정보를 멤버리스트에서 찾기위한 변수.
-
+	int q=0; //내부익명변수 처리카운트.
 	
 	public FriendsListPanel(KakaoMain kakaoMain){
 		this.kakaoMain= kakaoMain;
@@ -109,7 +113,14 @@ public class FriendsListPanel extends JPanel{
 		while( !(kakaoMain.loginEmail.equals(kakaoMain.memberList.get(j).getE_mail())) ){
 			j++;
 		}
-		myFriends.add(new PersonPanel(kakaoMain,kakaoMain.memberList.get(j).getProfile_img(), kakaoMain.memberList.get(j).getNik_id(),  kakaoMain.memberList.get(j).getStatus_msg() ));
+		myFriends.add(pp=new PersonPanel(kakaoMain,false,kakaoMain.memberList.get(j).getProfile_img(), kakaoMain.memberList.get(j).getNik_id(),  kakaoMain.memberList.get(j).getStatus_msg() ));
+		
+		pp.can.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				profile=new Profile(kakaoMain.memberList.get(j).getProfile_img(),kakaoMain,true,j); //f
+			}
+			
+		});
 		System.out.println("나: "+kakaoMain.memberList.get(j).getNik_id());
 		p_list.add(myFriends.get(0)); //myFriends의 첫번째 인덱스에 나를 등록. 
 		p_list.add(la_friends);
@@ -122,14 +133,49 @@ public class FriendsListPanel extends JPanel{
 		for(int i=0; i<kakaoMain.friendsList.size();i ++){
 			for(int j=0; j<kakaoMain.memberList.size(); j++){
 				if(kakaoMain.friendsList.get(i).getYour_email().equals(kakaoMain.memberList.get(j).getE_mail())){
-					System.out.println("j");
+					
+					System.out.println("만들기전"+j);
 					cnt++;
-					myFriends.add(new PersonPanel(kakaoMain,kakaoMain.memberList.get(j).getProfile_img(), kakaoMain.memberList.get(j).getNik_id(),  kakaoMain.memberList.get(j).getStatus_msg() ));
+					myFriends.add(new PersonPanel(kakaoMain,true,kakaoMain.memberList.get(j).getProfile_img(), kakaoMain.memberList.get(j).getNik_id(),  kakaoMain.memberList.get(j).getStatus_msg() ));
+					q=j;
+					
+					
+					
+					myFriends.get(myFriends.size()-1).can.addMouseListener(new MouseAdapter() {
+						public void mouseClicked(MouseEvent e) {
+							Object obj = e.getSource();
+							System.out.println(myFriends.get(1).can + "캔버스주소");
+							System.out.println(obj + "이벤트 발생주체");
+							for(int i=0;i<myFriends.size();i++){
+								if(obj==myFriends.get(i).can){
+									System.out.println(i+"리스너속 아이는?");
+									//프렌즈에 있는 i의 이메일가지고 멤버리스트의 아이가 일치하는 것을 찾아서 그것의 이미지를 불러와야 한다.
+									System.out.println(myFriends.get(i) + "이메일 가져와야함");
+									System.out.println(myFriends.get(i).name);
+									for(int j=0;j<kakaoMain.memberList.size();j++){
+										if(myFriends.get(i).name.equals(kakaoMain.memberList.get(j).getNik_id())){
+											profile=new Profile(kakaoMain.memberList.get(j).getProfile_img(),kakaoMain,false,j);
+											
+										}
+									}
+								}
+							}
+							
+						}
+					});
+					
+				/*	myFriends.get(myFriends.size()-1).can.addMouseListener(new MouseAdapter() {
+						public void mouseClicked(MouseEvent e) {
+							profile=new Profile(kakaoMain.memberList.get(q).getProfile_img(),kakaoMain,true); //f
+							
+						}
+						
+					});*/
+					
 					p_list.add(myFriends.get(cnt));
 					
 					System.out.println("친구:"+myFriends.get(cnt).name);
 					System.out.println(" 리스트 패널 사이즈:"+myFriends.size());
-					
 				}
 			}
 		}
