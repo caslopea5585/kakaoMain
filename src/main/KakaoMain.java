@@ -83,13 +83,10 @@ public class KakaoMain extends JFrame implements Runnable{
 		menuPanel=new MenuPanel(this);
 		friendsListPanel=new FriendsListPanel(this);
 		chattingListPanel=new ChattingListPanel(this);
-<<<<<<< HEAD:src/merge_sh_yk/KakaoMain.java
-		settingPanel=new SettingPanel();
-=======
+		
 		settingPanel=new SettingPanel(this);
 		
 		
->>>>>>> 916f4cedbecceb89754e6bb45aa640fc5e21c67d:src/main/KakaoMain.java
 		
 		
 		panel[1]=new JPanel();	

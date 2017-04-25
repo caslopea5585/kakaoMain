@@ -9,10 +9,6 @@ import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -22,10 +18,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneLayout;
 
-import db.DBManager;
+import Profile.Profile;
 import main.KakaoMain;
 import merge_sh_yk.MyScrollBarUI;
-import profile.Profile;
 
 public class FriendsListPanel extends JPanel {
 	JPanel p_search; //검색 패널

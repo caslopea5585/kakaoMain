@@ -2,7 +2,6 @@ package client.chat;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -10,29 +9,20 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Vector;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextPane;
 
-<<<<<<< HEAD
-
-import merge_sh_yk.KakaoMain;
-import merge_sh_yk.LoginPanel;
-=======
 import login.LoginPanel;
-import main.ClientThread;
 import main.KakaoMain;
->>>>>>> 916f4cedbecceb89754e6bb45aa640fc5e21c67d
 import net.miginfocom.swing.MigLayout;
 
 
