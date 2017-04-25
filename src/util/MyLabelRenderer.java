@@ -1,9 +1,12 @@
  package util;
 
+<<<<<<< HEAD
 import java.awt.BorderLayout;
 
 import java.awt.Canvas;
 import java.awt.Color;
+=======
+>>>>>>> 4919693f2a606d4f6080eb4d3b2b81929b7b85e7
 import java.awt.Component;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -15,9 +18,12 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
+<<<<<<< HEAD
 import db.DBManager;
 import Profile.Profile;
 
+=======
+>>>>>>> 4919693f2a606d4f6080eb4d3b2b81929b7b85e7
 public class MyLabelRenderer implements TableCellRenderer{
 
 	String[] list={

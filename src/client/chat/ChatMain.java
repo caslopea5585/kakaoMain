@@ -52,7 +52,7 @@ public class ChatMain extends JDialog implements ActionListener{
 	JFileChooser chooser;
 	
 	KakaoMain main;
-	Chat chatDto;
+	//Chat chatDto;
 	
 	
 	
@@ -153,15 +153,17 @@ public class ChatMain extends JDialog implements ActionListener{
 		log.ct.sendMsg(msg,time,sender);
 	
 		//chatDto=log.ct.chatDto;
+<<<<<<< HEAD
 		chatDto=log.ct.chatDto;
+=======
+>>>>>>> 4919693f2a606d4f6080eb4d3b2b81929b7b85e7
 
-		
-		chatDto=log.ct.chatDto;
-		
-		
 		//model.addRow(chatDto);
+<<<<<<< HEAD
 		//area.setText("");
 		model.addRow(chatDto);
+=======
+>>>>>>> 4919693f2a606d4f6080eb4d3b2b81929b7b85e7
 		area.setText("");
 
 	}
