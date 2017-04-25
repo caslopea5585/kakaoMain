@@ -51,7 +51,7 @@ public class KakaoMain extends JFrame implements Runnable{
 		add(panel[0]);
 		
 		
-		setUndecorated(true); //타이틀바 제거
+		//setUndecorated(true); //타이틀바 제거
 		setBounds(100,100,360,590);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -83,10 +83,14 @@ public class KakaoMain extends JFrame implements Runnable{
 		menuPanel=new MenuPanel(this);
 		friendsListPanel=new FriendsListPanel(this);
 		chattingListPanel=new ChattingListPanel(this);
+<<<<<<< HEAD
 		settingPanel=new SettingPanel(this);
 		
 		
+=======
+>>>>>>> e336f3aa61f0c432e405b1aeb98ac2f7cf895312
 		
+		settingPanel=new SettingPanel(this);
 		
 		panel[1]=new JPanel();	
 		

@@ -94,6 +94,10 @@ public class MenuDialog extends JDialog implements ActionListener{
 		}
 		else if(obj==bt_exit){
 			System.exit(0);
+		}else if(obj==bt_logout){
+			dispose();
+			//kakaoMain.panel[0]=new LoginPanel(this);
+			kakaoMain.panel[0].setVisible(true);
 		}
 	}
 

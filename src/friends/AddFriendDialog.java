@@ -32,10 +32,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import Profile.Profile;
 import db.DBManager;
 import main.KakaoMain;
 import main.MemberList;
+<<<<<<< HEAD
 import Profile.Profile;
+=======
+>>>>>>> e336f3aa61f0c432e405b1aeb98ac2f7cf895312
 import util.HintedTextField;
 
 public class AddFriendDialog extends JDialog{
@@ -147,8 +151,8 @@ public class AddFriendDialog extends JDialog{
 		point(this);
 		setButton(bt_close);
 		
-		//setUndecorated(true);
-		setSize(300,300);
+		setUndecorated(true);
+		setSize(300,320);
         setModal(true);
         setVisible(true);
 	}
@@ -251,14 +255,14 @@ public class AddFriendDialog extends JDialog{
 		
 		can=new Canvas(){
 			public void paint(Graphics g) {
-				g.drawImage(image, 0, 0, 100,100, this);
-				g.drawImage(bgimage, 0, 0, 100,100, this);
+				g.drawImage(image, 0, 20, 100,100, this);
+				g.drawImage(bgimage, 0, 20, 100,100, this);
 			}
 		};
 		//can.repaint();
 		
 		
-		can.setPreferredSize(new Dimension(100,100));
+		can.setPreferredSize(new Dimension(120,120));
 		p_img.add(can);
 		//System.out.println(member.getNik_id());
 		la_nick.setText(member.getNik_id());

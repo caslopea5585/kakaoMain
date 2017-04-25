@@ -17,8 +17,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import client.chat.Chat;
-
 //DB가 가져야할 정보 num/users/내용
 public class Server_chat extends Thread{
 	Socket socket;
@@ -29,7 +27,6 @@ public class Server_chat extends Thread{
 	JSONArray value;
 	String msgValue,timeValue,senderValue;
 	JSONObject valueCheck;
-	
 	
 	
 	public Server_chat(Socket socket,Vector<ThreadManager> userThread) {
@@ -114,12 +111,15 @@ public class Server_chat extends Thread{
 							bos.flush();
 							send(new File(path));
 						} catch (IOException e) {
+							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ParseException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 		    try {
@@ -127,6 +127,7 @@ public class Server_chat extends Thread{
 		    		fos.close();
 		    	}
 			} catch (IOException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -142,18 +143,41 @@ public class Server_chat extends Thread{
 			sb.append("\"contents\":[{\"msg\":\""+msg+"\"},{\"time\":\""+time+"\"},{\"sender\":\""+sender+"\"}]");
 			sb.append("}");
 			String myString = sb.toString();
+<<<<<<< HEAD
 				
 
+=======
+/*			
+			 chatDto.setMsg(msgValue);
+			 chatDto.setSender(senderValue);
+			 chatDto.setTime(timeValue);*/
+
+			
+			
+/*			try {
+				buffw.write(myString+"\n");
+				buffw.flush();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}*/
+			
+>>>>>>> e336f3aa61f0c432e405b1aeb98ac2f7cf895312
 			System.out.println("유저쓰레드 사이즈 = "+userThread.size());
 		for(int i=0;i<userThread.size();i++){
 			
 				try {
+<<<<<<< HEAD
 					userThread.elementAt(i).sever_chat.buffw.write(myString+"\n");
 					userThread.elementAt(i).sever_chat.buffw.flush();
 					System.out.println("서버에서 참여자들에게 보내는 메세지는???"+myString);
 					System.out.println("유저 쓰레드???"+userThread.get(i));
 
 
+=======
+
+					userThread.get(i).chat.buffw.write(myString+"\n");
+					userThread.get(i).chat.buffw.flush();
+>>>>>>> e336f3aa61f0c432e405b1aeb98ac2f7cf895312
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -178,15 +202,21 @@ public class Server_chat extends Thread{
 		String myString = obj.toString();
 	    try {
 			for(int i=0;i<userThread.size();i++){
+<<<<<<< HEAD
 				userThread.get(i).sever_chat.buffw.write(myString+"\n");
 				userThread.get(i).sever_chat.buffw.flush();
 				userThread.elementAt(i).sever_chat.buffw.write(myString+"\n");
 				userThread.elementAt(i).sever_chat.buffw.flush();
 				
+=======
+>>>>>>> e336f3aa61f0c432e405b1aeb98ac2f7cf895312
 				
-				/*
 				userThread.get(i).chat.buffw.write(myString+"\n");
+<<<<<<< HEAD
 				userThread.get(i).chat.buffw.flush();*/
+=======
+				userThread.get(i).chat.buffw.flush();
+>>>>>>> e336f3aa61f0c432e405b1aeb98ac2f7cf895312
 			}
 			
 		} catch (IOException e) {
