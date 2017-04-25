@@ -1,4 +1,4 @@
-package profile;
+package Profile;
 
 import java.awt.BasicStroke;
 import java.awt.Canvas;
