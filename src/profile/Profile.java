@@ -285,6 +285,18 @@ public class Profile extends JFrame implements ActionListener{
 	}
 	
 	public void chat(){
+		//1. 로그인한 아이디 가져오기 
+		//2. 대화상대의 아이디 가져오기
+		//3. ChatMain New할때 (로그인한 아이디, 대화상대 아이디) 보내주기.
+		
+		String myId=kakaoMain.loginEmail;
+		String yourId=kakaoMain.memberList.get(index).getE_mail();
+		ChatMain chat=new ChatMain(kakaoMain,kakaoMain.loginEmail,kakaoMain.memberList.get(index).getE_mail());
+		chat.setLocation(kakaoMain.getLocation().x+360,kakaoMain.getLocation().y);
+		chat.setVisible(true);//화면 교체
+		kakaoMain.chat.add(chat);
+		
+		/*
 		PreparedStatement pstmt=null;
 		ResultSet rs = null;
 		String sql="select roomNumber from Chats where e_mail=?";
@@ -295,7 +307,6 @@ public class Profile extends JFrame implements ActionListener{
 			rs = pstmt.executeQuery();
 			
 			roomNumberArray.removeAll(roomNumberArray);
-			System.out.println(roomNumberArray.size() + "프로필에서 룸넘버 사이즈");
 			
 			while(rs.next()){
 				roomNumberArray.add(rs.getInt("roomNumber"));
@@ -335,6 +346,7 @@ public class Profile extends JFrame implements ActionListener{
 				sql="select roomnumber from chats where e_mail=?";
 				pstmt = kakaoMain.con.prepareStatement(sql);
 				pstmt.setString(1, kakaoMain.loginEmail);
+				System.out.println("로그인 이메일은?"+kakaoMain.loginEmail);
 				rs = pstmt.executeQuery();
 				
 				System.out.println("룸넘버 가져오니???");
@@ -355,7 +367,11 @@ public class Profile extends JFrame implements ActionListener{
 					pstmt.setInt(1, (Integer)myRoomNum.get(i));
 					rs = pstmt.executeQuery();
 					while(rs.next()){
-						if(kakaoMain.memberList.get(index).getE_mail().equals(rs.getString("e_mail"))){
+						System.out.println("내가 로그인 한 이메일 = "+kakaoMain.memberList.get(index).getE_mail());
+						String test = rs.getString("e_mail");
+						System.out.println("비교되는 e_mail = " + test);
+						if(kakaoMain.memberList.get(index).getE_mail().equals(test)){
+							System.out.println(kakaoMain.chat.size()+"챗 사이즈");
 							for(int j=0; j<kakaoMain.chat.size();j++){
 								System.out.println(kakaoMain.loginEmail +kakaoMain.chat.get(j).loginEmail );
 								System.out.println(kakaoMain.memberList.get(index).getE_mail()+(kakaoMain.chat.get(j).yourEmail));
@@ -389,24 +405,13 @@ public class Profile extends JFrame implements ActionListener{
 					kakaoMain.chat.add(chat);
 					
 				}
-/*				
-				for(int i=0; i<kakaoMain.chat.size();i++){
-					System.out.println(kakaoMain.loginEmail +kakaoMain.chat.get(i).loginEmail );
-					System.out.println(kakaoMain.memberList.get(index).getE_mail()+(kakaoMain.chat.get(i).yourEmail));
-					if(kakaoMain.loginEmail.equals(kakaoMain.chat.get(i).loginEmail) && kakaoMain.memberList.get(index).getE_mail().equals(kakaoMain.chat.get(i).yourEmail)){
-						System.out.println("기존생성");
-						kakaoMain.chat.get(i).setVisible(true);
-						kakaoMain.chat.get(i).setLocation(kakaoMain.getLocation().x+360,kakaoMain.getLocation().y);
-					}
-				}*/
-				
 				
 			}
 			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 	
 

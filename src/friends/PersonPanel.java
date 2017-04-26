@@ -149,7 +149,6 @@ public class PersonPanel extends JPanel {
 		//setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 		setBackground(Color.WHITE);
 		
-		System.out.println("퍼슨 패널 생성 완료.");
 	}
 	
 	public void getFriendList(){

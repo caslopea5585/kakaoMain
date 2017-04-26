@@ -213,8 +213,6 @@ public class AddFriendDialog extends JDialog{
 				bt_add.setVisible(false);
 				bt_add.setEnabled(false);
 				la_des.setText("\'"+t_search.getText()+"\'"+"를 찾을 수 없습니다.");
-				System.out.println("정보 없 음");
-				//member.setStatus_msg(rs.getString("status_msg"));
 			}
 
 			
@@ -239,7 +237,6 @@ public class AddFriendDialog extends JDialog{
 		}
 	}
 	public void showFriend(MemberList member, JPanel p_friend){
-		System.out.println(member.getE_mail()+", "+member.getNik_id()+", "+member.getProfile_img());
 		url=this.getClass().getResource(member.getProfile_img());
 		bgurl=this.getClass().getResource("/emptyCircle.png");
 		
@@ -289,7 +286,6 @@ public class AddFriendDialog extends JDialog{
 	}
 
 	public void validateFriend(){
-		System.out.println("검사 전 친구 사이즈는???"+ kakaoMain.friendsList.size());
 		int friendsSize = kakaoMain.friendsList.size();
 		String getText = t_search.getText();
 		boolean flag =true;
@@ -308,7 +304,6 @@ public class AddFriendDialog extends JDialog{
 			
 			if(flag){
 				addFriend();
-				System.out.println("친구생성");
 			}
 		}else if(kakaoMain.friendsList.size()==0){
 			 
@@ -344,14 +339,10 @@ public class AddFriendDialog extends JDialog{
 							Object obj = e.getSource();
 							for(int i=0;i<kakaoMain.myFriends.size();i++){
 								if(obj==kakaoMain.myFriends.get(i).can){
-									System.out.println(i+"리스너속 아이는?");
 									//프렌즈에 있는 i의 이메일가지고 멤버리스트의 아이가 일치하는 것을 찾아서 그것의 이미지를 불러와야 한다.
-									System.out.println(kakaoMain.myFriends.get(i) + "이메일 가져와야함");
-									System.out.println(kakaoMain.myFriends.get(i).name);
 									for(int j=0;j<kakaoMain.memberList.size();j++){
 										if(kakaoMain.myFriends.get(i).name.equals(kakaoMain.memberList.get(j).getNik_id())){
 											profile=new Profile(kakaoMain.memberList.get(j).getProfile_img(),kakaoMain,false,j);
-											System.out.println("AddFriendDialog 프로필 생성");
 										}
 									}
 								}
@@ -364,9 +355,7 @@ public class AddFriendDialog extends JDialog{
 							profile=new Profile(kakaoMain.memberList.get(q).getProfile_img(),kakaoMain,true); //f
 						}
 					});*/
-					System.out.println("추가 후 mYFriend 의 사이즈는?" + kakaoMain.myFriends.size());
 					kakaoMain.p_list.add(kakaoMain.myFriends.get(kakaoMain.myFriends.size()-1 ));
-					System.out.println("");
 
 				}
 			}
@@ -376,7 +365,6 @@ public class AddFriendDialog extends JDialog{
 			kakaoMain.friends_count=kakaoMain.friendsList.size();
 			kakaoMain.la_friends.setText("    친구   "+Integer.toString(kakaoMain.friends_count));
 			kakaoMain.la_friends.updateUI();
-			System.out.println("친구 수:"+kakaoMain.la_friends.getText());
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}finally{

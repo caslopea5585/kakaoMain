@@ -14,6 +14,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Vector;
 
 import org.json.simple.JSONArray;
@@ -32,15 +34,13 @@ public class Server_chat extends Thread{
 	Vector<ThreadManager> userThread=new Vector<ThreadManager>();
 	
 	JSONArray value;
-	String msgValue,timeValue,senderValue;
+	String msgValue,myIdValue,yourIdValue;
 	int roomNumberValue;
 	JSONObject valueCheck;
 	Connection con;
 	DBManager manager;
 	
-	int index;
-	
-	public Server_chat(Socket socket,Vector<ThreadManager> userThread,int index) {
+	public Server_chat(Socket socket,Vector<ThreadManager> userThread) {
 		this.socket=socket;
 		this.userThread=userThread;
 		manager  = DBManager.getInstance();
@@ -85,24 +85,31 @@ public class Server_chat extends Thread{
 							 msgValue=(String)json.get("msg");
 						 }else if(i==1){
 							 JSONObject json = (JSONObject)value.get(i);
-							 timeValue=(String)json.get("time");
+							 myIdValue=(String)json.get("myId");
 						 }else if(i==2){
 							 JSONObject json = (JSONObject)value.get(i);
-							 senderValue=(String)json.get("sender");
-						 }else if(i==3){
-							 JSONObject json = (JSONObject)value.get(i);
-							 roomNumberValue= Integer.parseInt((String)json.get("roomNumber"));
+							 yourIdValue=(String)json.get("yourId");
 						 }
 					 }
-					 				 
-					 sendMsg(msgValue,timeValue,senderValue,roomNumberValue);
-					 System.out.println(msgValue+senderValue+timeValue+roomNumberValue);
+					 
+					 
+					 
+					 sendMsg(msgValue,myIdValue,yourIdValue);
+					 //sendMsg(msgValue,timeValue,senderValue,roomNumberValue);
+					 
+					 //System.out.println(msgValue+senderValue+timeValue+roomNumberValue);
 				 }
 			
 			}
 			else if(type.equals("loginID")){
 				String id=(String)obj.get("content");
-				userThread.elementAt(index).id=id;
+
+				for(int i=0;i<userThread.size();i++){
+					if(userThread.elementAt(i).id==null){
+						userThread.elementAt(i).id=id;
+						System.out.println(i+": "+id); 
+					}
+				}
 			}
 			else if(type.equals("image")){
 						String size_s=(String)obj.get("content");//file size
@@ -154,14 +161,17 @@ public class Server_chat extends Thread{
 	}
 
 	
-	public void sendMsg(String msg,String time,String sender,int roomNumber){
+	public void sendMsg(String msg,String myIdValue,String yourIdValue){
 		//서버가 보내주는 것
+			
+		
+			String timeValue=getTime();
 			System.out.println("보내지니????");
 			//판단해서 보내주기
 			StringBuffer sb = new StringBuffer();
 			sb.append("{");
 			sb.append(	"\"type\":\"chat\",");
-			sb.append("\"contents\":[{\"msg\":\""+msg+"\"},{\"time\":\""+time+"\"},{\"sender\":\""+sender+"\"},{\"roomNumber\":\""+roomNumber+"\"}]");
+			sb.append("\"contents\":[{\"msg\":\""+msg+"\"},{\"myId\":\""+myIdValue+"\"},{\"yourId\":\""+yourIdValue+"\"},{\"timeValue\":\""+timeValue+"\"}]");
 			sb.append("}");
 			String myString = sb.toString();
 
@@ -173,7 +183,7 @@ public class Server_chat extends Thread{
 			PreparedStatement pstmt =null;
 			ResultSet rs= null;
 			
-			String sql="select e_mail from chats where roomnumber=?";
+/*			String sql="select e_mail from chats where roomnumber=?";
 			Vector<String> roomMember=new Vector<String>();
 			try {
 				pstmt = con.prepareStatement(sql);
@@ -187,18 +197,36 @@ public class Server_chat extends Thread{
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
+*/			
 			
 			
+			//1. 보내주는 대상의 벡터를 만든다.(벡터는 userThread에 있는거를 가져와서 벡터에 담으면 됨.)
+			Vector<Server_chat> chatMates = new Vector<Server_chat>();
+			for(int i=0; i<userThread.size();i++){
+				if(userThread.elementAt(i).id.equals(myIdValue) || userThread.elementAt(i).id.equals(yourIdValue)){
+					chatMates.add(userThread.elementAt(i).sever_chat);
+				}
+			}
+			
+			for(int i=0; i<chatMates.size();i++){
+				try {
+					chatMates.elementAt(i).buffw.write(myString+"\n");
+					chatMates.elementAt(i).buffw.flush();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 			
 			
 			
 			
 		for(int i=0;i<userThread.size();i++){
 			
-				try {
+/*				try {
 					//각 클라이언트 쓰레드에 buffw하는 작업.
 					
-					for(int j=0;j<roomMember.size();j++){
+					for(int j=0;j<2;j++){
+						System.out.println("유저 아이디"+userThread.elementAt(i).id);
 						if(userThread.elementAt(i).id.equals(roomMember.elementAt(j))){
 							userThread.elementAt(i).sever_chat.buffw.write(myString+"\n");
 							userThread.elementAt(i).sever_chat.buffw.flush();
@@ -207,7 +235,7 @@ public class Server_chat extends Thread{
 
 				} catch (IOException e) {
 					e.printStackTrace();
-				}
+				}*/
 			}
 		
 			
@@ -238,6 +266,10 @@ public class Server_chat extends Thread{
 			e.printStackTrace();
 		}
 	
+	}
+	static String getTime() {
+		SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
+		return sdf.format(new Date());
 	}
 	
 	

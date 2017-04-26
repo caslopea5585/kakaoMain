@@ -58,19 +58,19 @@ public class ChatMain extends JDialog implements ActionListener{
 	
 	KakaoMain main;
 	//Chat chatDto;
-	public String loginEmail;
-	public String yourEmail;
+	public String myId;
+	public String yourId;
 	Connection con;
 	int roomNumber =0; //내이메일, 상대방 이메일이 공통으로 가지고 있는 방번호를 저장하는 변수
 	
 	
 	
-	public ChatMain(KakaoMain main,String loginEmail,String yourEmail) {
+	public ChatMain(KakaoMain main,String myId,String yourId) {
 
 		this.main=main;
-		this.loginEmail=loginEmail;
-		this.yourEmail=yourEmail;
-		getRoomNumber();
+		this.myId=myId;
+		this.yourId=yourId;
+		//getRoomNumber();
 		
 		initGUI();
 	}
@@ -159,8 +159,28 @@ public class ChatMain extends JDialog implements ActionListener{
 	}
 	//textpane 영역의 메세지를 보내자!!
 	public void sendsMsg(){
+		
+		
 		String msg = area.getText().trim();
-		String sender = main.memberList.get(0).getNik_id();
+		myId = myId;
+		yourId = yourId;
+		
+		LoginPanel log = (LoginPanel)main.panel[0];
+		log.ct.sendMsg(msg, myId, yourId);
+		
+		
+		
+		
+		area.setText("");
+		
+		
+		
+		
+		
+		
+		/*
+		String msg = area.getText().trim();
+		String sender = main.loginEmail;//센더를 b로 고정값을 받고있어서 고침 memberlist.get(0).
 		String time =  getTime();	
 		LoginPanel log=(LoginPanel)main.panel[0];
 		log.ct.sendMsg(msg,time,sender,roomNumber);
@@ -170,7 +190,7 @@ public class ChatMain extends JDialog implements ActionListener{
 
 		//model.addRow(chatDto);
 		area.setText("");
-
+*/
 	}
 	
 	static String getTime() {
@@ -178,7 +198,7 @@ public class ChatMain extends JDialog implements ActionListener{
 		return sdf.format(new Date());
 	}
 	
-	public void getRoomNumber(){
+	/*public void getRoomNumber(){
 		//쳇메인이 생성될때 내 이메일과, 상대방 이메일을 같이 보내준다.
 		//이 두명이 공통으로 가지고 있는 RoomNumber를 얻어오자!!!
 		con = main.con;
@@ -186,14 +206,14 @@ public class ChatMain extends JDialog implements ActionListener{
 		ResultSet rs=null;
 		
 		
-		System.out.println("쿼리 문 전 이메일정보 : "+loginEmail+" "+yourEmail);
+	
 		String sql="select roomNumber from chats where e_mail=?";
 		Vector<Integer> myRoomNum = new Vector<Integer>();
 		Vector<Integer> yourRoomNum = new Vector<Integer>();
 		
 		try {
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, loginEmail);
+			pstmt.setString(1, myId);
 			rs = pstmt.executeQuery();
 			
 
@@ -227,7 +247,7 @@ public class ChatMain extends JDialog implements ActionListener{
 		
 		
 		
-	}
+	}*/
 	
 	public void actionPerformed(ActionEvent e) {
 		Object obj=e.getSource();
