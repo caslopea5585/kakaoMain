@@ -143,13 +143,7 @@ public class Server_chat extends Thread{
 			sb.append("\"contents\":[{\"msg\":\""+msg+"\"},{\"time\":\""+time+"\"},{\"sender\":\""+sender+"\"}]");
 			sb.append("}");
 			String myString = sb.toString();
-<<<<<<< HEAD
 
-			
-=======
-<<<<<<< HEAD
-
-=======
 /*			
 			 chatDto.setMsg(msgValue);
 			 chatDto.setSender(senderValue);
@@ -163,14 +157,11 @@ public class Server_chat extends Thread{
 			} catch (IOException e) {
 				e.printStackTrace();
 			}*/
-			
->>>>>>> 4919693f2a606d4f6080eb4d3b2b81929b7b85e7
->>>>>>> 4a242c100e779e8ad9ad4bc55256f443d5b06095
+
 			System.out.println("유저쓰레드 사이즈 = "+userThread.size());
 		for(int i=0;i<userThread.size();i++){
 			
 				try {
-<<<<<<< HEAD
 					userThread.elementAt(i).sever_chat.buffw.write(myString+"\n");
 					userThread.elementAt(i).sever_chat.buffw.flush();
 					System.out.println("서버에서 참여자들에게 보내는 메세지는???"+myString);
@@ -180,17 +171,14 @@ public class Server_chat extends Thread{
 
 					userThread.get(i).sever_chat.buffw.write(myString+"\n");
 					userThread.get(i).sever_chat.buffw.flush();
-=======
 
-					userThread.elementAt(i).chat.buffw.write(myString+"\n");
-					userThread.elementAt(i).chat.buffw.flush();
->>>>>>> 4919693f2a606d4f6080eb4d3b2b81929b7b85e7
+
+					//userThread.elementAt(i).chat.buffw.write(myString+"\n");
+					//userThread.elementAt(i).chat.buffw.flush();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
-		
-			
 	}
 
 	public void send(File file){
@@ -209,18 +197,13 @@ public class Server_chat extends Thread{
 		String myString = obj.toString();
 	    try {
 			for(int i=0;i<userThread.size();i++){
-<<<<<<< HEAD
 				userThread.get(i).sever_chat.buffw.write(myString+"\n");
 				userThread.get(i).sever_chat.buffw.flush();
 				userThread.elementAt(i).sever_chat.buffw.write(myString+"\n");
 				userThread.elementAt(i).sever_chat.buffw.flush();
-				
-		
-=======
-				
-				userThread.get(i).chat.buffw.write(myString+"\n");
-				userThread.get(i).chat.buffw.flush();
->>>>>>> 4919693f2a606d4f6080eb4d3b2b81929b7b85e7
+	
+				//userThread.get(i).chat.buffw.write(myString+"\n");
+				//userThread.get(i).chat.buffw.flush();
 			}
 			
 		} catch (IOException e) {

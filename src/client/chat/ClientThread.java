@@ -94,7 +94,6 @@ public class ClientThread extends Thread{
 					
 				 }
 				 
-				
 			}
 			
 			if(type.equals("join")){//접속시 아이디 부여

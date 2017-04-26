@@ -7,6 +7,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -26,17 +27,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-<<<<<<< HEAD
-
-import profile.Profile;
-import util.Util;
-=======
-import Profile.Profile;
 import client.chat.ChatMain;
->>>>>>> 909311fda51f31ca484f8756fba4587896396e15
 import db.DBManager;
 import main.KakaoMain;
 import main.MemberList;
+import profile.Profile;
 
 public class PersonPanel extends JPanel {
 	Canvas can=null;
