@@ -12,10 +12,14 @@ public class ThreadManager {
 	public ThreadManager(Socket socket,Vector<ThreadManager> userThread) {
 		this.socket=socket;
 		this.userThread=userThread;
+<<<<<<< HEAD
 
 		sever_chat=new Server_chat(socket,userThread);
 
 		//chat=new Server_chat(socket,userThread);
+=======
+		sever_chat=new Server_chat(socket,userThread);
+>>>>>>> origin/master
 		
 		
 		

@@ -47,7 +47,10 @@ public class MainServer extends JFrame implements Runnable{
 				if(server.isClosed()){
 					System.out.println("현재 접속자는"+userThread.size()+"\n");
 				}
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
 
 			}
 			

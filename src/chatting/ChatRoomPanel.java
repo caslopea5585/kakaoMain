@@ -82,8 +82,8 @@ public class ChatRoomPanel extends JPanel{
 		//채팅방으로 마우스 리스너 연결
 		this.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				main.chat.setLocation(main.getLocation().x+360,main.getLocation().y);
-				main.chat.setVisible(true);//화면 교체
+				//main.chat.setLocation(main.getLocation().x+360,main.getLocation().y);
+				//main.chat.setVisible(true);//화면 교체
 			}
 		});
 		

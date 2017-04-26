@@ -1,10 +1,13 @@
  package util;
 
+<<<<<<< HEAD
 import java.awt.BorderLayout;
 
 import java.awt.Canvas;
 import java.awt.Color;
 
+=======
+>>>>>>> origin/master
 import java.awt.Component;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -16,10 +19,13 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
+<<<<<<< HEAD
 import db.DBManager;
 import profile.Profile;
 
 
+=======
+>>>>>>> origin/master
 public class MyLabelRenderer implements TableCellRenderer{
 
 	String[] list={

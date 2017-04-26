@@ -8,14 +8,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.nio.file.Files;
-import java.util.Vector;
-
-import javax.swing.JTextArea;
-import javax.swing.JTextPane;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -27,7 +22,7 @@ import main.KakaoMain;
 public class ClientThread extends Thread{
 	Socket socket;
 	Socket imgsocket;
-	KakaoMain kMain;
+	KakaoMain kakaoMain;
 	
 	BufferedReader buffr;
 	BufferedWriter buffw;
@@ -37,9 +32,9 @@ public class ClientThread extends Thread{
 	JSONArray value;
 	JSONObject valueCheck;
 	
-	public ClientThread(Socket socket,KakaoMain kMain) {
+	public ClientThread(Socket socket,KakaoMain kakaoMain) {
 		this.socket=socket;
-		this.kMain=kMain;
+		this.kakaoMain=kakaoMain;
 		
 		try {
 			buffr=new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -90,8 +85,10 @@ public class ClientThread extends Thread{
 					 chatDto.setTime(timeValue);
 					 System.out.println("클라이언트 쓰레드에서 셋한 dto메세지 값은??:"+chatDto.getMsg());
 					
-					 kMain.chat.get(index).model.addRow(chatDto);
 					
+					 // kMain.chat.get(index).model.addRow(chatDto);
+					 //모델에 행을 추가시켜야함
+					kakaoMain.chat.get(0).model.addRow(chatDto);
 				 }
 				 
 			}
@@ -176,8 +173,8 @@ public class ClientThread extends Thread{
 		
 		while(true){
 			listen();	
-			kMain.chat.get(index).table.setModel(kMain.chat.get(index).model);
-			kMain.chat.get(index).table.updateUI();
+			//kMain.chat.get(index).table.setModel(kMain.chat.get(index).model);
+			//kMain.chat.get(index).table.updateUI();
 		}
 	}
 }

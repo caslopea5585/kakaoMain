@@ -153,6 +153,7 @@ public class ChatMain extends JDialog implements ActionListener{
 		log.ct.sendMsg(msg,time,sender);
 	
 		//chatDto=log.ct.chatDto;
+<<<<<<< HEAD
 
 		chatDto=log.ct.chatDto;
 
@@ -162,6 +163,10 @@ public class ChatMain extends JDialog implements ActionListener{
 		//area.setText("");
 		model.addRow(chatDto);
 
+=======
+
+		//model.addRow(chatDto);
+>>>>>>> origin/master
 		area.setText("");
 
 	}
