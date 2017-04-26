@@ -28,7 +28,7 @@ public class ClientThread extends Thread{
 	BufferedWriter buffw;
 	
 	public Chat chatDto;
-	String msgValue,timeValue,senderValue;
+	String msgValue,timeValue,myIdValue,yourIdValue;
 	int roomNumberValue;
 	JSONArray value;
 	JSONObject valueCheck;
@@ -71,26 +71,21 @@ public class ClientThread extends Thread{
 							 msgValue=(String)json.get("msg");
 						 }else if(i==1){
 							 JSONObject json = (JSONObject)value.get(i);
-							 timeValue=(String)json.get("time");
+							 myIdValue=(String)json.get("myId");
 						 }else if(i==2){
 							 JSONObject json = (JSONObject)value.get(i);
-							 senderValue=(String)json.get("sender");
+							 yourIdValue=(String)json.get("yourId");
 						 }else if(i==3){
 							 JSONObject json = (JSONObject)value.get(i);
-							 roomNumberValue= Integer.parseInt((String)json.get("roomNumber"));
+							 timeValue= (String)json.get("timeValue");
 						 }
 					 }
-
-					 System.out.println("클라이언트에서 받는 메세지는???: "+msgValue+senderValue+timeValue+roomNumberValue);
+					 
+					 chatDto.setMyId(myIdValue);
+					 chatDto.setYourId(yourIdValue);
 					 chatDto.setMsg(msgValue);
-					 chatDto.setSender(senderValue);
-					 chatDto.setTime(timeValue);
-					 chatDto.setRoomNumber(roomNumberValue);
-					 
-					 
-					 
-					 System.out.println("클라이언트 쓰레드에서 셋한 dto메세지 값은??:"+chatDto.getMsg());
-					
+					 chatDto.setTimeValue(timeValue);
+					  
 					
 					  //kMain.chat.get(index).model.addRow(chatDto);
 					 //모델에 행을 추가시켜야함
@@ -115,12 +110,12 @@ public class ClientThread extends Thread{
 		}
 	}
 	
-	public void sendMsg(String msg,String time,String sender,int roomNumber){
+	public void sendMsg(String msg,String myId,String yourId){
 		try {
 			StringBuffer sb = new StringBuffer();
 			sb.append("{");
 			sb.append(	"\"type\":\"chat\",");
-			sb.append("\"contents\":[{\"msg\":\""+msg+"\"},{\"time\":\""+time+"\"},{\"sender\":\""+sender+"\"},{\"roomNumber\":\""+roomNumber+"\"}]");
+			sb.append("\"contents\":[{\"msg\":\""+msg+"\"},{\"myId\":\""+myId+"\"},{\"yourId\":\""+yourId+"\"}]");
 			sb.append("}");
 			
 			String myString = sb.toString();

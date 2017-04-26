@@ -22,7 +22,6 @@ public class MainServer extends JFrame implements Runnable{
 	
 	Connection con;
 	DBManager manager;
-	int count =0;
 	
 	public MainServer() {
 		dbContainer=new DBContainer();//dbÈ¹µæ
@@ -48,7 +47,7 @@ public class MainServer extends JFrame implements Runnable{
 				String ip=socket.getInetAddress().getHostAddress();
 				System.out.println(ip+" Á¢¼Ó\n");
 				insertIp();
-				ThreadManager tm=new ThreadManager(socket,userThread,count++);
+				ThreadManager tm=new ThreadManager(socket,userThread);
 				tm.start();
 				userThread.add(tm);
 

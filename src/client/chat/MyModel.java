@@ -17,9 +17,9 @@ public class MyModel extends AbstractTableModel{
 		
 		int len = list.size();
 		if(list.size()>3){
-			System.out.println(list.get(0).getSender());
-			System.out.println(list.get(1).getSender());
-			System.out.println(list.get(2).getSender());
+			System.out.println(list.get(0).getMyId());
+			System.out.println(list.get(1).getMyId());
+			System.out.println(list.get(2).getMyId());
 		}
 		//System.out.println(list.get(0));
 		this.fireTableRowsInserted(len-1, len-1);

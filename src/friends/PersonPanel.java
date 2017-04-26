@@ -27,11 +27,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-import client.chat.ChatMain;
+import Profile.Profile;
 import db.DBManager;
 import main.KakaoMain;
 import main.MemberList;
-import profile.Profile;
 
 public class PersonPanel extends JPanel {
 	Canvas can=null;
@@ -149,7 +148,6 @@ public class PersonPanel extends JPanel {
 		//setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 		setBackground(Color.WHITE);
 		
-		System.out.println("퍼슨 패널 생성 완료.");
 	}
 	
 	public void getFriendList(){

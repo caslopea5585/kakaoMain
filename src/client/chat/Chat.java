@@ -1,28 +1,22 @@
 package client.chat;
 
 public class Chat {
-	private String sender;
-	private String time;
+	private String myId;
+	private String yourId;
 	private String msg;
-	private int roomNumber;
+	private String timeValue;
 	
-	public int getRoomNumber() {
-		return roomNumber;
+	public String getMyId() {
+		return myId;
 	}
-	public void setRoomNumber(int roomNumber) {
-		this.roomNumber = roomNumber;
+	public void setMyId(String myId) {
+		this.myId = myId;
 	}
-	public String getSender() {
-		return sender;
+	public String getYourId() {
+		return yourId;
 	}
-	public void setSender(String sender) {
-		this.sender = sender;
-	}
-	public String getTime() {
-		return time;
-	}
-	public void setTime(String time) {
-		this.time = time;
+	public void setYourId(String yourId) {
+		this.yourId = yourId;
 	}
 	public String getMsg() {
 		return msg;
@@ -30,5 +24,12 @@ public class Chat {
 	public void setMsg(String msg) {
 		this.msg = msg;
 	}
+	public String getTimeValue() {
+		return timeValue;
+	}
+	public void setTimeValue(String timeValue) {
+		this.timeValue = timeValue;
+	}
 	
+
 }

@@ -230,7 +230,6 @@ public class LoginPanel extends JPanel{
          boolean loginFlag=false;
          
          while(rs.next()){
-        	 System.out.println("while");
  			MemberList memberListDto = new MemberList();
 			memberListDto.setE_mail(rs.getString("e_mail"));
 			memberListDto.setNik_id(rs.getString("nik_id"));

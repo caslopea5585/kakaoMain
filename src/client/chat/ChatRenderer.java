@@ -28,17 +28,20 @@ public class ChatRenderer implements TableCellRenderer {
 		boolean isSelected, boolean hasFocus, int row, int col) {
 		ChatHolder holder = null;
 		Chat chat = (Chat)value;
-		System.out.println("·£´õÀÇ = "+value);
-		String sender = chat.getSender();
-		String msg = chat.getMsg();
-		String time = chat.getTime();
+
+
+
 		
-		System.out.println("·»´õ ¼¾´õ"+chat.getSender());
-		System.out.println("·»´õ ¸Þ½ÃÁö"+chat.getMsg());
-		System.out.println("·»´õ ½Ã°£"+chat.getTime());
+		String myId = chat.getMyId();
+		String msg = chat.getMsg();
+		String timeValue = chat.getTimeValue();
+		
+		
 		
 		//¸â¹ö¸®½ºÆ® ¾ÈµÊ...ÇÁ·»Áî ¸®½ºÆ®·ÎÇØ¾ßÇÔ..
-		if(main.main.memberList.get(0).getNik_id().equals(chat.getSender())){
+//		if(main.main.memberList.get(0).getNik_id().equals(chat.getSender())){
+		
+		if(main.myId.equals(chat.getMyId())){//³ª¶û°°À¸¸é
 			holder=rightHolder;
 		}else{
 			holder=leftHolder;
@@ -46,8 +49,8 @@ public class ChatRenderer implements TableCellRenderer {
 
 		
 		
-		holder.la_user.setText(sender);
-		holder.la_time.setText(time);
+		holder.la_user.setText(myId);
+		holder.la_time.setText(timeValue);
 		holder.chatbox.setText(msg);
 		holder.readCount.setText(Integer.toString(count));
 		int iHeight = holder.chatbox.getPreferredSize().height + 20;
