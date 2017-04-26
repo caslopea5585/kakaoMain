@@ -213,17 +213,21 @@ public class Server_chat extends Thread{
          
          
          //1. 보내주는 대상의 벡터를 만든다.(벡터는 userThread에 있는거를 가져와서 벡터에 담으면 됨.)
-         Vector<Server_chat> chatMates = new Vector<Server_chat>();
+         Vector<ThreadManager> chatMates = new Vector<ThreadManager>();
          for(int i=0; i<userThread.size();i++){
             if(userThread.elementAt(i).id.equals(myIdValue) || userThread.elementAt(i).id.equals(yourIdValue)){
-               chatMates.add(userThread.elementAt(i).sever_chat);
+               chatMates.add(userThread.elementAt(i));
             }
          }
          
          for(int i=0; i<chatMates.size();i++){
+            
             try {
-               chatMates.elementAt(i).buffw.write(myString+"\n");
-               chatMates.elementAt(i).buffw.flush();
+               chatMates.elementAt(i).sever_chat.buffw.write(myString+"\n");
+               chatMates.elementAt(i).sever_chat.buffw.flush();
+               
+               /*chatMates.elementAt(i).buffw.write(myString+"\n");
+               chatMates.elementAt(i).buffw.flush();*/
             } catch (IOException e) {
                e.printStackTrace();
             }
