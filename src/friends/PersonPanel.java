@@ -5,6 +5,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
@@ -25,8 +26,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
+<<<<<<< HEAD
+
+import profile.Profile;
+import util.Util;
+=======
 import Profile.Profile;
 import client.chat.ChatMain;
+>>>>>>> 909311fda51f31ca484f8756fba4587896396e15
 import db.DBManager;
 import main.KakaoMain;
 import main.MemberList;
@@ -62,17 +69,21 @@ public class PersonPanel extends JPanel {
 		this.statusMsg=statusMsg;
 		this.flag = flag; //나이면 false, 나 아니면 true
 		
+		//p_img=new JPanel();
 		p_info=new JPanel();
 		p_status=new JPanel();
+		p_status.setBackground(Color.WHITE);
+		p_status.setLayout(new FlowLayout(FlowLayout.LEFT));
 		la_name=new JLabel(name);
 		la_statusMsg=new JLabel(statusMsg);
-		bt_statusMsg=new JButton(statusMsg);
+		//bt_statusMsg=new JButton(statusMsg);
 		
-		p_info.setPreferredSize(new Dimension(310, 50));
-		//la_name.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 300));
-		la_name.setPreferredSize(new Dimension(310, 20));
+		//p_info.setPreferredSize(new Dimension(310, 50));
+		la_name.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 0));
+		//la_name.setPreferredSize(new Dimension(310, 20));
 		
-		//la_statusMsg.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
+		la_statusMsg.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 0));
+		la_statusMsg.setBorder(new RoundedBorder(10));
 		//bt_statusMsg.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 		
 		//p_status.add(bt_statusMsg);
@@ -82,7 +93,7 @@ public class PersonPanel extends JPanel {
 		
 		setLayout(new BorderLayout());
 		
-		//p_info.setLayout(new GridLayout(2, 1));
+		p_info.setLayout(new GridLayout(2, 1));
 		p_info.setBackground(Color.WHITE);
 		url=this.getClass().getResource(photoPath); //"/jeju2.jpg"
 		bgurl=this.getClass().getResource("/emptyCircle.png");
@@ -96,17 +107,21 @@ public class PersonPanel extends JPanel {
 		
 		can=new Canvas(){
 			public void paint(Graphics g) {
-				g.drawImage(image, 0, 0, 50,50, this);
-				g.drawImage(bgimage, 0, 0, 50,50, this);
+				g.drawImage(image, 0, 0, 60,60, this);
+				g.drawImage(bgimage, 0, 0, 60,60, this);
 			}
 		};
 		
-		can.setPreferredSize(new Dimension(50,50));
+		can.setPreferredSize(new Dimension(60,60));
+		p_status.add(la_statusMsg);
 		
 		p_info.add(la_name);
-		p_info.add(la_statusMsg);
+		p_info.add(p_status);
+
+		//p_info.add(la_statusMsg);
 		
-		
+		//p_img.setPreferredSize(new Dimension(50, 50));
+		//p_img.add(can);
 		//p_info.add(bt_statusMsg);
 		//p_info.add(p_status);
 		add(can, BorderLayout.WEST);
@@ -136,7 +151,7 @@ public class PersonPanel extends JPanel {
 		setBorder(BorderFactory.createEmptyBorder(5,15,5,5));
 */
 		setPreferredSize(new Dimension(360, 60));
-		setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+		//setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 		setBackground(Color.WHITE);
 		
 		System.out.println("퍼슨 패널 생성 완료.");
@@ -179,7 +194,7 @@ public class PersonPanel extends JPanel {
 	        this.radius = radius;
 	    }
 	    public Insets getBorderInsets(Component c) {
-	        return new Insets(this.radius+1, this.radius+1, this.radius+2, this.radius);
+	        return new Insets(this.radius-7, this.radius+1, this.radius-7, this.radius);
 	    }
 	    public boolean isBorderOpaque() {
 	        return true;
