@@ -188,6 +188,68 @@ public class Server_chat extends Thread{
          }*/
 
 
+<<<<<<< HEAD
+			System.out.println("유저쓰레드 사이즈 = "+userThread.size());
+			//여기서 쓰레드를 찾으면서... 해당하는 유저의 클라이언트 쓰레드에만 내가 읽어들인걸 쓰면됨...
+			
+			
+			PreparedStatement pstmt =null;
+			ResultSet rs= null;
+			
+/*			String sql="select e_mail from chats where roomnumber=?";
+			Vector<String> roomMember=new Vector<String>();
+			try {
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, roomNumber);
+				rs = pstmt.executeQuery();
+				
+				while(rs.next()){
+					roomMember.add(rs.getString("e_mail"));
+				}
+				
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+*/			
+			
+			
+			//1. 보내주는 대상의 벡터를 만든다.(벡터는 userThread에 있는거를 가져와서 벡터에 담으면 됨.)
+			Vector<ThreadManager> chatMates = new Vector<ThreadManager>();
+			for(int i=0; i<userThread.size();i++){
+				if(userThread.elementAt(i).id.equals(myIdValue) || userThread.elementAt(i).id.equals(yourIdValue)){
+					chatMates.add(userThread.elementAt(i));
+				}
+			}
+			
+			for(int i=0; i<chatMates.size();i++){
+				
+				try {
+					chatMates.elementAt(i).sever_chat.buffw.write(myString+"\n");
+					chatMates.elementAt(i).sever_chat.buffw.flush();
+					
+					/*chatMates.elementAt(i).buffw.write(myString+"\n");
+					chatMates.elementAt(i).buffw.flush();*/
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			
+			
+			
+		for(int i=0;i<userThread.size();i++){
+			
+/*				try {
+					//각 클라이언트 쓰레드에 buffw하는 작업.
+					
+					for(int j=0;j<2;j++){
+						System.out.println("유저 아이디"+userThread.elementAt(i).id);
+						if(userThread.elementAt(i).id.equals(roomMember.elementAt(j))){
+							userThread.elementAt(i).sever_chat.buffw.write(myString+"\n");
+							userThread.elementAt(i).sever_chat.buffw.flush();
+						}
+					}
+=======
          System.out.println("유저쓰레드 사이즈 = "+userThread.size());
          //여기서 쓰레드를 찾으면서... 해당하는 유저의 클라이언트 쓰레드에만 내가 읽어들인걸 쓰면됨...
          
@@ -248,6 +310,7 @@ public class Server_chat extends Thread{
                      userThread.elementAt(i).sever_chat.buffw.flush();
                   }
                }
+>>>>>>> 3109ef5bb3eb402ad11824f432ee69c7a2facdb6
 
 
 
