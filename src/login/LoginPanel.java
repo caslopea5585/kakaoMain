@@ -34,6 +34,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import org.json.simple.JSONObject;
+
 import client.chat.ClientThread;
 import db.DBManager;
 import friends.Friends;
@@ -247,8 +249,9 @@ public class LoginPanel extends JPanel{
          
          if(loginFlag){
         	 JOptionPane.showMessageDialog(this, "로그인성공");  
-        	 
-        	 //내 친구정보(friends 테이블) 찾기
+        	 ct.sendID(t_email.getText());
+    		
+    		//내 친구정보(friends 테이블) 찾기
         	 //밑에 seeMain의 memberList자리에 
         	 //로그인 정보의 e_mail정보를 가져온다.
         	 String sql2="select * from friends where e_mail="+"\'"+t_email.getText()+"\'";

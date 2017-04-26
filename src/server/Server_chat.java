@@ -10,12 +10,19 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Vector;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+
+import db.DBManager;
+import main.KakaoMain;
 
 //DB가 가져야할 정보 num/users/내용
 public class Server_chat extends Thread{
@@ -28,11 +35,16 @@ public class Server_chat extends Thread{
 	String msgValue,timeValue,senderValue;
 	int roomNumberValue;
 	JSONObject valueCheck;
+	Connection con;
+	DBManager manager;
 	
+	int index;
 	
-	public Server_chat(Socket socket,Vector<ThreadManager> userThread) {
+	public Server_chat(Socket socket,Vector<ThreadManager> userThread,int index) {
 		this.socket=socket;
 		this.userThread=userThread;
+		manager  = DBManager.getInstance();
+		con = manager.getConnection();
 		try {
 			buffr=new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			buffw=new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
@@ -88,6 +100,10 @@ public class Server_chat extends Thread{
 				 }
 			
 			}
+			else if(type.equals("loginID")){
+				String id=(String)obj.get("content");
+				userThread.elementAt(index).id=id;
+			}
 			else if(type.equals("image")){
 						String size_s=(String)obj.get("content");//file size
 						int size=Integer.parseInt(size_s);
@@ -136,6 +152,7 @@ public class Server_chat extends Thread{
 			}
 		}
 	}
+
 	
 	public void sendMsg(String msg,String time,String sender,int roomNumber){
 		//서버가 보내주는 것
@@ -164,16 +181,43 @@ public class Server_chat extends Thread{
 
 
 			System.out.println("유저쓰레드 사이즈 = "+userThread.size());
+			//여기서 쓰레드를 찾으면서... 해당하는 유저의 클라이언트 쓰레드에만 내가 읽어들인걸 쓰면됨...
+			
+			
+			PreparedStatement pstmt =null;
+			ResultSet rs= null;
+			
+			String sql="select e_mail from chats where roomnumber=?";
+			Vector<String> roomMember=new Vector<String>();
+			try {
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, roomNumber);
+				rs = pstmt.executeQuery();
+				
+				while(rs.next()){
+					roomMember.add(rs.getString("e_mail"));
+				}
+				
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			
+			
+			
+			
+			
+			
 		for(int i=0;i<userThread.size();i++){
 			
 				try {
+					//각 클라이언트 쓰레드에 buffw하는 작업.
 					
-					userThread.elementAt(i).sever_chat.buffw.write(myString+"\n");
-					userThread.elementAt(i).sever_chat.buffw.flush();
-
-					
-					System.out.println("서버에서 참여자들에게 보내는 메세지는???"+myString);
-					System.out.println("유저 쓰레드???"+userThread.get(i));
+					for(int j=0;j<roomMember.size();j++){
+						if(userThread.elementAt(i).id.equals(roomMember.elementAt(j))){
+							userThread.elementAt(i).sever_chat.buffw.write(myString+"\n");
+							userThread.elementAt(i).sever_chat.buffw.flush();
+						}
+					}
 
 
 
@@ -213,8 +257,12 @@ public class Server_chat extends Thread{
 
 				userThread.elementAt(i).sever_chat.buffw.write(myString+"\n");
 				userThread.elementAt(i).sever_chat.buffw.flush();
+<<<<<<< HEAD
 
 			}
+=======
+			} 
+>>>>>>> 497950331bdb0bac82aecb9f61f1deb3fdc3f317
 			
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -174,6 +174,20 @@ public class ClientThread extends Thread{
 		};
 		thread.start();
 	}
+	
+	public void sendID(String id){
+		JSONObject obj=new JSONObject();
+		obj.put("type", "loginID");
+		obj.put("content",id);
+		
+		try {
+			buffw.write(obj.toString()+"\n");
+			buffw.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	public void run() {
 		
