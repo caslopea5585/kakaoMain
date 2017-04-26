@@ -188,6 +188,15 @@ public class ChatMain extends JDialog implements ActionListener{
 	
 		//chatDto=log.ct.chatDto;
 
+
+		//chatDto=log.ct.chatDto;
+
+
+		//model.addRow(chatDto);
+
+		//area.setText("");
+		//model.addRow(chatDto);
+
 		//model.addRow(chatDto);
 		area.setText("");
 */

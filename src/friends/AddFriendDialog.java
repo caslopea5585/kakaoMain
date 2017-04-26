@@ -32,10 +32,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import Profile.Profile;
 import db.DBManager;
 import main.KakaoMain;
 import main.MemberList;
+import profile.Profile;
 import util.HintedTextField;
 
 public class AddFriendDialog extends JDialog{

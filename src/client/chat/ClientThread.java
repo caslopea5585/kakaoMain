@@ -92,7 +92,6 @@ public class ClientThread extends Thread{
 					kakaoMain.chat.get(0).model.addRow(chatDto);
 				 }
 				 
-				
 			}
 			
 			if(type.equals("join")){//접속시 아이디 부여

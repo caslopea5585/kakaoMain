@@ -57,6 +57,7 @@ public class MainServer extends JFrame implements Runnable{
 					System.out.println("현재 접속자는"+userThread.size()+"\n");
 				}
 
+
 			}
 			
 		} catch (IOException e) {

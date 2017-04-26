@@ -67,7 +67,7 @@ public class LoginPanel extends JPanel{
    
  
 
-   String ip="211.238.142.113";
+   String ip="211.238.142.102";
   //String ip="211.238.142.102";//////////////////임시 아이피
 
    Socket socket;

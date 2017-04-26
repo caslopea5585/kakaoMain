@@ -18,9 +18,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneLayout;
 
-import Profile.Profile;
 import main.KakaoMain;
 import merge_sh_yk.MyScrollBarUI;
+import profile.Profile;
 
 public class FriendsListPanel extends JPanel {
 	JPanel p_search; //검색 패널

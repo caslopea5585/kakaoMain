@@ -175,6 +175,20 @@ public class Server_chat extends Thread{
 			sb.append("}");
 			String myString = sb.toString();
 
+/*			
+			 chatDto.setMsg(msgValue);
+			 chatDto.setSender(senderValue);
+			 chatDto.setTime(timeValue);*/
+
+			
+			
+/*			try {
+				buffw.write(myString+"\n");
+				buffw.flush();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}*/
+
 
 			System.out.println("유저쓰레드 사이즈 = "+userThread.size());
 			//여기서 쓰레드를 찾으면서... 해당하는 유저의 클라이언트 쓰레드에만 내가 읽어들인걸 쓰면됨...
@@ -233,12 +247,15 @@ public class Server_chat extends Thread{
 						}
 					}
 
+
+
+					//userThread.elementAt(i).chat.buffw.write(myString+"\n");
+					//userThread.elementAt(i).chat.buffw.flush();
+
 				} catch (IOException e) {
 					e.printStackTrace();
 				}*/
 			}
-		
-			
 	}
 
 	public void send(File file){
@@ -257,10 +274,23 @@ public class Server_chat extends Thread{
 		String myString = obj.toString();
 	    try {
 			for(int i=0;i<userThread.size();i++){
-				
+
+				userThread.get(i).sever_chat.buffw.write(myString+"\n");
+				userThread.get(i).sever_chat.buffw.flush();
 				userThread.elementAt(i).sever_chat.buffw.write(myString+"\n");
 				userThread.elementAt(i).sever_chat.buffw.flush();
+	
+				//userThread.get(i).chat.buffw.write(myString+"\n");
+				//userThread.get(i).chat.buffw.flush();
+
+				userThread.elementAt(i).sever_chat.buffw.write(myString+"\n");
+				userThread.elementAt(i).sever_chat.buffw.flush();
+<<<<<<< HEAD
+
+			}
+=======
 			} 
+>>>>>>> 497950331bdb0bac82aecb9f61f1deb3fdc3f317
 			
 		} catch (IOException e) {
 			e.printStackTrace();

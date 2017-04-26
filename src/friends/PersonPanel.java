@@ -27,11 +27,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-import Profile.Profile;
 import client.chat.ChatMain;
 import db.DBManager;
 import main.KakaoMain;
 import main.MemberList;
+import profile.Profile;
 
 public class PersonPanel extends JPanel {
 	Canvas can=null;
