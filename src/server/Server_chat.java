@@ -26,6 +26,7 @@ public class Server_chat extends Thread{
 	
 	JSONArray value;
 	String msgValue,timeValue,senderValue;
+	int roomNumberValue;
 	JSONObject valueCheck;
 	
 	
@@ -76,11 +77,14 @@ public class Server_chat extends Thread{
 						 }else if(i==2){
 							 JSONObject json = (JSONObject)value.get(i);
 							 senderValue=(String)json.get("sender");
+						 }else if(i==3){
+							 JSONObject json = (JSONObject)value.get(i);
+							 roomNumberValue= Integer.parseInt((String)json.get("roomNumber"));
 						 }
 					 }
 					 				 
-					 sendMsg(msgValue,timeValue,senderValue);
-					 System.out.println(msgValue+senderValue+timeValue);
+					 sendMsg(msgValue,timeValue,senderValue,roomNumberValue);
+					 System.out.println(msgValue+senderValue+timeValue+roomNumberValue);
 				 }
 			
 			}
@@ -133,18 +137,17 @@ public class Server_chat extends Thread{
 		}
 	}
 	
-	public void sendMsg(String msg,String time,String sender){
+	public void sendMsg(String msg,String time,String sender,int roomNumber){
 		//서버가 보내주는 것
 			System.out.println("보내지니????");
 			//판단해서 보내주기
 			StringBuffer sb = new StringBuffer();
 			sb.append("{");
 			sb.append(	"\"type\":\"chat\",");
-			sb.append("\"contents\":[{\"msg\":\""+msg+"\"},{\"time\":\""+time+"\"},{\"sender\":\""+sender+"\"}]");
+			sb.append("\"contents\":[{\"msg\":\""+msg+"\"},{\"time\":\""+time+"\"},{\"sender\":\""+sender+"\"},{\"roomNumber\":\""+roomNumber+"\"}]");
 			sb.append("}");
 			String myString = sb.toString();
 
-<<<<<<< HEAD
 /*			
 			 chatDto.setMsg(msgValue);
 			 chatDto.setSender(senderValue);
@@ -159,29 +162,24 @@ public class Server_chat extends Thread{
 				e.printStackTrace();
 			}*/
 
-=======
 
->>>>>>> origin/master
 			System.out.println("유저쓰레드 사이즈 = "+userThread.size());
 		for(int i=0;i<userThread.size();i++){
 			
 				try {
+					
 					userThread.elementAt(i).sever_chat.buffw.write(myString+"\n");
 					userThread.elementAt(i).sever_chat.buffw.flush();
+
+					
 					System.out.println("서버에서 참여자들에게 보내는 메세지는???"+myString);
 					System.out.println("유저 쓰레드???"+userThread.get(i));
 
-<<<<<<< HEAD
-
-
-					userThread.get(i).sever_chat.buffw.write(myString+"\n");
-					userThread.get(i).sever_chat.buffw.flush();
 
 
 					//userThread.elementAt(i).chat.buffw.write(myString+"\n");
 					//userThread.elementAt(i).chat.buffw.flush();
-=======
->>>>>>> origin/master
+
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -204,7 +202,7 @@ public class Server_chat extends Thread{
 		String myString = obj.toString();
 	    try {
 			for(int i=0;i<userThread.size();i++){
-<<<<<<< HEAD
+
 				userThread.get(i).sever_chat.buffw.write(myString+"\n");
 				userThread.get(i).sever_chat.buffw.flush();
 				userThread.elementAt(i).sever_chat.buffw.write(myString+"\n");
@@ -212,10 +210,10 @@ public class Server_chat extends Thread{
 	
 				//userThread.get(i).chat.buffw.write(myString+"\n");
 				//userThread.get(i).chat.buffw.flush();
-=======
+
 				userThread.elementAt(i).sever_chat.buffw.write(myString+"\n");
 				userThread.elementAt(i).sever_chat.buffw.flush();
->>>>>>> origin/master
+
 			}
 			
 		} catch (IOException e) {

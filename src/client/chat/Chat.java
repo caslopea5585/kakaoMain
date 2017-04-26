@@ -4,7 +4,14 @@ public class Chat {
 	private String sender;
 	private String time;
 	private String msg;
+	private int roomNumber;
 	
+	public int getRoomNumber() {
+		return roomNumber;
+	}
+	public void setRoomNumber(int roomNumber) {
+		this.roomNumber = roomNumber;
+	}
 	public String getSender() {
 		return sender;
 	}

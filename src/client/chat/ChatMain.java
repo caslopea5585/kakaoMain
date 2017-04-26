@@ -7,8 +7,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Vector;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -53,12 +58,20 @@ public class ChatMain extends JDialog implements ActionListener{
 	
 	KakaoMain main;
 	//Chat chatDto;
+	public String loginEmail;
+	public String yourEmail;
+	Connection con;
+	int roomNumber =0; //내이메일, 상대방 이메일이 공통으로 가지고 있는 방번호를 저장하는 변수
 	
 	
 	
-	
-	public ChatMain(KakaoMain main) {
+	public ChatMain(KakaoMain main,String loginEmail,String yourEmail) {
+
 		this.main=main;
+		this.loginEmail=loginEmail;
+		this.yourEmail=yourEmail;
+		getRoomNumber();
+		
 		initGUI();
 	}
 	
@@ -150,23 +163,21 @@ public class ChatMain extends JDialog implements ActionListener{
 		String sender = main.memberList.get(0).getNik_id();
 		String time =  getTime();	
 		LoginPanel log=(LoginPanel)main.panel[0];
-		log.ct.sendMsg(msg,time,sender);
+		log.ct.sendMsg(msg,time,sender,roomNumber);
+		//클라이언트가 쓰레드에 (메세지, 시간, 보낸사람, 채팅방번호) 보내줌.
 	
 		//chatDto=log.ct.chatDto;
-<<<<<<< HEAD
 
-		chatDto=log.ct.chatDto;
+
+		//chatDto=log.ct.chatDto;
 
 
 		//model.addRow(chatDto);
 
 		//area.setText("");
-		model.addRow(chatDto);
-
-=======
+		//model.addRow(chatDto);
 
 		//model.addRow(chatDto);
->>>>>>> origin/master
 		area.setText("");
 
 	}
@@ -176,6 +187,56 @@ public class ChatMain extends JDialog implements ActionListener{
 		return sdf.format(new Date());
 	}
 	
+	public void getRoomNumber(){
+		//쳇메인이 생성될때 내 이메일과, 상대방 이메일을 같이 보내준다.
+		//이 두명이 공통으로 가지고 있는 RoomNumber를 얻어오자!!!
+		con = main.con;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		
+		System.out.println("쿼리 문 전 이메일정보 : "+loginEmail+" "+yourEmail);
+		String sql="select roomNumber from chats where e_mail=?";
+		Vector<Integer> myRoomNum = new Vector<Integer>();
+		Vector<Integer> yourRoomNum = new Vector<Integer>();
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, loginEmail);
+			rs = pstmt.executeQuery();
+			
+
+			while(rs.next()){
+				myRoomNum.add(rs.getInt("roomnumber"));
+			}
+			
+			sql="select roomNumber from chats where e_mail=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, yourEmail);
+			rs = pstmt.executeQuery();
+			while(rs.next()){
+				yourRoomNum.add(rs.getInt("roomnumber"));
+			}
+			
+			for(int i=0;i<myRoomNum.size();i++){
+				for(int j=0; j<yourRoomNum.size();j++){
+					if(myRoomNum.get(i).equals(yourRoomNum.get(j))){
+						roomNumber = myRoomNum.get(i);
+					}
+				}
+			}
+			
+			System.out.println(roomNumber+ "공통으로 가지고 있는 방번호는???");
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+	}
 	
 	public void actionPerformed(ActionEvent e) {
 		Object obj=e.getSource();

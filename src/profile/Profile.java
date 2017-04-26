@@ -20,6 +20,10 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Vector;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -55,6 +59,7 @@ public class Profile extends JFrame implements ActionListener{
 	KakaoMain kakaoMain;
 	boolean flag; //나인지 아닌지 구별
 	int index; //멤버리스트의 인덱스 찾기
+	Vector roomNumberArray=new Vector();//룸넘버 정보를 저장하기 위한 벡터
 	
 	public Profile(String photopath,KakaoMain kakaoMain,boolean flag,int index) {
 		
@@ -268,19 +273,141 @@ public class Profile extends JFrame implements ActionListener{
 		}else if(obj==bt_chat){
 			//ChatMain chat=new ChatMain(kakaoMain);
 			//챗메인을 여기서 만들자. (여기서 대화방 생성)
-			ChatMain chat=new ChatMain(kakaoMain);
-			chat.setLocation(kakaoMain.getLocation().x+360,kakaoMain.getLocation().y);
-			chat.setVisible(true);//화면 교체
+			chat();
 			
-			kakaoMain.chat.add(chat);
+			
+			//System.out.println(kakaoMain.loginEmail + kakaoMain.memberList.get(index).getE_mail());
+			//로그인 한 사람의 이메일  && 채팅 대상자의 이메일(방번호 조회의 대상)
+			
+			
 		}
 		
 	}
 	
-
-/*
-	public static void main(String[] args) {
-		new Profile();
+	public void chat(){
+		PreparedStatement pstmt=null;
+		ResultSet rs = null;
+		String sql="select roomNumber from Chats where e_mail=?";
+		boolean findChat=true; //채팅방을 찾는지 못찾는지의 플래그값.
+		try {
+			pstmt = kakaoMain.con.prepareStatement(sql);
+			pstmt.setString(1, kakaoMain.loginEmail);
+			rs = pstmt.executeQuery();
+			
+			roomNumberArray.removeAll(roomNumberArray);
+			System.out.println(roomNumberArray.size() + "프로필에서 룸넘버 사이즈");
+			
+			while(rs.next()){
+				roomNumberArray.add(rs.getInt("roomNumber"));
+			}
+			if(roomNumberArray.size()==0){
+				//아무것도 없으니 만들자
+				sql="insert into Chats(roomNumber, e_mail) values(seq_chats.nextval,?)";
+				pstmt = kakaoMain.con.prepareStatement(sql);
+				pstmt.setString(1, kakaoMain.loginEmail);
+				pstmt.executeUpdate(); 
+				
+				sql="insert into Chats(roomNumber, e_mail) values(seq_chats.currval,?)";
+				pstmt = kakaoMain.con.prepareStatement(sql);
+				pstmt.setString(1, kakaoMain.memberList.get(index).getE_mail());
+				pstmt.executeUpdate(); 
+									
+				ChatMain chat=new ChatMain(kakaoMain,kakaoMain.loginEmail,kakaoMain.memberList.get(index).getE_mail());
+				chat.setLocation(kakaoMain.getLocation().x+360,kakaoMain.getLocation().y);
+				chat.setVisible(true);//화면 교체
+				
+				kakaoMain.chat.add(chat);
+				System.out.println("새로생성");
+				System.out.println("새로 생성 후 메인의 챗 사이즈는?"  +kakaoMain.chat.size());
+				
+			}else{
+				//조회필요
+				
+				
+				//1. 내이메일로 가지고 내 룸넘버를 조회.
+				//2. 대화할 상대와 만든 룸넘버가 있는지 검사
+				//    2-1) 있다면
+				//			- 그방을 visible(true)
+				//	  2-2) 없다면
+				//			-- chatMain 을 새로 생성.
+				
+				
+				sql="select roomnumber from chats where e_mail=?";
+				pstmt = kakaoMain.con.prepareStatement(sql);
+				pstmt.setString(1, kakaoMain.loginEmail);
+				rs = pstmt.executeQuery();
+				
+				System.out.println("룸넘버 가져오니???");
+				Vector myRoomNum = new Vector<>();
+				
+				while(rs.next()){
+					int room = rs.getInt("roomnumber");
+					//myRoomNum.add(rs.getInt("roomnumber"));
+					System.out.println("가져오는 룸의 번호는? " + room);
+					myRoomNum.add(room);
+					
+				}
+				
+				System.out.println("룸넘버의 사이즈는????? " + myRoomNum.size());
+				for(int i=0;i<myRoomNum.size();i++){
+					sql="select e_mail from chats where roomnumber=?";
+					pstmt = kakaoMain.con.prepareStatement(sql);
+					pstmt.setInt(1, (Integer)myRoomNum.get(i));
+					rs = pstmt.executeQuery();
+					while(rs.next()){
+						if(kakaoMain.memberList.get(index).getE_mail().equals(rs.getString("e_mail"))){
+							for(int j=0; j<kakaoMain.chat.size();j++){
+								System.out.println(kakaoMain.loginEmail +kakaoMain.chat.get(j).loginEmail );
+								System.out.println(kakaoMain.memberList.get(index).getE_mail()+(kakaoMain.chat.get(j).yourEmail));
+								if(kakaoMain.loginEmail.equals(kakaoMain.chat.get(j).loginEmail) && kakaoMain.memberList.get(index).getE_mail().equals(kakaoMain.chat.get(j).yourEmail)){
+									System.out.println("기존생성");
+									//룸사이즈가 0이 아니고 내가 대화하고 싶은 사람이랑 이미 대화창을 만들었을때 & 그 대화창을 보여준다.
+									kakaoMain.chat.get(j).setVisible(true);
+									kakaoMain.chat.get(j).setLocation(kakaoMain.getLocation().x+360,kakaoMain.getLocation().y);
+									findChat=false;
+								}
+							}
+						}
+					}
+				}
+				
+				if(findChat){ //룸사이즈는 0이 아닌데 내가 대화하고싶은사람이랑 대화창이 없을떄!! 대화창을 새로 생성
+					System.out.println("룸 없는데 나오니??????" );
+					sql="insert into Chats(roomNumber, e_mail) values(seq_chats.nextval,?)";
+					pstmt = kakaoMain.con.prepareStatement(sql);
+					pstmt.setString(1, kakaoMain.loginEmail);
+					pstmt.executeUpdate(); 
+					
+					sql="insert into Chats(roomNumber, e_mail) values(seq_chats.currval,?)";
+					pstmt = kakaoMain.con.prepareStatement(sql);
+					pstmt.setString(1, kakaoMain.memberList.get(index).getE_mail());
+					pstmt.executeUpdate(); 
+					
+					ChatMain chat=new ChatMain(kakaoMain,kakaoMain.loginEmail,kakaoMain.memberList.get(index).getE_mail());
+					chat.setLocation(kakaoMain.getLocation().x+360,kakaoMain.getLocation().y);
+					chat.setVisible(true);//화면 교체
+					kakaoMain.chat.add(chat);
+					
+				}
+/*				
+				for(int i=0; i<kakaoMain.chat.size();i++){
+					System.out.println(kakaoMain.loginEmail +kakaoMain.chat.get(i).loginEmail );
+					System.out.println(kakaoMain.memberList.get(index).getE_mail()+(kakaoMain.chat.get(i).yourEmail));
+					if(kakaoMain.loginEmail.equals(kakaoMain.chat.get(i).loginEmail) && kakaoMain.memberList.get(index).getE_mail().equals(kakaoMain.chat.get(i).yourEmail)){
+						System.out.println("기존생성");
+						kakaoMain.chat.get(i).setVisible(true);
+						kakaoMain.chat.get(i).setLocation(kakaoMain.getLocation().x+360,kakaoMain.getLocation().y);
+					}
+				}*/
+				
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
-	*/
+	
+
 }
