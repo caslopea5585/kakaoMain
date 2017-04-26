@@ -29,6 +29,7 @@ public class ClientThread extends Thread{
 	
 	public Chat chatDto;
 	String msgValue,timeValue,senderValue;
+	int roomNumberValue;
 	JSONArray value;
 	JSONObject valueCheck;
 	
@@ -70,23 +71,28 @@ public class ClientThread extends Thread{
 							 msgValue=(String)json.get("msg");
 						 }else if(i==1){
 							 JSONObject json = (JSONObject)value.get(i);
-							 
 							 timeValue=(String)json.get("time");
 						 }else if(i==2){
 							 JSONObject json = (JSONObject)value.get(i);
-							 
 							 senderValue=(String)json.get("sender");
+						 }else if(i==3){
+							 JSONObject json = (JSONObject)value.get(i);
+							 roomNumberValue= Integer.parseInt((String)json.get("roomNumber"));
 						 }
 					 }
 
-					 System.out.println("클라이언트에서 받는 메세지는???: "+msgValue+senderValue+timeValue);
+					 System.out.println("클라이언트에서 받는 메세지는???: "+msgValue+senderValue+timeValue+roomNumberValue);
 					 chatDto.setMsg(msgValue);
 					 chatDto.setSender(senderValue);
 					 chatDto.setTime(timeValue);
+					 chatDto.setRoomNumber(roomNumberValue);
+					 
+					 
+					 
 					 System.out.println("클라이언트 쓰레드에서 셋한 dto메세지 값은??:"+chatDto.getMsg());
 					
 					
-					 // kMain.chat.get(index).model.addRow(chatDto);
+					  //kMain.chat.get(index).model.addRow(chatDto);
 					 //모델에 행을 추가시켜야함
 					kakaoMain.chat.get(0).model.addRow(chatDto);
 				 }
@@ -110,12 +116,12 @@ public class ClientThread extends Thread{
 		}
 	}
 	
-	public void sendMsg(String msg,String time,String sender){
+	public void sendMsg(String msg,String time,String sender,int roomNumber){
 		try {
 			StringBuffer sb = new StringBuffer();
 			sb.append("{");
 			sb.append(	"\"type\":\"chat\",");
-			sb.append("\"contents\":[{\"msg\":\""+msg+"\"},{\"time\":\""+time+"\"},{\"sender\":\""+sender+"\"}]");
+			sb.append("\"contents\":[{\"msg\":\""+msg+"\"},{\"time\":\""+time+"\"},{\"sender\":\""+sender+"\"},{\"roomNumber\":\""+roomNumber+"\"}]");
 			sb.append("}");
 			
 			String myString = sb.toString();

@@ -351,7 +351,7 @@ public class AddFriendDialog extends JDialog{
 									for(int j=0;j<kakaoMain.memberList.size();j++){
 										if(kakaoMain.myFriends.get(i).name.equals(kakaoMain.memberList.get(j).getNik_id())){
 											profile=new Profile(kakaoMain.memberList.get(j).getProfile_img(),kakaoMain,false,j);
-											
+											System.out.println("AddFriendDialog 프로필 생성");
 										}
 									}
 								}

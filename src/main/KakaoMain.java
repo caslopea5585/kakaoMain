@@ -40,6 +40,7 @@ public class KakaoMain extends JFrame implements Runnable{
 
 	public int friends_count;
 	public JLabel la_friends=new JLabel();
+	
 	public KakaoMain(){
 		getRootPane().setBorder( BorderFactory.createLineBorder(Color.DARK_GRAY) );
 		DBConn();
