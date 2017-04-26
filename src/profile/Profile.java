@@ -1,4 +1,4 @@
-package profile;
+package Profile;
 
 import java.awt.BasicStroke;
 import java.awt.Canvas;
@@ -20,9 +20,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Vector;
 
 import javax.imageio.ImageIO;

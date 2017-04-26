@@ -1,4 +1,4 @@
-package profile;
+package Profile;
 
 import java.awt.BorderLayout;
 import java.awt.Canvas;

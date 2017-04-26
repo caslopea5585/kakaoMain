@@ -13,7 +13,6 @@ import java.net.Socket;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
@@ -24,7 +23,6 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import db.DBManager;
-import main.KakaoMain;
 
 //DB가 가져야할 정보 num/users/내용
 public class Server_chat extends Thread{
@@ -285,12 +283,8 @@ public class Server_chat extends Thread{
 
 				userThread.elementAt(i).sever_chat.buffw.write(myString+"\n");
 				userThread.elementAt(i).sever_chat.buffw.flush();
-<<<<<<< HEAD
 
 			}
-=======
-			} 
->>>>>>> 497950331bdb0bac82aecb9f61f1deb3fdc3f317
 			
 		} catch (IOException e) {
 			e.printStackTrace();
