@@ -2,8 +2,11 @@ package client.chat;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
@@ -15,7 +18,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -28,17 +30,20 @@ import javax.swing.JTextPane;
 
 import login.LoginPanel;
 import main.KakaoMain;
-import net.miginfocom.swing.MigLayout;
+import util.MyRoundButton;
+import util.Util;
 
 
 public class ChatMain extends JDialog implements ActionListener{
 	JPanel p_north;//북쪽에 붙여질 패널
 	JPanel p_center; //가운데 붙여질 패널
 	JPanel p_south;////남쪽에 붙여질 패널
+	JPanel p_chat;//채팅방 붙일 패널
+	JPanel p_bt; //버튼 붙일 패널
 	public MyModel model = new MyModel();//테이블 모델
 	
 	//북쪽 영역
-	RButton bt_profil;//북쪽 패널 서쪽의 프로필 사진
+	MyRoundButton bt_profil;//북쪽 패널 서쪽의 프로필 사진
 	JLabel la_user; //북쪽 패널 센터의 채팅방의 대화상대
 	JButton bt_list, bt_totalview, bt_serch;//북쪽 패널 남쪽의 게시판, 모아보기, 검색기능
 	JComboBox cmb;// 임시적인 사람 선택창
@@ -62,35 +67,66 @@ public class ChatMain extends JDialog implements ActionListener{
 	public String yourId;
 	Connection con;
 	int roomNumber =0; //내이메일, 상대방 이메일이 공통으로 가지고 있는 방번호를 저장하는 변수
+	Vector<String> chatMember ;
+	public String yourPhotoPath;
 	
-	
-	
-	public ChatMain(KakaoMain main,String myId,String yourId) {
+	public ChatMain(KakaoMain main,String myId,String yourId,Vector chatMember) {
 
 		this.main=main;
 		this.myId=myId;
 		this.yourId=yourId;
+		
+		this.chatMember = chatMember;
 		//getRoomNumber();
 		
+		findYourPhoto();
 		initGUI();
+	}
+	
+	public void findYourPhoto(){
+		con = main.con;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String sql=null;
+		
+		sql="select profile_img from members where e_mail=?";
+
+		Vector<String> yourPhoto = new Vector<String>();
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, yourId);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				yourPhoto.add(rs.getString("profile_img"));	
+			}
+			yourPhotoPath=yourPhoto.get(0);
+			System.out.println("너의 사진 경로는?"+yourPhoto.get(0));			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
 	}
 	
 	public void initGUI() {
 		p_north = new JPanel();
 		p_center = new JPanel();
 		p_south = new JPanel();
+		p_chat = new JPanel();
+		
+		
 		
 		//북쪽영역의 패널
-		bt_profil = new RButton(new ImageIcon(this.getClass().getResource("/head2.png")));
-		la_user = new JLabel("유저");
+		bt_profil = new MyRoundButton(Util.createRoundIcon(yourPhotoPath, 70));
+		la_user = new JLabel(yourId);
 		bt_list = new JButton("게시판");
 		bt_totalview = new JButton("모아보기");
 		bt_serch = new JButton("검색");
 		bt_option = new JButton("설정");
 		chooser=new JFileChooser();
 		
-		p_north.setLayout(new MigLayout());
-		p_north.setBackground(Color.RED);
+		p_north.setLayout(new FlowLayout(FlowLayout.LEADING));
+		p_north.setBackground(new Color(160, 192, 215));
 		p_north.setPreferredSize(new Dimension(500, 80));
 		p_north.add(bt_profil, "span 2 2"); //유저 프로필
 		p_north.add(la_user, "span 3,wrap"); //대화방 유저목록
@@ -104,50 +140,65 @@ public class ChatMain extends JDialog implements ActionListener{
 		//센터영역
 		table = new JTable();
 		scroll = new JScrollPane();
-		System.out.println("테이블이 만들어지나?");
+		bt_send = new JButton("전송");
+		area = new JTextPane();
 		
 		table.setTableHeader(null);
 		table.setModel(model);
 		table.getColumnModel().getColumn(0).setPreferredWidth(260);
 		table.getColumnModel().getColumn(0).setCellRenderer(new ChatRenderer(this));
-		table.setBackground(Color.white);
+		table.setBackground(new Color(160, 192, 215));
 		table.setOpaque(true);
 		table.setShowHorizontalLines(false);
 		
 		scroll.setViewportView(table);
-		scroll.getViewport().setBackground(Color.WHITE);
+		scroll.getViewport().setBackground(new Color(160, 192, 215));
+		//스크롤 자동으로 내려가게함
+		scroll.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {  
+		    public void adjustmentValueChanged(AdjustmentEvent e) {  
+		        e.getAdjustable().setValue(e.getAdjustable().getMaximum());  
+		    }
+		});
+		bt_send.setBackground(new Color(255, 235, 051));
+		area.setPreferredSize(new Dimension(250, 50));
 		
 		p_center.setLayout(new BorderLayout());
 		p_center.add(scroll, BorderLayout.CENTER);
+		
+		p_chat.setBackground(Color.WHITE);
+		p_chat.add(area, "hmin 50px,growx,pushx");
+		p_chat.add(bt_send, "growy,pushy, wrap");
+		p_center.add(p_chat, BorderLayout.SOUTH);
 		add(p_center);
 		
 		//남쪽영역
-		bt_send = new JButton("전송");
-		area = new JTextPane();
 		bt_imo = new JButton("이모티콘");
 		bt_file = new JButton("파일전송");
 		bt_img = new JButton("이미지전송");
 		
-		
-		p_south.setLayout(new MigLayout());
-		p_south.add(area, "hmin 50px,growx,pushx");
-		p_south.add(bt_send, "growy,pushy, wrap");
+		p_south.setLayout(new FlowLayout(FlowLayout.LEADING));
+		p_south.setBackground(Color.WHITE);
 		p_south.add(bt_imo, "split 3");
 		p_south.add(bt_file);
 		p_south.add(bt_img);
-		p_center.add(p_south, BorderLayout.SOUTH);
 		
-		setBounds(100, 100, 500, 550);
+		add(p_south, BorderLayout.SOUTH);
+		
+		setBounds(100, 100, 360, 550);
 		setVisible(false);
 	
 		
 		bt_send.addActionListener(this);
 		bt_file.addActionListener(this);
-
+		bt_profil.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("눌렀어");
+			}
+		});
 		
 		//텍스트 area에 내용 엔터키로 보내기
 		area.addKeyListener(new KeyAdapter() {
-
 			public void keyReleased(KeyEvent e) {
 				int key= e.getKeyCode();
 				if(key==KeyEvent.VK_ENTER){
@@ -166,40 +217,13 @@ public class ChatMain extends JDialog implements ActionListener{
 		yourId = yourId;
 		
 		LoginPanel log = (LoginPanel)main.panel[0];
-		log.ct.sendMsg(msg, myId, yourId);
+		log.ct.sendMsg(msg, myId, yourId,chatMember);
 		
 		
 		
 		
 		area.setText("");
 		
-		
-		//여기서 모델 에드 로우 안해도돼?
-		
-		
-		
-		/*
-		String msg = area.getText().trim();
-		String sender = main.loginEmail;//센더를 b로 고정값을 받고있어서 고침 memberlist.get(0).
-		String time =  getTime();	
-		LoginPanel log=(LoginPanel)main.panel[0];
-		log.ct.sendMsg(msg,time,sender,roomNumber);
-		//클라이언트가 쓰레드에 (메세지, 시간, 보낸사람, 채팅방번호) 보내줌.
-	
-		//chatDto=log.ct.chatDto;
-
-
-		//chatDto=log.ct.chatDto;
-
-
-		//model.addRow(chatDto);
-
-		//area.setText("");
-		//model.addRow(chatDto);
-
-		//model.addRow(chatDto);
-		area.setText("");
-*/
 	}
 	
 	static String getTime() {
@@ -207,56 +231,6 @@ public class ChatMain extends JDialog implements ActionListener{
 		return sdf.format(new Date());
 	}
 	
-	/*public void getRoomNumber(){
-		//쳇메인이 생성될때 내 이메일과, 상대방 이메일을 같이 보내준다.
-		//이 두명이 공통으로 가지고 있는 RoomNumber를 얻어오자!!!
-		con = main.con;
-		PreparedStatement pstmt=null;
-		ResultSet rs=null;
-		
-		
-	
-		String sql="select roomNumber from chats where e_mail=?";
-		Vector<Integer> myRoomNum = new Vector<Integer>();
-		Vector<Integer> yourRoomNum = new Vector<Integer>();
-		
-		try {
-			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, myId);
-			rs = pstmt.executeQuery();
-			
-
-			while(rs.next()){
-				myRoomNum.add(rs.getInt("roomnumber"));
-			}
-			
-			sql="select roomNumber from chats where e_mail=?";
-			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, yourEmail);
-			rs = pstmt.executeQuery();
-			while(rs.next()){
-				yourRoomNum.add(rs.getInt("roomnumber"));
-			}
-			
-			for(int i=0;i<myRoomNum.size();i++){
-				for(int j=0; j<yourRoomNum.size();j++){
-					if(myRoomNum.get(i).equals(yourRoomNum.get(j))){
-						roomNumber = myRoomNum.get(i);
-					}
-				}
-			}
-			
-			System.out.println(roomNumber+ "공통으로 가지고 있는 방번호는???");
-			
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-		}
-		
-		
-		
-		
-	}*/
 	
 	public void actionPerformed(ActionEvent e) {
 		Object obj=e.getSource();

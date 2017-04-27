@@ -33,7 +33,8 @@ public class FriendsListPanel extends JPanel {
 	
 	//ArrayList<PersonPanel> people = new ArrayList<PersonPanel>(); //전체 member테이블 레코드 저장
 	public ArrayList<PersonPanel> myFriends = new ArrayList<PersonPanel>(); //friends 테이블 레코드 저장
-
+	//public ArrayList<PersonPanel> myFriendsCopy = new ArrayList<PersonPanel>(); //friends 테이블 레코드 저장
+	
 	KakaoMain kakaoMain;
 	PersonPanel pp;
 	Profile profile;
@@ -122,13 +123,15 @@ public class FriendsListPanel extends JPanel {
 			
 		});
 		System.out.println("나: "+kakaoMain.memberList.get(j).getNik_id());
-		p_list.add(myFriends.get(0)); //myFriends의 첫번째 인덱스에 나를 등록. 
+		p_list.add(myFriends.get(0)); //myFriends의 첫번째 인덱스에 나를 등록.
+		//myFriendsCopy.add(myFriends.get(0));
+		//System.out.println("프렌즈카피-나: "+myFriendsCopy.get(0).name);
 		p_list.add(la_friends);
 		
 		//친구들을 패널에 붙이기
 		int cnt=0;
-		System.out.println("friendsList size:"+kakaoMain.friendsList.size());
-		System.out.println("memberList size:"+kakaoMain.memberList.size());
+		//System.out.println("friendsList size:"+kakaoMain.friendsList.size());
+		//System.out.println("memberList size:"+kakaoMain.memberList.size());
 		
 		for(int i=0; i<kakaoMain.friendsList.size();i ++){
 			for(int j=0; j<kakaoMain.memberList.size(); j++){
@@ -171,6 +174,8 @@ public class FriendsListPanel extends JPanel {
 					});*/
 					
 					p_list.add(myFriends.get(cnt));
+					//myFriendsCopy.add(myFriends.get(cnt));
+					//System.out.println("프렌즈카피-나: "+myFriendsCopy.get(cnt).name);
 					/*if(cnt>=4){
 						x=cnt+1;
 						listX+=50;
@@ -188,6 +193,7 @@ public class FriendsListPanel extends JPanel {
 			}
 		}
 		kakaoMain.myFriends=myFriends;
+		//kakaoMain.myFriendsCopy=myFriendsCopy;
 		kakaoMain.p_list=p_list;
 		kakaoMain.friendsListPanel=this;
 		

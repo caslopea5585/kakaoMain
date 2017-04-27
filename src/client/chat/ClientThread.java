@@ -11,6 +11,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.nio.file.Files;
+import java.util.Vector;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -32,6 +33,8 @@ public class ClientThread extends Thread{
 	int roomNumberValue;
 	JSONArray value;
 	JSONObject valueCheck;
+	boolean flag = true;
+	int index=0;
 	
 	public ClientThread(Socket socket,KakaoMain kakaoMain) {
 		this.socket=socket;
@@ -51,6 +54,7 @@ public class ClientThread extends Thread{
 
 		JSONParser parser=new JSONParser();
 		chatDto=new Chat();
+		Vector<String> chatMember=new Vector<String>();
 		try {
 			msg=buffr.readLine();
 			
@@ -81,15 +85,31 @@ public class ClientThread extends Thread{
 						 }
 					 }
 					 
-					 chatDto.setMyId(myIdValue);
-					 chatDto.setYourId(yourIdValue);
+					 
+					 
+				 value = (JSONArray)obj.get("chatMembers");
+				 if(value.size()!=0){
+					 for(int i=0; i<value.size();i++){
+						 JSONObject json  = (JSONObject)value.get(i);
+						 
+						 String val = (String)json.get("chatMember");
+						 System.out.println("채팅방에 들어있는 사람은? = "+ val);
+						 if(i==0){
+							 kakaoMain.senderId = val; //보내는 사람이 누구인지 알려고! (chatRender에 쓰일예쩡)
+						 }
+						 chatMember.add(val);
+					}
+					 kakaoMain.chatMember=chatMember;
+				 }
+/*					 chatDto.setMyId(myIdValue);
+					 chatDto.setYourId(yourIdValue);*/
 					 chatDto.setMsg(msgValue);
 					 chatDto.setTimeValue(timeValue);
 					  
 					
-					  //kMain.chat.get(index).model.addRow(chatDto);
+					  //kMain.chat.get(i).model.addRow(chatDto);
 					 //모델에 행을 추가시켜야함
-					 System.out.println("카카오메시지 사이즈는???" + kakaoMain.chat.size());
+/*					 System.out.println("카카오메시지 사이즈는???" + kakaoMain.chat.size());
 					 
 					for(int i=0;i<kakaoMain.chat.size();i++){
 						String myid=kakaoMain.chat.get(i).myId;
@@ -97,12 +117,61 @@ public class ClientThread extends Thread{
 						
 						System.out.println("가져오는 값은 = "+myid + yourid);
 						
+						//여기서 쳇 멤버에 담긴 배열의 아이디가 모두 같아야하는거지...
 						if((myIdValue.equals(myid)|| myIdValue.equals(yourid)) && (yourIdValue.equals(yourid)||yourIdValue.equals(myid))){
 							kakaoMain.chat.get(i).model.addRow(chatDto);
 							System.out.println("클라이언트쓰레드??? 뿌려져야할 chat의 주소는 ??"+ kakaoMain.chat.get(i));
 						}
 						
 					}
+					*/
+					
+					//테스트용(다중)
+					//쳇은 사용자의 정보를 담은 chatmember를 가지고 있따.
+					//개별아이디가 아니라. 
+					int count=0;
+					
+					for(int i=0; i<kakaoMain.chat.size();i++){
+						//쳇멤버리스트에서 사람을 조사!!
+						//Dto의 chatMember의 인덱스와..chat의 배열안에있는 chatMember의 아이디가 같으면 그 인덱스를...라이터
+						
+						//쳇의 i만큼 돌리는데 그 안에 있는 쳇멤버를 쳇멤버의 사이즈만큼 j번돌려야한다.
+						//j가 한번돌때 Dto의 chatMember는 q번 돌아야 한다.(dto의 쳇멤버만큼)
+						
+						for(int j=0; j<kakaoMain.chat.get(i).chatMember.size();j++){
+							
+							for(int q=0; q<chatMember.size();q++){
+									if(kakaoMain.chat.get(i).chatMember.get(j).equals(chatMember.get(q)) && kakaoMain.chat.get(i).chatMember.size()==chatMember.size()){
+										System.out.println("클쓰 괄호 밖 ="+kakaoMain.chat.get(i).chatMember.get(j));
+										System.out.println("클쓰 괄호 안 = " + chatMember.get(q));
+										count++;
+										index=i;
+									}
+							}
+							
+						}
+						
+					}
+					System.out.println("클 쓰레드 카운터는 " + count);
+					System.out.println("클 쓰레드 인덱스는?? " + index);
+					if(count==kakaoMain.chat.get(index).chatMember.size()){
+						//만약 쳇멤버의 사이즈가 2가 아니라면 setyourID는 사이즈 -1까지 돌아야한다.
+						chatDto.setMyId(chatMember.get(0));
+						System.out.println("쳇멤버의 사이즈는"+chatMember.size());
+						if(chatMember.size() >=3){
+							//1부터 사이즈 인덱스까지 setyourId를 해줘야한다.
+							for(int i=1; i<chatMember.size();i++){
+								chatDto.setYourId(chatMember.get(i));
+							}
+						}else{
+							
+							chatDto.setYourId(chatMember.get(1));							
+						}
+						
+						kakaoMain.chat.get(index).model.addRow(chatDto);
+						System.out.println("클 쓰레드 쳇의 겟의 인덱스의 쳇메인? "+kakaoMain.chat.get(index));
+					}
+					
 				 }
 				 
 			}
@@ -123,14 +192,24 @@ public class ClientThread extends Thread{
 		}
 	}
 	
-	public void sendMsg(String msg,String myId,String yourId){
+	public void sendMsg(String msg,String myId,String yourId,Vector<String> chatMember){
 		try {
 			StringBuffer sb = new StringBuffer();
-			sb.append("{");
-			sb.append(	"\"type\":\"chat\",");
-			sb.append("\"contents\":[{\"msg\":\""+msg+"\"},{\"myId\":\""+myId+"\"},{\"yourId\":\""+yourId+"\"}]");
-			sb.append("}");
-			
+			   sb.append("{");
+		         sb.append(   "\"type\":\"chat\",");
+		         sb.append("\"contents\":[{\"msg\":\""+msg+"\"},{\"myId\":\""+myIdValue+"\"},{\"yourId\":\""+yourIdValue+"\"},{\"timeValue\":\""+timeValue+"\"}],");
+		         sb.append("\"chatMembers\":[");
+		         int size = chatMember.size();
+		         System.out.println("사이즈는?" +size);
+		         for(int i=0;i<chatMember.size();i++){
+		        	 if(i==chatMember.size()-1){
+		        		sb.append("{\"chatMember\" :\""+chatMember.get(i)+"\"}");
+		        	 }else{
+		        		 sb.append("{\"chatMember\" :\""+chatMember.get(i)+"\"},");
+		        	 }
+		         }
+		         sb.append(" ] ");
+		         sb.append("}");
 			String myString = sb.toString();
 			
 			System.out.println("클라이언트에서 서버로 보내는말: "+myString);
@@ -201,8 +280,7 @@ public class ClientThread extends Thread{
 		
 		while(true){
 			listen();	
-			//kMain.chat.get(index).table.setModel(kMain.chat.get(index).model);
-			//kMain.chat.get(index).table.updateUI();
+
 		}
 	}
 }

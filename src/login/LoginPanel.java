@@ -204,7 +204,7 @@ public class LoginPanel extends JPanel{
  
    public void login(){
 	   ///////////서버연결//////////////
-	   connect();
+	 //  connect();
 	   ///////////////////////////////
       PreparedStatement pstmt=null;
       ResultSet rs=null;
@@ -248,6 +248,7 @@ public class LoginPanel extends JPanel{
          
          if(loginFlag){
         	 JOptionPane.showMessageDialog(this, "로그인성공");  
+        	 connect();
         	 ct.sendID(t_email.getText());
     		
     		//내 친구정보(friends 테이블) 찾기

@@ -1,13 +1,11 @@
 package client.chat;
 
 import java.awt.Component;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Vector;
 
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
-import javax.xml.ws.Holder;
+
+import util.Util;
 
 public class ChatRenderer implements TableCellRenderer {
 	ChatHolder holder;
@@ -29,30 +27,36 @@ public class ChatRenderer implements TableCellRenderer {
 		ChatHolder holder = null;
 		Chat chat = (Chat)value;
 
-
-
-		
 		String myId = chat.getMyId();
 		String msg = chat.getMsg();
+		
 		String timeValue = chat.getTimeValue();
+		System.out.println("괄호밖!!"+ main.main.loginEmail);
+		System.out.println("괄호안!! + " + main.main.chatMember.get(0));
+		System.out.println("처음 값은?" + main.main.senderId);
 		
 		
-		
-		//멤버리스트 안됨...프렌즈 리스트로해야함..
-//		if(main.main.memberList.get(0).getNik_id().equals(chat.getSender())){
-		
-		if(main.myId.equals(chat.getMyId())){//나랑같으면
-			holder=rightHolder;
-		}else{
-			holder=leftHolder;
-		}
+			if(main.main.loginEmail.equals(chat.getMyId() )){//나랑같으면
+				holder=rightHolder;
+				
+			}else{
+				holder=leftHolder;
 
+				holder.user_info.setIcon(Util.createRoundIcon(main.yourPhotoPath, 50));
+				holder.la_user.setText(main.yourId);
+				holder.add(holder.user_info);
+				holder.add(holder.la_user);
+				
+				
+			}
+			holder.la_time.setText(timeValue);
+			holder.chatbox.setText(msg);
+			holder.readCount.setText(Integer.toString(count));
 		
-		
-		holder.la_user.setText(myId);
-		holder.la_time.setText(timeValue);
-		holder.chatbox.setText(msg);
-		holder.readCount.setText(Integer.toString(count));
+			holder.add(holder.chatbox);
+			holder.add(holder.la_time);
+			holder.add(holder.readCount);
+	
 		int iHeight = holder.chatbox.getPreferredSize().height + 20;
 		iHeight = iHeight < 80 ? 80 : iHeight;
 		

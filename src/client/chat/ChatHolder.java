@@ -9,7 +9,7 @@ public class ChatHolder extends JPanel{
 	JLabel la_user; //유저아이디
 	JLabel la_time; //시간정보
 	JLabel readCount; //읽은 정보
-	RLabel user_info; //대화상대 사진
+	JLabel user_info; //대화상대 사진
 	RTextPane chatbox; //채팅박스
 	
 	
@@ -19,9 +19,9 @@ public class ChatHolder extends JPanel{
 		la_user = new JLabel();
 		la_time = new JLabel();
 		readCount = new JLabel();
-		user_info = new RLabel();
+		user_info = new JLabel();
 		chatbox = new RTextPane();
-		setBackground(Color.white);
+		setBackground(new Color(160, 192, 215));
 	}
 }
 

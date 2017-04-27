@@ -35,11 +35,15 @@ public class KakaoMain extends JFrame implements Runnable{
 	public Vector<Friends> friendsList;
 	//Thread updateUIThread;
 	public ArrayList<PersonPanel> myFriends = new ArrayList<PersonPanel>(); //friends 테이블 레코드 저장
+	//public ArrayList<PersonPanel> myFriendsCopy = new ArrayList<PersonPanel>(); //friends 테이블 레코드 저장-대화상대초대에 사용
 	
 	public Vector<ChatMain> chat;//채널 새창*채팅목록에서 새로열기 가능하게 바꾸기
 
 	public int friends_count;
 	public JLabel la_friends=new JLabel();
+	public Vector<String> chatMember=new Vector<String>();
+	public String senderId="";
+	
 	
 	public KakaoMain(){
 		getRootPane().setBorder( BorderFactory.createLineBorder(Color.DARK_GRAY) );
@@ -79,6 +83,7 @@ public class KakaoMain extends JFrame implements Runnable{
 		chattingListPanel=new ChattingListPanel(this);
 		settingPanel=new SettingPanel(this);
 
+		
 		
 		panel[1]=new JPanel();	
 		

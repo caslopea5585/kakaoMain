@@ -37,6 +37,7 @@ public class MyModel extends AbstractTableModel{
 
 	
 	public Object getValueAt(int row, int col) {
+		System.out.println("¸ðµ¨¼Ó °ª" + list.get(row));
 		return list.get(row);
 	}
 	

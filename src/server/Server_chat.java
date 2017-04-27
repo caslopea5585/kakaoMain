@@ -67,7 +67,7 @@ public class Server_chat extends Thread{
          System.out.println(msg+"ServerChat에서 파서할 내용.....");
          JSONParser parser=new JSONParser();
          JSONObject obj=(JSONObject)parser.parse(msg);
-         
+         Vector<String> chatMembers= new Vector<String>() ; //채팅 관련된 사람들을 묶는 벡터.
          
          String type=(String)obj.get("type");
          if(type.equals("chat")){
@@ -91,22 +91,44 @@ public class Server_chat extends Thread{
                 }
                 
                 
+                value = (JSONArray)obj.get("chatMembers");
+                System.out.println("쳇멤버의 사이즈 = " + value.size());
+                if(value.size()!=0){
+                	for(int i=0;i<value.size();i++){
+                		//if(i==0){
+                			JSONObject jsonArray = (JSONObject)value.get(i);
+                			
+               			    String val = (String)jsonArray.get("chatMember");
+                    		System.out.println(val);
+                       		chatMembers.add(val);
+
+                	}
+                }
                 
-                sendMsg(msgValue,myIdValue,yourIdValue);
-                //sendMsg(msgValue,timeValue,senderValue,roomNumberValue);
                 
-                //System.out.println(msgValue+senderValue+timeValue+roomNumberValue);
+                //벨류가 chatMembers일때.
+                sendMsg(msgValue,myIdValue,yourIdValue,chatMembers);
+                //클라이언트에게 메시지, 나의 아이디, 상대방 아이디, 챗 멤버들 목록을 전송.
+
              }
          
          }
          else if(type.equals("loginID")){
             String id=(String)obj.get("content");
-
+            
+            int c=0;
             for(int i=0;i<userThread.size();i++){
-               if(userThread.elementAt(i).id==null){
-                  userThread.elementAt(i).id=id;
-                  System.out.println(i+": "+id); 
-               }
+            	if(userThread.get(i).id==id){
+            		c++;
+            	}
+            }
+            if(c==0){
+	            for(int i=0;i<userThread.size();i++){
+	               if(userThread.elementAt(i).id==null){            	  
+	                  userThread.elementAt(i).id=id;
+	                  System.out.println(i+": "+id); 
+	               }
+	            }
             }
          }
          else if(type.equals("image")){
@@ -159,7 +181,7 @@ public class Server_chat extends Thread{
    }
 
    
-   public void sendMsg(String msg,String myIdValue,String yourIdValue){
+   public void sendMsg(String msg,String myIdValue,String yourIdValue,Vector chatMember){
       //서버가 보내주는 것
          
       
@@ -167,85 +189,93 @@ public class Server_chat extends Thread{
          System.out.println("보내지니????");
          //판단해서 보내주기
          StringBuffer sb = new StringBuffer();
-         sb.append("{");
-         sb.append(   "\"type\":\"chat\",");
-         sb.append("\"contents\":[{\"msg\":\""+msg+"\"},{\"myId\":\""+myIdValue+"\"},{\"yourId\":\""+yourIdValue+"\"},{\"timeValue\":\""+timeValue+"\"}]");
-         sb.append("}");
+		   sb.append("{");
+	         sb.append(   "\"type\":\"chat\",");
+	         sb.append("\"contents\":[{\"msg\":\""+msg+"\"},{\"myId\":\""+myIdValue+"\"},{\"yourId\":\""+yourIdValue+"\"},{\"timeValue\":\""+timeValue+"\"}],");
+	         sb.append("\"chatMembers\":[");
+	         int size = chatMember.size();
+	         System.out.println("사이즈는?" +size);
+	         for(int i=0;i<chatMember.size();i++){
+	        	 if(i==chatMember.size()-1){
+	        		sb.append("{\"chatMember\" :\""+chatMember.get(i)+"\"}");
+	        	 }else{
+	        		 sb.append("{\"chatMember\" :\""+chatMember.get(i)+"\"},");
+	        	 }
+	         }
+	         sb.append(" ] ");
+	         sb.append("}");
          String myString = sb.toString();
-
-/*         
-          chatDto.setMsg(msgValue);
-          chatDto.setSender(senderValue);
-          chatDto.setTime(timeValue);*/
-
+         System.out.println("서버가 각 유저에게 보내주는거."+myString);
          
-         
-/*         try {
-            buffw.write(myString+"\n");
-            buffw.flush();
-         } catch (IOException e) {
-            e.printStackTrace();
-         }*/
-
-
-			System.out.println("유저쓰레드 사이즈 = "+userThread.size());
+		System.out.println("유저쓰레드 사이즈 = "+userThread.size());
 			//여기서 쓰레드를 찾으면서... 해당하는 유저의 클라이언트 쓰레드에만 내가 읽어들인걸 쓰면됨...
 			
 			
 			PreparedStatement pstmt =null;
 			ResultSet rs= null;
 			
-/*			String sql="select e_mail from chats where roomnumber=?";
-			Vector<String> roomMember=new Vector<String>();
-			try {
-				pstmt = con.prepareStatement(sql);
-				pstmt.setInt(1, roomNumber);
-				rs = pstmt.executeQuery();
-				
-				while(rs.next()){
-					roomMember.add(rs.getString("e_mail"));
-				}
-				
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-*/			
-			
 			
 			//1. 보내주는 대상의 벡터를 만든다.(벡터는 userThread에 있는거를 가져와서 벡터에 담으면 됨.)
 			Vector<Vector> chatMates = new Vector<Vector>();
+			Vector<Vector> chatMates2 = new Vector<Vector>();
 			
 			
 			//2. 채팅과 관련된 애들을 하나로 묶어서 쳇메이트에 올린다.
 			Vector<Object> chatConsist = new Vector<Object>();
+			Vector<ThreadManager> chatConsist2 = new Vector<ThreadManager>();
 			
 			
 			for(int i=0; i<userThread.size();i++){
+				//테스트용(다중)
+				System.out.println("1");
+				for(int j=0;j<chatMember.size();j++){
+					System.out.println("2");
+					System.out.println("아이디는??? = "+userThread.elementAt(i).id);
+					System.out.println("비교되는 아이디 값은 = "+chatMember.get(j));
+					if(userThread.elementAt(i).id.equals(chatMember.get(j))){
+						chatConsist2.add(userThread.elementAt(i));
+						System.out.println("담기는 유저쓰레드 주소는?"+userThread.elementAt(i));
+						System.out.println("챗 컨시스2가 담김?" + chatConsist2.size());
+					}
+				}
+				
+/*				//실제1:1채팅용
 				if(userThread.elementAt(i).id.equals(myIdValue)){
 					chatConsist.add(userThread.elementAt(i));
 					System.out.println("담기는 쓰레드 주소는?"+ userThread.elementAt(i));
 				}else if(userThread.elementAt(i).id.equals(yourIdValue)){
 					chatConsist.add(userThread.elementAt(i));
 					System.out.println("담기는 쓰레드 주소는111?"+ userThread.elementAt(i));
-				}
+				}*/
 				
 			}
-			chatMates.add(chatConsist);
-			System.out.println("채팅관련 쓰레드의 정보가 담겨있는 사이즈는?" + chatConsist.size());
+			//chatMates.add(chatConsist);
+			chatMates2.add(chatConsist2);					//테스트용(다중)
 			
+			System.out.println("채팅관련 쓰레드의 정보가 담겨있는 사이즈는?" + chatConsist2.size());
 			
-			//엘리먼트의 아이디 비교 들어가야하나요???네네
-			
+
 			System.out.println("들어온 아이디 선택 아이디"+myIdValue + " " + yourIdValue);
 			
-			for(int i=0;i<chatMates.size();i++){
+			for(int i=0;i<chatMates2.size();i++){
 				Vector<String> idGet = new Vector<String>();
 				ThreadManager tm=null;
-				Vector vec=null;;
+				Vector vec=null;
 				boolean myid= false;
 				boolean yourid = false;
-				for(int j=0;j<chatConsist.size();j++){
+/*				for(int j=0;j<chatConsist.size();j++){
 					vec = chatMates.elementAt(i);
+					tm = (ThreadManager)vec.elementAt(j);
+
+					System.out.println("쓰레드에 들어있는 아이디 값은 = "+tm.id);
+					//tm에 들어잇는 ID가져오기...
+					idGet.add(tm.id);
+			
+				}*/
+
+				//테스트용(다중)
+				vec = chatMates2.elementAt(i);
+				for(int j=0;j<chatConsist2.size();j++){
 					tm = (ThreadManager)vec.elementAt(j);
 
 					System.out.println("쓰레드에 들어있는 아이디 값은 = "+tm.id);
@@ -254,19 +284,62 @@ public class Server_chat extends Thread{
 			
 				}
 				
-				for(int q=0;q<idGet.size();q++){
+				//=======================================================
+				
+/*				for(int q=0;q<idGet.size();q++){
 					System.out.println("겟 큐가 가져오는 값들은? = " + idGet.get(q));
 					if(idGet.get(q).equals(myIdValue)){
 						myid = true;
 					}else if(idGet.get(q).equals(yourIdValue)){
 						yourid = true;
 					}
+				}*/
+				
+				
+				//사이즈만큼 카운트와 일치하면!!! 그때 그안에 잇는 쓰레드에게 buffw시키자!!
+				//돌려야할 쓰레드의 싸이즈는 chatmate의 사이즈!!
+				
+/*		*/	//	다중 채팅안되는 버전!!!
+ 				int count =0;
+				for(int j=0;j<idGet.size();j++){
+					for(int q=0; q<chatConsist2.size();q++){
+						System.out.println("비교되는 값이 일치?? = " + idGet.get(j));
+						System.out.println("괄호값 = "+ chatConsist2.get(q).id);
+						if(idGet.get(j).equals(chatConsist2.elementAt(q).id)){
+							count++;
+						}	
+					}
+					
 				}
 				
-				if(myid && yourid){
+				
+				
+				//int count =0;
+				
+				
+				//------------------------------------------------------
+				
+/*				if(myid && yourid){
 					try {
 						//위에 i의 인덱스를 가져와서..그 인덱스에 잇는 쓰레드매니저 전체를 돌려야함.
 						for(int j=0;j<chatConsist.size();j++){
+
+							tm = (ThreadManager)vec.elementAt(j);
+							System.out.println("쓰레드는??"  + tm);
+
+							tm.sever_chat.buffw.write(myString+"\n");
+							tm.sever_chat.buffw.flush();
+						}
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}*/
+				
+				//테스트용(다중)
+				if(count==chatConsist2.size()){
+					try {
+						//위에 i의 인덱스를 가져와서..그 인덱스에 잇는 쓰레드매니저 전체를 돌려야함.
+						for(int j=0;j<chatConsist2.size();j++){
 
 							tm = (ThreadManager)vec.elementAt(j);
 							System.out.println("쓰레드는??"  + tm);
@@ -281,82 +354,12 @@ public class Server_chat extends Thread{
 				
 			}
 			
-	
-			
-/*			for(int i=0; i<chatMates.size();i++){
-				
-				try {
-					chatMates.elementAt(i).sever_chat.buffw.write(myString+"\n");
-					chatMates.elementAt(i).sever_chat.buffw.flush();
-					
-					chatMates.elementAt(i).buffw.write(myString+"\n");
-					chatMates.elementAt(i).buffw.flush();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			*/
-			
-			
-			
-		for(int i=0;i<userThread.size();i++){
-			
-/*				try {
-					//각 클라이언트 쓰레드에 buffw하는 작업.
-					
-					for(int j=0;j<2;j++){
-						System.out.println("유저 아이디"+userThread.elementAt(i).id);
-						if(userThread.elementAt(i).id.equals(roomMember.elementAt(j))){
-							userThread.elementAt(i).sever_chat.buffw.write(myString+"\n");
-							userThread.elementAt(i).sever_chat.buffw.flush();
-						}
-					}
-=======
-=======
->>>>>>> 5a0fcdd6209477c595a581346d7433808dbd79d4
-         System.out.println("유저쓰레드 사이즈 = "+userThread.size());
-         //여기서 쓰레드를 찾으면서... 해당하는 유저의 클라이언트 쓰레드에만 내가 읽어들인걸 쓰면됨...
-         
-         
-         PreparedStatement pstmt =null;
-         ResultSet rs= null;
-         
-/*         String sql="select e_mail from chats where roomnumber=?";
-         Vector<String> roomMember=new Vector<String>();
-         try {
-            pstmt = con.prepareStatement(sql);
-            pstmt.setInt(1, roomNumber);
-            rs = pstmt.executeQuery();
-            
-            while(rs.next()){
-               roomMember.add(rs.getString("e_mail"));
-            }
-            
-         } catch (SQLException e1) {
-            e1.printStackTrace();
-         }
-*/         
-
-         
-         
-         
-		}
-         
-         
    }
 
    public void send(File file){
       JSONObject obj=new JSONObject();
       obj.put("type", "image");
       obj.put("content", "http://"+socket.getInetAddress().getHostAddress()+":9090/data/"+file.getName());
-      
-//      String str="http://"+socket.getInetAddress().getHostAddress()+":9090/data"+file.getName();
-//      StringBuffer sb = new StringBuffer();
-//      sb.append("{");
-//      sb.append(   "\"type\":\"image\",");
-//      sb.append("\"contents+\":"+"\""+str+"\"");
-//      sb.append("}");
-//      String myString = sb.toString();
       
       String myString = obj.toString();
        try {
