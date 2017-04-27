@@ -188,7 +188,6 @@ public class Server_chat extends Thread{
          }*/
 
 
-<<<<<<< HEAD
 			System.out.println("유저쓰레드 사이즈 = "+userThread.size());
 			//여기서 쓰레드를 찾으면서... 해당하는 유저의 클라이언트 쓰레드에만 내가 읽어들인걸 쓰면됨...
 			
@@ -214,26 +213,89 @@ public class Server_chat extends Thread{
 			
 			
 			//1. 보내주는 대상의 벡터를 만든다.(벡터는 userThread에 있는거를 가져와서 벡터에 담으면 됨.)
-			Vector<ThreadManager> chatMates = new Vector<ThreadManager>();
+			Vector<Vector> chatMates = new Vector<Vector>();
+			
+			
+			//2. 채팅과 관련된 애들을 하나로 묶어서 쳇메이트에 올린다.
+			Vector<Object> chatConsist = new Vector<Object>();
+			
+			
 			for(int i=0; i<userThread.size();i++){
-				if(userThread.elementAt(i).id.equals(myIdValue) || userThread.elementAt(i).id.equals(yourIdValue)){
-					chatMates.add(userThread.elementAt(i));
+				if(userThread.elementAt(i).id.equals(myIdValue)){
+					chatConsist.add(userThread.elementAt(i));
+					System.out.println("담기는 쓰레드 주소는?"+ userThread.elementAt(i));
+				}else if(userThread.elementAt(i).id.equals(yourIdValue)){
+					chatConsist.add(userThread.elementAt(i));
+					System.out.println("담기는 쓰레드 주소는111?"+ userThread.elementAt(i));
 				}
+				
+			}
+			chatMates.add(chatConsist);
+			System.out.println("채팅관련 쓰레드의 정보가 담겨있는 사이즈는?" + chatConsist.size());
+			
+			
+			//엘리먼트의 아이디 비교 들어가야하나요???네네
+			
+			System.out.println("들어온 아이디 선택 아이디"+myIdValue + " " + yourIdValue);
+			
+			for(int i=0;i<chatMates.size();i++){
+				Vector<String> idGet = new Vector<String>();
+				ThreadManager tm=null;
+				Vector vec=null;;
+				boolean myid= false;
+				boolean yourid = false;
+				for(int j=0;j<chatConsist.size();j++){
+					vec = chatMates.elementAt(i);
+					tm = (ThreadManager)vec.elementAt(j);
+
+					System.out.println("쓰레드에 들어있는 아이디 값은 = "+tm.id);
+					//tm에 들어잇는 ID가져오기...
+					idGet.add(tm.id);
+			
+				}
+				
+				for(int q=0;q<idGet.size();q++){
+					System.out.println("겟 큐가 가져오는 값들은? = " + idGet.get(q));
+					if(idGet.get(q).equals(myIdValue)){
+						myid = true;
+					}else if(idGet.get(q).equals(yourIdValue)){
+						yourid = true;
+					}
+				}
+				
+				if(myid && yourid){
+					try {
+						//위에 i의 인덱스를 가져와서..그 인덱스에 잇는 쓰레드매니저 전체를 돌려야함.
+						for(int j=0;j<chatConsist.size();j++){
+
+							tm = (ThreadManager)vec.elementAt(j);
+							System.out.println("쓰레드는??"  + tm);
+
+							tm.sever_chat.buffw.write(myString+"\n");
+							tm.sever_chat.buffw.flush();
+						}
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				
 			}
 			
-			for(int i=0; i<chatMates.size();i++){
+	
+			
+/*			for(int i=0; i<chatMates.size();i++){
 				
 				try {
 					chatMates.elementAt(i).sever_chat.buffw.write(myString+"\n");
 					chatMates.elementAt(i).sever_chat.buffw.flush();
 					
-					/*chatMates.elementAt(i).buffw.write(myString+"\n");
-					chatMates.elementAt(i).buffw.flush();*/
+					chatMates.elementAt(i).buffw.write(myString+"\n");
+					chatMates.elementAt(i).buffw.flush();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
-			
+			*/
 			
 			
 			
@@ -272,51 +334,11 @@ public class Server_chat extends Thread{
             e1.printStackTrace();
          }
 */         
-         
-         
-         //1. 보내주는 대상의 벡터를 만든다.(벡터는 userThread에 있는거를 가져와서 벡터에 담으면 됨.)
-         Vector<Server_chat> chatMates = new Vector<Server_chat>();
-         for(int i=0; i<userThread.size();i++){
-            if(userThread.elementAt(i).id.equals(myIdValue) || userThread.elementAt(i).id.equals(yourIdValue)){
-               chatMates.add(userThread.elementAt(i).sever_chat);
-            }
-         }
-         
-         for(int i=0; i<chatMates.size();i++){
-            try {
-               chatMates.elementAt(i).buffw.write(myString+"\n");
-               chatMates.elementAt(i).buffw.flush();
-            } catch (IOException e) {
-               e.printStackTrace();
-            }
-         }
-         
-         
-         
-         
-      for(int i=0;i<userThread.size();i++){
-         
-/*            try {
-               //각 클라이언트 쓰레드에 buffw하는 작업.
-               
-               for(int j=0;j<2;j++){
-                  System.out.println("유저 아이디"+userThread.elementAt(i).id);
-                  if(userThread.elementAt(i).id.equals(roomMember.elementAt(j))){
-                     userThread.elementAt(i).sever_chat.buffw.write(myString+"\n");
-                     userThread.elementAt(i).sever_chat.buffw.flush();
-                  }
-               }
->>>>>>> 3109ef5bb3eb402ad11824f432ee69c7a2facdb6
 
-
-
-               //userThread.elementAt(i).chat.buffw.write(myString+"\n");
-               //userThread.elementAt(i).chat.buffw.flush();
-
-            } catch (IOException e) {
-               e.printStackTrace();
-            }*/
-         }
+         
+         
+         
+		}
    }
 
    public void send(File file){

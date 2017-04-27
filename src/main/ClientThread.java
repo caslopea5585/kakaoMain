@@ -89,10 +89,22 @@ public class ClientThread extends Thread{
 					
 					  //kMain.chat.get(index).model.addRow(chatDto);
 					 //모델에 행을 추가시켜야함
-					kakaoMain.chat.get(0).model.addRow(chatDto);
+					 System.out.println("카카오메시지 사이즈는???" + kakaoMain.chat.size());
+					 
+					for(int i=0;i<kakaoMain.chat.size();i++){
+						String myid=kakaoMain.chat.get(i).myId;
+						String yourid= kakaoMain.chat.get(i).yourId;
+						
+						System.out.println("가져오는 값은 = "+myid + yourid);
+						
+						if((myIdValue.equals(myid)|| myIdValue.equals(yourid)) && (yourIdValue.equals(yourid)||yourIdValue.equals(myid))){
+							kakaoMain.chat.get(i).model.addRow(chatDto);
+							System.out.println("메인에 있는???? 뿌려져야할 chat의 주소는 ??"+ kakaoMain.chat.get(i));
+						}
+						
+					}
 				 }
 				 
-				
 			}
 			
 			if(type.equals("join")){//접속시 아이디 부여

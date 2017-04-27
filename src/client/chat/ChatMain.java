@@ -174,7 +174,7 @@ public class ChatMain extends JDialog implements ActionListener{
 		area.setText("");
 		
 		
-		
+		//여기서 모델 에드 로우 안해도돼?
 		
 		
 		
