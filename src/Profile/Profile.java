@@ -12,6 +12,9 @@ import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Area;
@@ -71,6 +74,19 @@ public class Profile extends JFrame implements ActionListener{
 		url_profileImage=this.getClass().getResource(photopath); //프로필사진
 		status_msg=kakaoMain.memberList.get(index).getStatus_msg();
 		
+		this.addKeyListener(new KeyAdapter() {
+			public void keyReleased(KeyEvent e) {
+				int keycode = e.getKeyCode();
+				if(keycode==KeyEvent.VK_ESCAPE){
+					System.out.println("나눌렀어?");
+					dispose();
+				}else if(keycode ==KeyEvent.VK_ENTER){
+					System.out.println("나눌렀어");
+					dispose();
+				}
+			}
+			
+		});
 		try {
 			buffr_south = ImageIO.read(url_profileSouth);
 			
@@ -302,6 +318,7 @@ public class Profile extends JFrame implements ActionListener{
 		chat.setLocation(kakaoMain.getLocation().x+360,kakaoMain.getLocation().y);
 		chat.setVisible(true);//화면 교체
 		kakaoMain.chat.add(chat);
+		dispose();
 		
 	}
 	

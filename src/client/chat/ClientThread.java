@@ -11,6 +11,10 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.nio.file.Files;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Vector;
 
 import org.json.simple.JSONArray;
@@ -36,6 +40,7 @@ public class ClientThread extends Thread{
 	boolean flag = true;
 	int index=0;
 	
+	String opponent;
 	public ClientThread(Socket socket,KakaoMain kakaoMain) {
 		this.socket=socket;
 		this.kakaoMain=kakaoMain;
@@ -101,30 +106,10 @@ public class ClientThread extends Thread{
 					}
 					 kakaoMain.chatMember=chatMember;
 				 }
-/*					 chatDto.setMyId(myIdValue);
-					 chatDto.setYourId(yourIdValue);*/
+
 					 chatDto.setMsg(msgValue);
 					 chatDto.setTimeValue(timeValue);
-					  
-					
-					  //kMain.chat.get(i).model.addRow(chatDto);
-					 //모델에 행을 추가시켜야함
-/*					 System.out.println("카카오메시지 사이즈는???" + kakaoMain.chat.size());
-					 
-					for(int i=0;i<kakaoMain.chat.size();i++){
-						String myid=kakaoMain.chat.get(i).myId;
-						String yourid= kakaoMain.chat.get(i).yourId;
-						
-						System.out.println("가져오는 값은 = "+myid + yourid);
-						
-						//여기서 쳇 멤버에 담긴 배열의 아이디가 모두 같아야하는거지...
-						if((myIdValue.equals(myid)|| myIdValue.equals(yourid)) && (yourIdValue.equals(yourid)||yourIdValue.equals(myid))){
-							kakaoMain.chat.get(i).model.addRow(chatDto);
-							System.out.println("클라이언트쓰레드??? 뿌려져야할 chat의 주소는 ??"+ kakaoMain.chat.get(i));
-						}
-						
-					}
-					*/
+					 chatDto.setChatMember(chatMember);
 					
 					//테스트용(다중)
 					//쳇은 사용자의 정보를 담은 chatmember를 가지고 있따.
@@ -169,6 +154,8 @@ public class ClientThread extends Thread{
 						}
 						
 						kakaoMain.chat.get(index).model.addRow(chatDto);
+						chatDto.setIndex(index);
+						
 						System.out.println("클 쓰레드 쳇의 겟의 인덱스의 쳇메인? "+kakaoMain.chat.get(index));
 					}
 					
@@ -193,6 +180,9 @@ public class ClientThread extends Thread{
 	}
 	
 	public void sendMsg(String msg,String myId,String yourId,Vector<String> chatMember){
+		PreparedStatement pstmt =null;
+		
+		
 		try {
 			StringBuffer sb = new StringBuffer();
 			   sb.append("{");
@@ -210,7 +200,33 @@ public class ClientThread extends Thread{
 		         }
 		         sb.append(" ] ");
 		         sb.append("}");
+		         
+		         
+		         
 			String myString = sb.toString();
+			String timeValue=getTime();
+			String sql="insert into chatInfo (sender,listener,msg,time,chatIndex) values (?,?,?,?,?)";
+			try {
+				pstmt = kakaoMain.con.prepareStatement(sql);
+				
+				for(int i=1;i<chatMember.size();i++){
+					pstmt.setString(1, chatMember.get(0));
+					pstmt.setString(2, chatMember.get(i));
+					pstmt.setString(3, msg);
+					pstmt.setString(4, timeValue);
+					pstmt.setInt(5,index);
+					
+					int result = pstmt.executeUpdate();
+					
+				}
+			
+				
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			
 			System.out.println("클라이언트에서 서버로 보내는말: "+myString);
 			System.out.println("");
@@ -275,6 +291,11 @@ public class ClientThread extends Thread{
 			e.printStackTrace();
 		}
 	}
+	
+   static String getTime() {
+	      SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
+	      return sdf.format(new Date());
+	   }
 
 	public void run() {
 		

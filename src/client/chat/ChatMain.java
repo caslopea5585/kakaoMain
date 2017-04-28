@@ -3,12 +3,15 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
 
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -30,6 +34,7 @@ import javax.swing.JTextPane;
 
 import login.LoginPanel;
 import main.KakaoMain;
+import util.Join3Image;
 import util.MyRoundButton;
 import util.Util;
 
@@ -70,6 +75,9 @@ public class ChatMain extends JDialog implements ActionListener{
 	Vector<String> chatMember ;
 	public String yourPhotoPath;
 	
+	boolean act=false;
+	boolean act_ready=false;//읽음/안읽음 상태등 상대가 정보를 읽을 준비가 되어있는가
+	
 	public ChatMain(KakaoMain main,String myId,String yourId,Vector chatMember) {
 
 		this.main=main;
@@ -95,13 +103,26 @@ public class ChatMain extends JDialog implements ActionListener{
 		
 		try {
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, yourId);
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()){
-				yourPhoto.add(rs.getString("profile_img"));	
+			for(int i=0; i<chatMember.size();i++){
+				pstmt.setString(1, chatMember.get(i));
+				rs = pstmt.executeQuery();
+				rs.next();
+				yourPhoto.add(rs.getString("profile_img"));	//내 대화방에 있는 모든사람(나포함)의 이미지경로 추가
 			}
-			yourPhotoPath=yourPhoto.get(0);
+			
+			if(yourPhoto.size()==1){
+				yourPhotoPath = yourPhoto.get(1);
+				bt_profil = new MyRoundButton(Util.createRoundIcon(yourPhotoPath, 70));
+			}else if(yourPhoto.size()==3){
+				
+				Icon icon = Join3Image.createJoin3Image(yourPhoto.get(0),yourPhoto.get(1),yourPhoto.get(2));
+				bt_profil = new MyRoundButton(icon);
+			}else{
+				yourPhotoPath = yourPhoto.get(1);
+				bt_profil = new MyRoundButton(Util.createRoundIcon(yourPhotoPath, 70));
+				
+			}
+			
 			System.out.println("너의 사진 경로는?"+yourPhoto.get(0));			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -117,24 +138,26 @@ public class ChatMain extends JDialog implements ActionListener{
 		
 		
 		//북쪽영역의 패널
-		bt_profil = new MyRoundButton(Util.createRoundIcon(yourPhotoPath, 70));
-		la_user = new JLabel(yourId);
+		
+		la_user = new JLabel(yourId + " 님과 대화중입니다.");
 		bt_list = new JButton("게시판");
 		bt_totalview = new JButton("모아보기");
 		bt_serch = new JButton("검색");
 		bt_option = new JButton("설정");
 		chooser=new JFileChooser();
 		
+		
+		la_user.setFont(new Font("돋움", Font.BOLD, 15));
 		p_north.setLayout(new FlowLayout(FlowLayout.LEADING));
 		p_north.setBackground(new Color(160, 192, 215));
 		p_north.setPreferredSize(new Dimension(500, 80));
 		p_north.add(bt_profil, "span 2 2"); //유저 프로필
 		p_north.add(la_user, "span 3,wrap"); //대화방 유저목록
-		p_north.add(bt_list); //게시판
-		p_north.add(bt_totalview); //모아보기
-		p_north.add(bt_serch); //검색
+		//p_north.add(bt_list); //게시판
+		//p_north.add(bt_totalview); //모아보기
+		//p_north.add(bt_serch); //검색
 		
-		p_north.add(bt_option,"gapleft 50"); //설정	
+		//p_north.add(bt_option,"gapleft 50"); //설정	
 		add(p_north, BorderLayout.NORTH);
 		
 		//센터영역
@@ -178,9 +201,9 @@ public class ChatMain extends JDialog implements ActionListener{
 		
 		p_south.setLayout(new FlowLayout(FlowLayout.LEADING));
 		p_south.setBackground(Color.WHITE);
-		p_south.add(bt_imo, "split 3");
-		p_south.add(bt_file);
-		p_south.add(bt_img);
+		//p_south.add(bt_imo, "split 3");
+		//p_south.add(bt_file);
+		//p_south.add(bt_img);
 		
 		add(p_south, BorderLayout.SOUTH);
 		
@@ -207,6 +230,24 @@ public class ChatMain extends JDialog implements ActionListener{
 			}
 		});
 			
+		addWindowListener(new WindowAdapter() {
+			public void windowActivated(WindowEvent e) {
+				if(act_ready){
+					if(!act){
+						act=true;
+						//활성화되어 읽음을 알림
+						sendAct();
+					}
+				}
+			}
+			public void windowDeactivated(WindowEvent e) {
+				if(act_ready){
+					if(act){
+						act=false;
+					}
+				}
+			}
+		});
 	}
 	//textpane 영역의 메세지를 보내자!!
 	public void sendsMsg(){
@@ -225,6 +266,12 @@ public class ChatMain extends JDialog implements ActionListener{
 		area.setText("");
 		
 	}
+
+	public void sendAct(){//활성화됨을 알리는 메세지
+		LoginPanel log=(LoginPanel)main.panel[0];
+		//log.ct.sendAct(act,main.loginEmail,chatMember);
+	}
+	
 	
 	static String getTime() {
 		SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");

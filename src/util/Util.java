@@ -104,6 +104,7 @@ public class Util {
 		//이미지 읽어오기
 		BufferedImage image=null; 
 		try {
+			System.out.println("photoPath" + photoPath);
 			image = ImageIO.read(Util.class.getResource(photoPath));
 		} catch (MalformedURLException e) {
 			e.printStackTrace();

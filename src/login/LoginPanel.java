@@ -250,6 +250,7 @@ public class LoginPanel extends JPanel{
         	 JOptionPane.showMessageDialog(this, "로그인성공");  
         	 connect();
         	 ct.sendID(t_email.getText());
+        	 getChatList();
     		
     		//내 친구정보(friends 테이블) 찾기
         	 //밑에 seeMain의 memberList자리에 
@@ -302,6 +303,16 @@ public class LoginPanel extends JPanel{
    }
    public void getFriends(){
 	  
+   }
+   
+   public void getChatList(){
+	   //로그인한 아이디가 쳇 리스트의 센더인게 잇니?>??
+	   //1. 있다면
+	   //  -> 리스너, 쳇 메인 인덱스를 가져오자.
+	   //  ->쳇 메인 인덱스 순서대로 chatmain을 new해주자.
+	   
+	   
+	   
    }
    
 	public void connect(){
