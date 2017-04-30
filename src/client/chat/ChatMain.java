@@ -111,14 +111,14 @@ public class ChatMain extends JDialog implements ActionListener{
 			}
 			
 			if(yourPhoto.size()==1){
-				yourPhotoPath = yourPhoto.get(1);
+				yourPhotoPath = yourPhoto.get(0);
 				bt_profil = new MyRoundButton(Util.createRoundIcon(yourPhotoPath, 70));
 			}else if(yourPhoto.size()==3){
 				
 				Icon icon = Join3Image.createJoin3Image(yourPhoto.get(0),yourPhoto.get(1),yourPhoto.get(2));
 				bt_profil = new MyRoundButton(icon);
 			}else{
-				yourPhotoPath = yourPhoto.get(1);
+				yourPhotoPath = yourPhoto.get(0);
 				bt_profil = new MyRoundButton(Util.createRoundIcon(yourPhotoPath, 70));
 				
 			}
@@ -269,7 +269,7 @@ public class ChatMain extends JDialog implements ActionListener{
 
 	public void sendAct(){//활성화됨을 알리는 메세지
 		LoginPanel log=(LoginPanel)main.panel[0];
-		//log.ct.sendAct(act,main.loginEmail,chatMember);
+		log.ct.sendAct(act,main.loginEmail,chatMember);
 	}
 	
 	

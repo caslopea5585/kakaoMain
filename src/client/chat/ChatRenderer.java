@@ -25,8 +25,8 @@ public class ChatRenderer implements TableCellRenderer {
 	
 	public Component getTableCellRendererComponent(JTable table, Object value,
 		boolean isSelected, boolean hasFocus, int row, int col) {
-		ChatHolder holder = null;
-		Chat chat = (Chat)value;
+		holder = null;
+		chat = (Chat)value;
 		
 		//쳇dto의 멤버리스트는!! 0번쨰는 자기 자신!!
 		Vector<String>chatMember = chat.getChatMember();
@@ -35,11 +35,12 @@ public class ChatRenderer implements TableCellRenderer {
 		String msg = chat.getMsg();
 		
 		String timeValue = chat.getTimeValue();
-		System.out.println("괄호밖!!"+ main.main.loginEmail);
+	/*	System.out.println("괄호밖!!"+ main.main.loginEmail);
 		System.out.println("괄호안!! + " + main.main.chatMember.get(0));
-		System.out.println("처음 값은?" + main.main.senderId);
+		System.out.println("처음 값은?" + main.main.senderId);*/
 		String yourId = chat.getYourId();
 		String yourPhotoPath=main.main.memberList.get(0).getProfile_img();
+		int count=chat.getCount();
 		
 		int index = chat.getIndex();
 		
@@ -82,8 +83,12 @@ public class ChatRenderer implements TableCellRenderer {
 			}
 			holder.la_time.setText(timeValue);
 			holder.chatbox.setText(msg);
-			holder.readCount.setText(Integer.toString(count));
-		
+			if(count!=0){
+				holder.readCount.setText(Integer.toString(count));
+			}
+			else{
+				holder.readCount.setText("");
+			}
 			holder.add(holder.chatbox);
 			holder.add(holder.la_time);
 			holder.add(holder.readCount);

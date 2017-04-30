@@ -22,6 +22,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import chatting.ChatRoomPanel;
+import chatting.ChattingListPanel;
 import main.KakaoMain;
 
 public class ClientThread extends Thread{
@@ -103,6 +105,9 @@ public class ClientThread extends Thread{
 							 kakaoMain.senderId = val; //보내는 사람이 누구인지 알려고! (chatRender에 쓰일예쩡)
 						 }
 						 chatMember.add(val);
+		                   if(val!=kakaoMain.senderId){
+		                	   chatDto.readCheck.put(val, false);//채팅방에 있는 사람들
+		                   }
 					}
 					 kakaoMain.chatMember=chatMember;
 				 }
@@ -110,6 +115,7 @@ public class ClientThread extends Thread{
 					 chatDto.setMsg(msgValue);
 					 chatDto.setTimeValue(timeValue);
 					 chatDto.setChatMember(chatMember);
+					 chatDto.setCount();
 					
 					//테스트용(다중)
 					//쳇은 사용자의 정보를 담은 chatmember를 가지고 있따.
@@ -155,12 +161,64 @@ public class ClientThread extends Thread{
 						
 						kakaoMain.chat.get(index).model.addRow(chatDto);
 						chatDto.setIndex(index);
+						 kakaoMain.chat.get(index).act_ready=true;
 						
 						System.out.println("클 쓰레드 쳇의 겟의 인덱스의 쳇메인? "+kakaoMain.chat.get(index));
 					}
 					
 				 }
 				 
+				 ////////////////마지막메세지/////////////////
+	             ChattingListPanel clp=(ChattingListPanel)kakaoMain.chattingListPanel;
+	             Vector<ChatRoomPanel> crp=(Vector<ChatRoomPanel>)clp.chatlist;
+	             crp.get(index).setMsgAndTime(timeValue, msgValue);
+			}
+			
+			if(type.equals("act")){//활성화됨을 알림
+				String str=(String)obj.get("content");
+				boolean bool=Boolean.parseBoolean(str);
+				String sender=(String)obj.get("sender");
+				
+				 value = (JSONArray)obj.get("chatMembers");
+				 if(value.size()!=0){
+					 for(int i=0; i<value.size();i++){
+						 JSONObject json  = (JSONObject)value.get(i);
+						 
+						 String val = (String)json.get("chatMember");
+						 System.out.println("채팅방에 들어있는 사람은? = "+ val);
+						 if(i==0){
+							 kakaoMain.senderId = val; //보내는 사람이 누구인지 알려고! (chatRender에 쓰일예쩡)
+						 }
+						 chatMember.add(val);
+					}
+					 kakaoMain.chatMember=chatMember;
+				 }
+					int count=0;
+					
+					for(int i=0; i<kakaoMain.chat.size();i++){
+						for(int j=0; j<kakaoMain.chat.get(i).chatMember.size();j++){
+							
+							for(int q=0; q<chatMember.size();q++){
+									if(kakaoMain.chat.get(i).chatMember.get(j).equals(chatMember.get(q)) && kakaoMain.chat.get(i).chatMember.size()==chatMember.size()){
+										count++;
+										index=i;
+									}
+							}	
+						}
+					}
+					if(count==kakaoMain.chat.get(index).chatMember.size()){
+						if(kakaoMain.chat!=null){
+							if(kakaoMain.chat.get(index)!=null){
+								for(int i=0;i<kakaoMain.chat.get(index).table.getRowCount();i++){
+									if(kakaoMain.chat.get(index).model.list.get(i)!=null){
+										kakaoMain.chat.get(index).model.list.get(i).readCheck.replace(sender, true);
+										kakaoMain.chat.get(index).model.list.get(i).setCount();
+										kakaoMain.chat.get(index).table.updateUI();
+									}
+								}
+							}
+						}
+					}
 			}
 			
 			if(type.equals("join")){//접속시 아이디 부여
@@ -220,7 +278,10 @@ public class ClientThread extends Thread{
 					
 				}
 			
-				
+				   ////////////////마지막메세지/////////////////
+	            ChattingListPanel clp=(ChattingListPanel)kakaoMain.chattingListPanel;
+	            Vector<ChatRoomPanel> crp=(Vector<ChatRoomPanel>)clp.chatlist;
+	            crp.get(index).setMsgAndTime(timeValue, msg);
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -276,6 +337,35 @@ public class ClientThread extends Thread{
 			}
 		};
 		thread.start();
+	}
+	
+	public void sendAct(boolean act,String sender,Vector<String> chatMember){
+		StringBuffer sb = new StringBuffer();
+		  sb.append("{");
+	         sb.append(   "\"type\":\"act\",");
+	         sb.append("\"content\":\""+Boolean.toString(act)+"\",");
+	         sb.append("\"sender\":\""+sender+"\",");
+	         sb.append("\"chatMembers\":[");
+	         int size = chatMember.size();
+	         System.out.println("사이즈는?" +size);
+	         for(int i=0;i<chatMember.size();i++){
+	        	 if(i==chatMember.size()-1){
+	        		sb.append("{\"chatMember\" :\""+chatMember.get(i)+"\"}");
+	        	 }else{
+	        		 sb.append("{\"chatMember\" :\""+chatMember.get(i)+"\"},");
+	        	 }
+	         }
+	         sb.append(" ] ");
+	         sb.append("}");
+
+	         String myString = sb.toString();
+		try {
+			buffw.write(myString+"\n");
+			buffw.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void sendID(String id){

@@ -1,5 +1,8 @@
 package client.chat;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Vector;
 
 public class Chat {
@@ -9,6 +12,9 @@ public class Chat {
 	private String timeValue;
 	private Vector<String> chatMember;
 	private int index;
+	private int count;
+	
+	Map<String, Boolean> readCheck=new HashMap<String, Boolean>();//각 채팅을 보는 사람들의 목록 읽었으면 true 로 변환한다 false 안읽은사람
 	
 	public int getIndex() {
 		return index;
@@ -46,6 +52,26 @@ public class Chat {
 	public void setTimeValue(String timeValue) {
 		this.timeValue = timeValue;
 	}
+
+	public int getCount(){
+		return count;
+	}
 	
+	public void setCount(){
+		int c=0;
+		Iterator<String> iter=readCheck.keySet().iterator();
+		
+		while(iter.hasNext()){
+			String key=iter.next();
+			
+			if(readCheck.containsKey(key)){
+				if(!readCheck.get(key)){
+					c++;
+				}
+			}
+		}
+		this.count=c;
+	}
+
 
 }

@@ -26,6 +26,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.imageio.ImageIO;
@@ -36,6 +37,7 @@ import javax.swing.JPanel;
 
 import org.json.simple.JSONObject;
 
+import client.chat.CIdto;
 import client.chat.ClientThread;
 import db.DBManager;
 import friends.Friends;
@@ -65,9 +67,14 @@ public class LoginPanel extends JPanel{
    Connection con;
    DBManager manager;
    
- 
+   //이전대화데이터베이스 내용을 담을 벡터
+   public ArrayList<CIdto> backChatMsg = new ArrayList<CIdto>();
+   
+   //사용자와 방번호를 넣는 벡터
+   public Vector<String>keyMap= new Vector<String>();
+   
 
-   String ip="211.238.142.113";
+   String ip="211.238.142.122";
   //String ip="211.238.142.102";//////////////////임시 아이피
 
    Socket socket;
@@ -76,6 +83,8 @@ public class LoginPanel extends JPanel{
    
    public LoginPanel(KakaoMain kakaoMain) {
        this.kakaoMain=kakaoMain; 
+       kakaoMain.backChatMsg=backChatMsg;
+       kakaoMain.keyMap=keyMap;
        setLayout(new BorderLayout());
  
       
@@ -209,6 +218,7 @@ public class LoginPanel extends JPanel{
       PreparedStatement pstmt=null;
       ResultSet rs=null;
       ResultSet rs2=null;
+      ResultSet rs3 =null; //이전대화를 갖고오는 쿼리문의 resultset..
      // String sql="select * from members where e_mail=? and password=?";
       //회원로그인시 필요한 정보 확인을 위한정보...
       
@@ -247,7 +257,7 @@ public class LoginPanel extends JPanel{
          System.out.println("memberList에 들어 있는 사람 수: "+memberList.size()+"명");
          
          if(loginFlag){
-        	 JOptionPane.showMessageDialog(this, "로그인성공");  
+        	 
         	 connect();
         	 ct.sendID(t_email.getText());
         	 getChatList();
@@ -271,6 +281,32 @@ public class LoginPanel extends JPanel{
         	 }
         	 System.out.println("loginpanel 내친구수:"+friendsList.size());
         	 kakaoMain.seeMain(t_email.getText(),memberList, friendsList);
+        	 
+        	 String str = "select DISTINCT sender,listener, msg, time,roomnumber from members left outer join ChatInfo on chatInfo.sender=members.NIK_ID order by time asc";
+
+        	 pstmt=con.prepareStatement(str);
+  
+        	 System.out.println(str);
+        	 
+        	 rs3=pstmt.executeQuery();
+     	 
+        	 while(rs3.next()){
+        		 CIdto cidto=new CIdto();
+        		 cidto.setSender(rs3.getString("sender"));
+        		 cidto.setListener(rs3.getString("listener"));
+        		 cidto.setMsg(rs3.getString("msg"));
+        		 cidto.setTime(rs3.getString("time"));      		 
+        		 cidto.setRoomNumber(rs3.getInt("roomNumber"));  		 
+        		 backChatMsg.add(cidto); //전체 값을 집어넣는 리스트 배열
+        		 keyMap.add(rs3.getString("sender")); //센더를 저장
+        		 keyMap.add(rs3.getString("listener")); //방번호를 저장
+        		 keyMap.add(rs3.getString("roomNumber")); //방번호를 저장
+        		 
+        		         	
+        	 } 
+        	 for(int i=0; i<keyMap.size(); i++){
+        	 	System.out.println("키맵의 값은???:"+keyMap.get(i));
+        	 }
          }	else {
         	 JOptionPane.showMessageDialog(this, "아이디나 비밀번호를 확인해주세요.");
         	 t_pw.setText("");

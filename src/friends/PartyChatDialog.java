@@ -18,6 +18,7 @@ import java.sql.Connection;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
@@ -25,10 +26,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import Profile.Profile;
+import chatting.ChattingListPanel;
 import client.chat.ChatMain;
 import db.DBManager;
 import main.KakaoMain;
 import main.MemberList;
+import util.Join3Image;
+import util.MyRoundButton;
 import util.Util;
 
 public class PartyChatDialog extends JDialog {
@@ -56,6 +60,7 @@ public class PartyChatDialog extends JDialog {
 
    MemberList memberList;
    PersonPanel personPanel;
+   Vector<String> ids=new Vector<String>();
 
    //ArrayList<PersonPanel> myFriends = new ArrayList<PersonPanel>();
    public Vector<Friends> friendsList;
@@ -65,6 +70,8 @@ public class PartyChatDialog extends JDialog {
    //CheckboxGroup cg = new CheckboxGroup();
    Vector<JCheckBox> cb=new Vector<JCheckBox>();
    Vector<String> photoPath=new Vector<String>(); //
+	MyRoundButton bt_profil;//북쪽 패널 서쪽의 프로필 사진
+	  String myPhotoPath;
    
    public PartyChatDialog(Connection con, KakaoMain kakaoMain) {
       
@@ -76,6 +83,16 @@ public class PartyChatDialog extends JDialog {
       //myFriends=kakaoMain.myFriends;
       //myFriendsCopy=kakaoMain.myFriendsCopy;
       friendsList=kakaoMain.friendsList;
+      
+      String myemail = kakaoMain.friendsList.get(0).getE_mail();
+      myPhotoPath="";
+      for(int i=0; i<kakaoMain.memberList.size();i++){
+    	  if(myemail.equals(kakaoMain.memberList.get(i).getE_mail())){
+    		  myPhotoPath = kakaoMain.memberList.get(i).getProfile_img();
+    	  }
+      }
+      
+      kakaoMain.memberList.get(0).getProfile_img();
       
       /*for(int i=0; i<myFriendsCopy.size(); i++){
          myFriendsCopy.add(kakaoMain.myFriendsCopy.get(i));
@@ -148,7 +165,7 @@ public class PartyChatDialog extends JDialog {
             for(int i=0; i<cb.size();i++){
                if(cb.get(i).isSelected()){ //선택 되었으면
                   //ids.add(friendsList.get(i).getYour_email());
-                  //ids.add(cb.get(i).getText());
+                  ids.add(cb.get(i).getText());
                   
                   System.out.println("선택된 친구들:"+cb.get(i).getText());
                }   
@@ -210,11 +227,11 @@ public class PartyChatDialog extends JDialog {
       Vector<String> chatMember =new Vector<String>();
       
       chatMember.add(kakaoMain.loginEmail);
-   /*   
+    
       for(int i=0;i<ids.size();i++){
          chatMember.add(ids.get(i));
          
-      }*/
+      }
       
       //향후 여기다가 추가로 넣어주자... chatMember만큼 사이즈가 돌수 잇도록.
       
@@ -223,7 +240,45 @@ public class PartyChatDialog extends JDialog {
       chat.setVisible(true);//화면 교체
       kakaoMain.chat.add(chat);
       
+      StringBuffer sb=new StringBuffer();
+      for(int i=0;i<chatMember.size();i++){
+         if((chatMember.size()-1)==i){
+            sb.append(chatMember.get(i)+" : "+chatMember.size());
+         }
+         else{
+            sb.append(chatMember.get(i)+",");
+         }
+      }
       
+      Vector<String> yourPhoto = new Vector<String>();
+      String yourPhotoPath;
+
+      yourPhoto.add(myPhotoPath);
+      for(int i=0; i<friendsList.size();i++){
+	      for(int j=0; j<kakaoMain.memberList.size(); j++){
+	          if(kakaoMain.memberList.get(j).getE_mail().equals(friendsList.get(i).getYour_email())){
+	        	  yourPhoto.add(kakaoMain.memberList.get(j).getProfile_img());
+
+	            	System.out.println("포토"+yourPhoto.get(i));
+	          }
+	       }
+      }
+		if(yourPhoto.size()==1){
+			yourPhotoPath = yourPhoto.get(0);
+			bt_profil = new MyRoundButton(Util.createRoundIcon(yourPhotoPath, 40));
+		}else if(yourPhoto.size()==3){
+			
+			Icon icon = Join3Image.createJoin3Image(yourPhoto.get(0),yourPhoto.get(1),yourPhoto.get(2));
+			bt_profil = new MyRoundButton(icon);
+		}else{
+			yourPhotoPath = yourPhoto.get(0);
+			bt_profil = new MyRoundButton(Util.createRoundIcon(yourPhotoPath, 40));
+			
+		}
+      
+      kakaoMain.roomNumberList.add(kakaoMain.roomNumberList.size());
+      ChattingListPanel clp=(ChattingListPanel)kakaoMain.chattingListPanel;
+      clp.addChattingRoom(bt_profil,sb.toString(),"",kakaoMain.roomNumberList.size()-1);
    }
 
 }

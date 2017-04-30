@@ -10,7 +10,7 @@ public class DBManager {
 	static private DBManager instance;
 
 	private String driver="oracle.jdbc.driver.OracleDriver";
-	private String url="jdbc:oracle:thin:@localhost:1521:XE";
+	private String url="jdbc:oracle:thin:@211.238.142.121:1521:XE";
 	private String user="bread";
 	private String pass="bread";
 /*	

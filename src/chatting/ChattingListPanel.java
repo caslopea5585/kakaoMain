@@ -11,6 +11,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import main.KakaoMain;
+import util.MyRoundButton;
 
 public class ChattingListPanel extends JPanel{
 	KakaoMain main;
@@ -18,7 +19,7 @@ public class ChattingListPanel extends JPanel{
 	JPanel p_list; //p_search부분 제외한 아랫부분 전체 패널-그리드
 	JTextField t_search;
 	JScrollPane scroll;
-	Vector<ChatRoomPanel> chatlist =new Vector<ChatRoomPanel>();
+	public Vector<ChatRoomPanel> chatlist =new Vector<ChatRoomPanel>();
 
 	
 	public ChattingListPanel(KakaoMain main){
@@ -41,8 +42,10 @@ public class ChattingListPanel extends JPanel{
 		
 		p_search.add(t_search);	
 		
-		ChatRoomPanel crp=new ChatRoomPanel("/p1.jpg", "chat", "--", main);
-		chatlist.add(crp);
+		for(int i=0;i<main.roomNumberList.size();i++){
+			ChatRoomPanel crp=new ChatRoomPanel("/p1.jpg", "chat", "--", main,main.roomNumberList.get(i));
+			chatlist.add(crp);
+		}
 		for(int i=0;i<chatlist.size();i++){
 			p_list.add(chatlist.get(i));
 		}
@@ -53,6 +56,19 @@ public class ChattingListPanel extends JPanel{
 		setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(360, 497));
 		
+	}
+	//새로운 방일때 추가
+	public void addChattingRoom(String img,String name,String msg,int num){
+		ChatRoomPanel crp=new ChatRoomPanel(img, name, msg, main, num);
+		chatlist.add(crp);
+		p_list.add(crp);
+	}
+	
+	public void addChattingRoom(MyRoundButton button,String name,String msg,int num){
+		ChatRoomPanel crp=new ChatRoomPanel("", name, msg, main, num);
+		crp.addButton(button);
+		chatlist.add(crp);
+		p_list.add(crp);
 	}
 	
 }

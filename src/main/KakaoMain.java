@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import chatting.ChattingListPanel;
+import client.chat.CIdto;
 import client.chat.ChatMain;
 import db.DBManager;
 import friends.Friends;
@@ -31,6 +32,7 @@ public class KakaoMain extends JFrame implements Runnable{
 	DBManager manager;
 	public Connection con;
 	public String loginEmail;
+	public Vector<Integer> roomNumberList=new Vector<Integer>();
 	public Vector<MemberList> memberList;
 	public Vector<Friends> friendsList;
 	//Thread updateUIThread;
@@ -39,6 +41,9 @@ public class KakaoMain extends JFrame implements Runnable{
 	
 	public Vector<ChatMain> chat;//채널 새창*채팅목록에서 새로열기 가능하게 바꾸기
 
+	public ArrayList<CIdto> backChatMsg = new ArrayList<CIdto>();
+	public Vector<String>keyMap= new Vector<String>();
+	
 	public int friends_count;
 	public JLabel la_friends=new JLabel();
 	public Vector<String> chatMember=new Vector<String>();
@@ -56,7 +61,7 @@ public class KakaoMain extends JFrame implements Runnable{
 		add(panel[0]);
 		
 		
-		//setUndecorated(true); //타이틀바 제거
+		setUndecorated(true); //타이틀바 제거
 		setBounds(100,100,360,590);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
